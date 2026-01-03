@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Star01, Shield01 } from "@untitledui/icons";
+import { useRef, useState } from "react";
+import { ArrowRight, Star01, Shield01, ChevronLeft, ChevronRight } from "@untitledui/icons";
 import { Button } from "@/components/base/buttons/button";
 import { Badge } from "@/components/base/badges/badges";
 import { MarketplaceProductCard, MarketplaceProduct } from "@/components/marketplace/MarketplaceProductCard";
@@ -85,6 +86,32 @@ const premiumProducts: MarketplaceProduct[] = [
 ];
 
 export const PremiumCollectionSection = () => {
+    const sliderRef = useRef<HTMLDivElement>(null);
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(true);
+
+    const checkScrollPosition = () => {
+        if (sliderRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+            setCanScrollLeft(scrollLeft > 0);
+            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+        }
+    };
+
+    const scrollLeft = () => {
+        if (sliderRef.current) {
+            const scrollAmount = sliderRef.current.clientWidth;
+            sliderRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+        }
+    };
+
+    const scrollRight = () => {
+        if (sliderRef.current) {
+            const scrollAmount = sliderRef.current.clientWidth;
+            sliderRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        }
+    };
+
     return (
         <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-8 lg:py-6">
             {/* Background Pattern */}
@@ -99,7 +126,7 @@ export const PremiumCollectionSection = () => {
             <div className="absolute -top-40 -right-40 size-96 rounded-full bg-brand-500/20 blur-3xl" />
             <div className="absolute -bottom-40 -left-40 size-96 rounded-full bg-brand-500/20 blur-3xl" />
 
-            <div className="relative mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+            <div className="relative mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 overflow-visible">
                 {/* Header */}
                 <div className="flex items-start justify-between">
                     <div>
@@ -123,8 +150,47 @@ export const PremiumCollectionSection = () => {
                     </Link>
                 </div>
 
-                {/* Products Grid */}
-                <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+                {/* Mobile Slider */}
+                <div className="mt-6 sm:hidden relative overflow-visible">
+                    <div
+                        ref={sliderRef}
+                        onScroll={checkScrollPosition}
+                        className="flex gap-2 pb-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
+                    >
+                        {premiumProducts.map((product, index) => (
+                            <div
+                                key={product.id}
+                                className={`flex-shrink-0 ${index % 2 === 0 ? "snap-start snap-always" : ""}`}
+                                style={{ width: "calc((100% - 8px) / 2)" }}
+                            >
+                                <MarketplaceProductCard product={product} transparentBorder />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Left Arrow */}
+                    {canScrollLeft && (
+                        <button
+                            onClick={scrollLeft}
+                            className="absolute top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-lg border border-gray-200 -left-4"
+                        >
+                            <ChevronLeft className="size-5 text-gray-700" />
+                        </button>
+                    )}
+
+                    {/* Right Arrow */}
+                    {canScrollRight && (
+                        <button
+                            onClick={scrollRight}
+                            className="absolute top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-lg border border-gray-200 -right-4"
+                        >
+                            <ChevronRight className="size-5 text-gray-700" />
+                        </button>
+                    )}
+                </div>
+
+                {/* Desktop Grid */}
+                <div className="mt-6 hidden sm:grid grid-cols-3 gap-4 lg:grid-cols-5">
                     {premiumProducts.map((product) => (
                         <MarketplaceProductCard key={product.id} product={product} transparentBorder />
                     ))}
