@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight } from "@untitledui/icons";
+import { useRef, useState } from "react";
+import { ChevronRight, ChevronLeft } from "@untitledui/icons";
 import { ProductCard, ProductCardProps } from "./ProductCard";
 
 const relatedProductsByCategory: ProductCardProps[] = [
@@ -57,8 +58,34 @@ interface Props {
 }
 
 export function RelatedProductsByCategory({ category }: Props) {
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScrollPosition = () => {
+    if (sliderRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  const scrollLeft = () => {
+    if (sliderRef.current) {
+      const scrollAmount = sliderRef.current.clientWidth;
+      sliderRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (sliderRef.current) {
+      const scrollAmount = sliderRef.current.clientWidth;
+      sliderRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className="border-t border-secondary pt-8">
+    <div className="border-t border-secondary pt-8 overflow-x-clip">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-lg font-semibold text-primary">Similar in {category}</h2>
@@ -68,7 +95,47 @@ export function RelatedProductsByCategory({ category }: Props) {
           View all <ChevronRight className="size-4" />
         </Link>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+      {/* Mobile Slider */}
+      <div className="sm:hidden relative overflow-visible">
+        <div
+          ref={sliderRef}
+          onScroll={checkScrollPosition}
+          className="flex gap-2 pb-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
+        >
+          {relatedProductsByCategory.map((product, index) => (
+            <div
+              key={product.id}
+              className={`flex-shrink-0 ${index % 2 === 0 ? "snap-start snap-always" : ""}`}
+              style={{ width: "calc((100% - 8px) / 2)" }}
+            >
+              <ProductCard product={product} showSeller />
+            </div>
+          ))}
+        </div>
+
+        {/* Left Arrow */}
+        {canScrollLeft && (
+          <button
+            onClick={scrollLeft}
+            className="absolute top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-lg border border-gray-200 -left-4"
+          >
+            <ChevronLeft className="size-5 text-gray-700" />
+          </button>
+        )}
+
+        {/* Right Arrow */}
+        {canScrollRight && (
+          <button
+            onClick={scrollRight}
+            className="absolute top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-lg border border-gray-200 -right-4"
+          >
+            <ChevronRight className="size-5 text-gray-700" />
+          </button>
+        )}
+      </div>
+
+      {/* Desktop Grid */}
+      <div className="hidden sm:grid grid-cols-3 lg:grid-cols-5 gap-4">
         {relatedProductsByCategory.map((product) => (
           <ProductCard key={product.id} product={product} showSeller />
         ))}
