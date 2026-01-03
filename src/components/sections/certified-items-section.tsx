@@ -113,29 +113,15 @@ export const CertifiedItemsSection = () => {
     };
 
     return (
-        <section className="bg-primary py-8 lg:py-6 overflow-x-clip">
+        <section className="bg-primary py-4 lg:py-6 overflow-x-clip">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 overflow-visible">
                 {/* Header */}
                 <div className="flex items-start justify-between">
                     <div>
-                        <h2 className="text-lg font-semibold text-primary sm:text-xl">
+                        <h2 className="text-md font-semibold text-primary sm:text-xl">
                             Certified & Authenticated Items
                         </h2>
-                        <div className="mt-2 hidden sm:flex items-center gap-4">
-                            <div className="flex items-center gap-2 text-sm text-secondary">
-                                <Award01 className="size-4 text-brand-500" />
-                                <span>PSA Certified</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm text-secondary">
-                                <Award01 className="size-4 text-brand-500" />
-                                <span>CGC Graded</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm text-secondary">
-                                <Award01 className="size-4 text-brand-500" />
-                                <span>GIA Certified</span>
-                            </div>
-                        </div>
-                    </div>
+                                            </div>
                     <Link href="/certified" className="flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700">
                         See All
                         <ArrowRight className="size-4" />
@@ -143,7 +129,7 @@ export const CertifiedItemsSection = () => {
                 </div>
 
                 {/* Mobile Slider */}
-                <div className="mt-6 sm:hidden relative overflow-visible">
+                <div className="mt-3 sm:hidden relative overflow-visible">
                     <div
                         ref={sliderRef}
                         onScroll={checkScrollPosition}

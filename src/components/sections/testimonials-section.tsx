@@ -69,7 +69,7 @@ const testimonials = [
 
 export const TestimonialsSection = () => {
     return (
-        <section id="testimonials" className="bg-primary py-8 lg:py-6 border-y-4 border-brand-300">
+        <section id="testimonials" className="bg-primary py-4 lg:py-6 border-y-4 border-brand-300">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
                 <div className="text-center">
                     <div className="flex justify-center">

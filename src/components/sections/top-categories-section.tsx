@@ -69,7 +69,7 @@ const categories = [
 
 export const TopCategoriesSection = () => {
     return (
-        <section className="bg-primary py-8 lg:py-6">
+        <section className="bg-primary py-4 lg:py-6">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="flex items-center justify-between">

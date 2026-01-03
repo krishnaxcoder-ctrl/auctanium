@@ -139,7 +139,7 @@ export const FeaturedCollectionSection = () => {
                 </div>
 
                 {/* Mobile Slider */}
-                <div className="mt-6 sm:hidden relative overflow-visible">
+                <div className="mt-3 sm:hidden relative overflow-visible">
                     <div
                         ref={sliderRef}
                         onScroll={checkScrollPosition}

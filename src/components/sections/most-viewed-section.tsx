@@ -115,7 +115,7 @@ export const MostViewedSection = () => {
     };
 
     return (
-        <section className="bg-primary py-8 lg:py-6 overflow-x-clip">
+        <section className="bg-primary py-4 lg:py-6 overflow-x-clip">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 overflow-visible">
                 {/* Header */}
                 <div className="flex items-center justify-between">
@@ -129,7 +129,7 @@ export const MostViewedSection = () => {
                 </div>
 
                 {/* Mobile Slider */}
-                <div className="mt-6 sm:hidden relative overflow-visible">
+                <div className="mt-3 sm:hidden relative overflow-visible">
                     <div
                         ref={sliderRef}
                         onScroll={checkScrollPosition}

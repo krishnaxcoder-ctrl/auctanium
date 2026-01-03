@@ -153,7 +153,7 @@ export const DealsOfTheDaySection = () => {
     };
 
     return (
-        <section className="bg-primary py-8 lg:py-6 border-y border-secondary overflow-x-clip">
+        <section className="bg-primary py-4 lg:py-6 border-y border-secondary overflow-x-clip">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 overflow-visible">
                 {/* Header */}
                 <div className="flex items-start justify-between">
@@ -172,7 +172,7 @@ export const DealsOfTheDaySection = () => {
                 </div>
 
                 {/* Mobile Slider */}
-                <div className="mt-6 sm:hidden relative overflow-visible">
+                <div className="mt-3 sm:hidden relative overflow-visible">
                     <div
                         ref={sliderRef}
                         onScroll={checkScrollPosition}

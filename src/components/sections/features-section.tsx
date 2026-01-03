@@ -52,7 +52,7 @@ const features = [
 
 export const FeaturesSection = () => {
     return (
-        <section id="features" className="relative bg-primary py-8 lg:py-6 overflow-hidden">
+        <section id="features" className="relative bg-primary py-4 lg:py-6 overflow-hidden">
             {/* Background decoration */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-brand-100 rounded-full blur-3xl opacity-50" />
