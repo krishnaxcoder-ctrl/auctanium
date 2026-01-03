@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun --version:*)",
+      "Bash(bun add:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(move middleware.ts proxy.ts)",
+      "Bash(ren middleware.ts proxy.ts)",
+      "Bash(cat:*)",
+      "Bash(dir:*)",
+      "Bash(tree:*)",
+      "Bash(npx tsc:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:untitled-ui-chi.vercel.app)",
+      "Bash(npm i:*)",
+      "Bash(del:*)",
+      "Bash(copy:*)",
+      "Bash(copy \"C:\\\\Users\\\\krishna\\\\Videos\\\\newproject\\\\untitled-ui\\\\faces\\\\Screenshot 2025-12-19 010009.png\" \"C:\\\\Users\\\\krishna\\\\Videos\\\\newproject\\\\untitled-ui\\\\public\\\\face2.png\")",
+      "Bash(powershell -Command:*)"
+    ]
+  }
+}
