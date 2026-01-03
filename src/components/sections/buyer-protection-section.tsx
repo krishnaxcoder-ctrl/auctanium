@@ -7,6 +7,8 @@ import {
     CheckCircle,
     CreditCard02,
     Truck01,
+    LifeBuoy01,
+    MessageTextCircle01,
 } from "@untitledui/icons";
 import { Badge } from "@/components/base/badges/badges";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
@@ -48,6 +50,18 @@ const protectionFeatures = [
         description: "All shipments are fully insured. Your precious metals are protected from the moment they leave the seller.",
         color: "success" as const,
     },
+    {
+        icon: LifeBuoy01,
+        title: "24/7 Support",
+        description: "Our support team is available around the clock to help you with any issues or questions.",
+        color: "warning" as const,
+    },
+    {
+        icon: MessageTextCircle01,
+        title: "Dispute Resolution",
+        description: "We offer a fair and transparent dispute resolution process to protect both buyers and sellers.",
+        color: "error" as const,
+    },
 ];
 
 export const BuyerProtectionSection = () => {
@@ -55,7 +69,7 @@ export const BuyerProtectionSection = () => {
         <section className="bg-secondary py-8 lg:py-6">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div className="text-center">
+                <div className="flex flex-col items-center text-center">
                     <Badge type="pill-color" size="md" color="brand">
                         Platform Guarantees
                     </Badge>
@@ -68,7 +82,7 @@ export const BuyerProtectionSection = () => {
                 </div>
 
                 {/* Features Grid */}
-                <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     {protectionFeatures.map((feature) => (
                         <div
                             key={feature.title}
