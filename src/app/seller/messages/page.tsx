@@ -11,6 +11,7 @@ import {
   Star01,
   Archive,
   Trash01,
+  ArrowLeft,
 } from "@untitledui/icons";
 import { Avatar } from "@/components/base/avatar/avatar";
 import { Badge } from "@/components/base/badges/badges";
@@ -123,6 +124,7 @@ export default function MessagesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(conversations[0]);
   const [newMessage, setNewMessage] = useState("");
+  const [showChat, setShowChat] = useState(false);
 
   const filteredConversations = conversations.filter((conv) =>
     conv.customer.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -135,14 +137,23 @@ export default function MessagesPage() {
     }
   };
 
+  const handleSelectConversation = (conversation: Conversation) => {
+    setSelectedConversation(conversation);
+    setShowChat(true);
+  };
+
+  const handleBackToList = () => {
+    setShowChat(false);
+  };
+
   return (
     <div className="flex flex-col h-full overflow-x-hidden max-w-full">
       {/* Main Content */}
-      <div className="flex flex-1 border border-secondary bg-primary overflow-hidden min-h-0">
-        {/* Conversations List */}
-        <div className="w-80 border-r border-secondary flex flex-col min-h-0">
+      <div className="flex flex-1 border border-secondary bg-primary overflow-hidden min-h-0 rounded-xl">
+        {/* Conversations List - Hidden on mobile when chat is shown */}
+        <div className={`${showChat ? 'hidden' : 'flex'} md:flex w-full md:w-80 border-r border-secondary flex-col min-h-0`}>
           {/* Search */}
-          <div className="p-4 border-b border-secondary">
+          <div className="p-3 sm:p-4 border-b border-secondary">
             <Input
               icon={SearchLg}
               placeholder="Search conversations..."
@@ -156,12 +167,12 @@ export default function MessagesPage() {
             {filteredConversations.map((conversation) => (
               <button
                 key={conversation.id}
-                onClick={() => setSelectedConversation(conversation)}
-                className={`w-full flex items-start gap-3 p-4 text-left hover:bg-secondary/50 transition-colors ${
+                onClick={() => handleSelectConversation(conversation)}
+                className={`w-full flex items-start gap-3 p-3 sm:p-4 text-left hover:bg-secondary/50 transition-colors ${
                   selectedConversation?.id === conversation.id ? "bg-secondary/70" : ""
                 }`}
               >
-                <div className="relative">
+                <div className="relative flex-shrink-0">
                   <Avatar src={conversation.customer.avatar} alt={conversation.customer.name} size="md" />
                   {conversation.unread > 0 && (
                     <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-brand-600 text-xs font-medium text-white">
@@ -170,11 +181,11 @@ export default function MessagesPage() {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <span className={`text-sm font-medium ${conversation.unread > 0 ? "text-primary" : "text-secondary"}`}>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className={`text-sm font-medium truncate ${conversation.unread > 0 ? "text-primary" : "text-secondary"}`}>
                       {conversation.customer.name}
                     </span>
-                    <span className="text-xs text-tertiary">{conversation.time}</span>
+                    <span className="text-xs text-tertiary flex-shrink-0">{conversation.time}</span>
                   </div>
                   <p className={`text-sm truncate mt-0.5 ${conversation.unread > 0 ? "text-primary font-medium" : "text-tertiary"}`}>
                     {conversation.lastMessage}
@@ -190,38 +201,45 @@ export default function MessagesPage() {
           </div>
         </div>
 
-        {/* Chat Area */}
-        <div className="flex-1 flex flex-col min-w-0 min-h-0">
+        {/* Chat Area - Hidden on mobile when list is shown */}
+        <div className={`${showChat ? 'flex' : 'hidden'} md:flex flex-1 flex-col min-w-0 min-h-0`}>
           {selectedConversation ? (
             <>
               {/* Chat Header */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-secondary">
-                <div className="flex items-center gap-3">
-                  <Avatar src={selectedConversation.customer.avatar} alt={selectedConversation.customer.name} size="md" />
-                  <div>
-                    <h3 className="font-medium text-primary">{selectedConversation.customer.name}</h3>
+              <div className="flex items-center justify-between px-3 sm:px-6 py-3 sm:py-4 border-b border-secondary gap-2">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                  {/* Back button - only on mobile */}
+                  <button
+                    onClick={handleBackToList}
+                    className="md:hidden flex items-center justify-center size-8 rounded-lg hover:bg-secondary transition-colors flex-shrink-0"
+                  >
+                    <ArrowLeft className="size-5 text-tertiary" />
+                  </button>
+                  <Avatar src={selectedConversation.customer.avatar} alt={selectedConversation.customer.name} size="md" className="flex-shrink-0" />
+                  <div className="min-w-0">
+                    <h3 className="font-medium text-primary text-sm sm:text-base truncate">{selectedConversation.customer.name}</h3>
                     {selectedConversation.orderId && (
-                      <p className="text-xs text-tertiary">Re: Order {selectedConversation.orderId}</p>
+                      <p className="text-xs text-tertiary truncate">Re: Order {selectedConversation.orderId}</p>
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Button color="tertiary" size="sm" iconLeading={Star01} />
-                  <Button color="tertiary" size="sm" iconLeading={Archive} />
-                  <Button color="tertiary" size="sm" iconLeading={Trash01} />
+                <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                  <Button color="tertiary" size="sm" iconLeading={Star01} className="hidden sm:flex" />
+                  <Button color="tertiary" size="sm" iconLeading={Archive} className="hidden sm:flex" />
+                  <Button color="tertiary" size="sm" iconLeading={Trash01} className="hidden sm:flex" />
                   <Button color="tertiary" size="sm" iconLeading={DotsHorizontal} />
                 </div>
               </div>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3 sm:space-y-4">
                 {selectedConversation.messages.map((message) => (
                   <div
                     key={message.id}
                     className={`flex ${message.isOwn ? "justify-end" : "justify-start"}`}
                   >
                     <div
-                      className={`max-w-[70%] rounded-xl px-4 py-2.5 ${
+                      className={`max-w-[85%] sm:max-w-[70%] rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 ${
                         message.isOwn
                           ? "bg-brand-600 text-white"
                           : "bg-secondary text-primary"
@@ -244,10 +262,10 @@ export default function MessagesPage() {
               </div>
 
               {/* Message Input */}
-              <div className="px-6 py-4 border-t border-secondary">
-                <div className="flex items-center gap-3">
-                  <Button color="tertiary" size="sm" iconLeading={Paperclip} />
-                  <div className="flex-1">
+              <div className="px-3 sm:px-6 py-3 sm:py-4 border-t border-secondary">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Button color="tertiary" size="sm" iconLeading={Paperclip} className="hidden sm:flex" />
+                  <div className="flex-1 min-w-0">
                     <Input
                       placeholder="Type a message..."
                       value={newMessage}
@@ -266,14 +284,15 @@ export default function MessagesPage() {
                     iconLeading={Send01}
                     onClick={handleSendMessage}
                     isDisabled={!newMessage.trim()}
+                    className="flex-shrink-0"
                   >
-                    Send
+                    <span className="hidden sm:inline">Send</span>
                   </Button>
                 </div>
               </div>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center">
+            <div className="flex-1 flex items-center justify-center p-4">
               <EmptyState size="sm">
                 <EmptyState.Header pattern="none">
                   <EmptyState.FeaturedIcon icon={SearchLg} color="gray" theme="light" />
