@@ -23,7 +23,7 @@ function SellerLayoutInner({ children }: { children: ReactNode }) {
           </div>
 
           {/* Main Content - Full width */}
-          <div className="flex-1 p-4">
+          <div className="flex-1 min-w-0 overflow-hidden p-4">
             {children}
           </div>
         </div>

@@ -185,21 +185,20 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6 overflow-x-hidden max-w-full">
+    <div className="space-y-4 sm:space-y-6 min-w-0">
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-lg sm:text-xl font-semibold text-primary">Products</h1>
           <p className="text-xs sm:text-sm text-tertiary">Manage your product inventory</p>
         </div>
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2">
           <Button color="secondary" size="sm" iconLeading={FilterLines}>
-            <span className="hidden sm:inline">Export</span>
+            Export
           </Button>
           <Link href="/seller/products/new">
             <Button color="primary" size="sm" iconLeading={Plus}>
-              <span className="hidden sm:inline">Add Product</span>
-              <span className="sm:hidden">Add</span>
+              Add
             </Button>
           </Link>
         </div>
@@ -322,32 +321,32 @@ export default function ProductsPage() {
       {/* Products Table - Desktop */}
       <div className="hidden md:block rounded-xl border border-secondary bg-primary overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[800px]">
+          <table className="w-full">
             <thead>
               <tr className="border-b border-secondary bg-secondary/50">
-                <th className="px-4 py-3 text-left w-12">
+                <th className="px-3 py-2.5 text-left w-10">
                   <Checkbox
                     isSelected={selectedProducts.length === filteredProducts.length && filteredProducts.length > 0}
                     isIndeterminate={selectedProducts.length > 0 && selectedProducts.length < filteredProducts.length}
                     onChange={toggleSelectAll}
                   />
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-3 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
                   Product
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-3 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-tertiary whitespace-nowrap">
                   Status
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-3 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-tertiary whitespace-nowrap hidden lg:table-cell">
                   Inventory
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary hidden lg:table-cell">
+                <th className="px-3 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-tertiary hidden xl:table-cell">
                   Category
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-3 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-tertiary whitespace-nowrap">
                   Price
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-tertiary w-28">
+                <th className="px-3 py-2.5 text-right text-xs font-medium uppercase tracking-wider text-tertiary w-20">
                   Actions
                 </th>
               </tr>
@@ -355,15 +354,15 @@ export default function ProductsPage() {
             <tbody className="divide-y divide-secondary">
               {filteredProducts.map((product) => (
                 <tr key={product.id} className="hover:bg-secondary/30 transition-colors">
-                  <td className="px-4 py-3">
+                  <td className="px-3 py-2.5">
                     <Checkbox
                       isSelected={selectedProducts.includes(product.id)}
                       onChange={() => toggleSelectProduct(product.id)}
                     />
                   </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <div className="relative size-10 overflow-hidden rounded-lg bg-secondary flex-shrink-0">
+                  <td className="px-3 py-2.5">
+                    <div className="flex items-center gap-2">
+                      <div className="relative size-9 overflow-hidden rounded-lg bg-secondary flex-shrink-0">
                         <Image
                           src={product.image}
                           alt={product.name}
@@ -371,18 +370,18 @@ export default function ProductsPage() {
                           className="object-cover"
                         />
                       </div>
-                      <div className="min-w-0">
+                      <div className="min-w-0 max-w-[180px] lg:max-w-[240px]">
                         <Link
                           href={`/seller/products/${product.id}`}
                           className="text-sm font-medium text-primary hover:text-brand-600 transition-colors truncate block"
                         >
                           {product.name}
                         </Link>
-                        <p className="text-xs text-tertiary">{product.sku}</p>
+                        <p className="text-xs text-tertiary truncate">{product.sku}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-3 py-2.5">
                     <Badge
                       type="pill-color"
                       size="sm"
@@ -391,30 +390,30 @@ export default function ProductsPage() {
                       {statusConfig[product.status].label}
                     </Badge>
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap">
+                  <td className="px-3 py-2.5 whitespace-nowrap hidden lg:table-cell">
                     <span className={`text-sm ${product.inventory <= 5 ? "text-error-600 font-medium" : "text-primary"}`}>
-                      {product.inventory} in stock
+                      {product.inventory}
                     </span>
                   </td>
-                  <td className="px-4 py-3 hidden lg:table-cell">
+                  <td className="px-3 py-2.5 hidden xl:table-cell">
                     <span className="text-sm text-secondary">{product.category}</span>
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap">
+                  <td className="px-3 py-2.5 whitespace-nowrap">
                     <div>
                       <span className="text-sm font-medium text-primary">${product.price}</span>
                       {product.comparePrice && (
-                        <span className="ml-1 text-xs text-tertiary line-through">
+                        <span className="ml-1 text-xs text-tertiary line-through hidden lg:inline">
                           ${product.comparePrice}
                         </span>
                       )}
                     </div>
                   </td>
-                  <td className="px-4 py-3">
-                    <div className="relative flex items-center justify-end gap-2">
+                  <td className="px-3 py-2.5">
+                    <div className="relative flex items-center justify-end gap-1">
                       <Link href={`/seller/products/${product.id}`}>
-                        <Button color="tertiary" size="sm" iconLeading={Edit02}>
-                          Edit
-                        </Button>
+                        <button className="p-1.5 rounded-lg hover:bg-secondary transition-colors">
+                          <Edit02 className="size-4 text-tertiary" />
+                        </button>
                       </Link>
                       <button
                         onClick={() => setActiveMenu(activeMenu === product.id ? null : product.id)}
@@ -423,21 +422,21 @@ export default function ProductsPage() {
                         <DotsVertical className="size-4 text-tertiary" />
                       </button>
                       {activeMenu === product.id && (
-                        <div className="absolute right-0 top-full z-10 mt-1 w-40 rounded-lg border border-secondary bg-primary py-1 shadow-lg">
-                          <button className="flex w-full items-center gap-2 px-3 py-2 text-sm text-secondary hover:bg-secondary transition-colors">
+                        <div className="absolute right-0 top-full z-10 mt-1 w-36 rounded-lg border border-secondary bg-primary py-1 shadow-lg">
+                          <button className="flex w-full items-center gap-2 px-3 py-1.5 text-sm text-secondary hover:bg-secondary transition-colors">
                             <Eye className="size-4" />
                             View
                           </button>
-                          <button className="flex w-full items-center gap-2 px-3 py-2 text-sm text-secondary hover:bg-secondary transition-colors">
+                          <button className="flex w-full items-center gap-2 px-3 py-1.5 text-sm text-secondary hover:bg-secondary transition-colors">
                             <Copy01 className="size-4" />
                             Duplicate
                           </button>
-                          <button className="flex w-full items-center gap-2 px-3 py-2 text-sm text-secondary hover:bg-secondary transition-colors">
+                          <button className="flex w-full items-center gap-2 px-3 py-1.5 text-sm text-secondary hover:bg-secondary transition-colors">
                             <Archive className="size-4" />
                             Archive
                           </button>
                           <hr className="my-1 border-secondary" />
-                          <button className="flex w-full items-center gap-2 px-3 py-2 text-sm text-error-600 hover:bg-secondary transition-colors">
+                          <button className="flex w-full items-center gap-2 px-3 py-1.5 text-sm text-error-600 hover:bg-secondary transition-colors">
                             <Trash01 className="size-4" />
                             Delete
                           </button>

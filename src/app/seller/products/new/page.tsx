@@ -212,23 +212,23 @@ export default function NewProductPage() {
   };
 
   return (
-    <div className="pb-20">
+    <div className="pb-20 min-w-0">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
         <Link
           href="/seller/products"
-          className="text-tertiary hover:text-primary transition-colors"
+          className="text-tertiary hover:text-primary transition-colors flex-shrink-0"
         >
           <ArrowLeft className="size-5" />
         </Link>
-        <h1 className="text-lg font-semibold text-primary">Add product</h1>
+        <h1 className="text-base sm:text-lg font-semibold text-primary">Add product</h1>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr,320px]">
+      <div className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr,280px] xl:grid-cols-[1fr,320px]">
         {/* Main Content */}
-        <div className="space-y-4">
+        <div className="space-y-4 min-w-0">
           {/* Title & Description */}
-          <div className="rounded-xl border border-secondary bg-primary p-4 space-y-4">
+          <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4 space-y-4">
             {/* Title */}
             <div>
               <label className="text-sm font-medium text-primary mb-1.5 block">Title</label>
@@ -245,51 +245,45 @@ export default function NewProductPage() {
             <div>
               <label className="text-sm font-medium text-primary mb-1.5 block">Description</label>
               {/* Toolbar */}
-              <div className="flex items-center gap-1 p-2 border border-secondary rounded-t-lg bg-secondary/30 flex-wrap">
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors flex items-center gap-1 text-sm text-tertiary">
+              <div className="flex items-center gap-0.5 sm:gap-1 p-1.5 sm:p-2 border border-secondary rounded-t-lg bg-secondary/30 overflow-x-auto">
+                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex items-center gap-0.5 text-sm text-tertiary flex-shrink-0">
                   <Stars01 className="size-4" />
                   <ChevronDown className="size-3" />
                 </button>
-                <div className="w-px h-5 bg-secondary mx-1" />
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors flex items-center gap-1 text-sm text-tertiary">
-                  Paragraph
+                <div className="w-px h-5 bg-secondary mx-0.5 sm:mx-1 flex-shrink-0" />
+                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex items-center gap-0.5 text-xs sm:text-sm text-tertiary flex-shrink-0">
+                  <span className="hidden sm:inline">Paragraph</span>
+                  <span className="sm:hidden">P</span>
                   <ChevronDown className="size-3" />
                 </button>
-                <div className="w-px h-5 bg-secondary mx-1" />
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors">
+                <div className="w-px h-5 bg-secondary mx-0.5 sm:mx-1 flex-shrink-0" />
+                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0">
                   <Bold01 className="size-4 text-tertiary" />
                 </button>
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors">
+                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0">
                   <Italic01 className="size-4 text-tertiary" />
                 </button>
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors">
+                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0">
                   <Underline01 className="size-4 text-tertiary" />
                 </button>
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors flex items-center">
+                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex items-center flex-shrink-0 hidden sm:flex">
                   <Type01 className="size-4 text-tertiary" />
                   <ChevronDown className="size-3 text-tertiary" />
                 </button>
-                <div className="w-px h-5 bg-secondary mx-1" />
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors flex items-center">
+                <div className="w-px h-5 bg-secondary mx-0.5 sm:mx-1 flex-shrink-0 hidden sm:block" />
+                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex items-center flex-shrink-0">
                   <AlignLeft className="size-4 text-tertiary" />
                   <ChevronDown className="size-3 text-tertiary" />
                 </button>
-                <div className="w-px h-5 bg-secondary mx-1" />
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors">
+                <div className="w-px h-5 bg-secondary mx-0.5 sm:mx-1 flex-shrink-0" />
+                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0">
                   <Link01 className="size-4 text-tertiary" />
                 </button>
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors">
+                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0 hidden sm:flex">
                   <Image03 className="size-4 text-tertiary" />
                 </button>
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors">
-                  <FaceSmile className="size-4 text-tertiary" />
-                </button>
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors">
+                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0">
                   <DotsHorizontal className="size-4 text-tertiary" />
-                </button>
-                <div className="w-px h-5 bg-secondary mx-1" />
-                <button className="p-1.5 rounded hover:bg-secondary transition-colors">
-                  <Code01 className="size-4 text-tertiary" />
                 </button>
               </div>
               {/* Text Area */}
@@ -303,11 +297,11 @@ export default function NewProductPage() {
           </div>
 
           {/* Media */}
-          <div className="rounded-xl border border-secondary bg-primary p-4">
+          <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
             <label className="text-sm font-medium text-primary mb-3 block">Media</label>
-            <div className="border-2 border-dashed border-secondary rounded-lg p-8 text-center">
-              <div className="flex items-center justify-center gap-3">
-                <label className="cursor-pointer">
+            <div className="border-2 border-dashed border-secondary rounded-lg p-4 sm:p-8 text-center">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
+                <label className="cursor-pointer w-full sm:w-auto">
                   <input
                     type="file"
                     accept="image/*,video/*"
@@ -315,11 +309,11 @@ export default function NewProductPage() {
                     onChange={handleFileUpload}
                     className="hidden"
                   />
-                  <span className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary bg-primary border border-secondary rounded-lg hover:bg-secondary transition-colors">
+                  <span className="inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 text-sm font-medium text-primary bg-primary border border-secondary rounded-lg hover:bg-secondary transition-colors w-full sm:w-auto">
                     Upload new
                   </span>
                 </label>
-                <button className="px-4 py-2 text-sm font-medium text-primary bg-primary border border-secondary rounded-lg hover:bg-secondary transition-colors">
+                <button className="px-3 sm:px-4 py-2 text-sm font-medium text-primary bg-primary border border-secondary rounded-lg hover:bg-secondary transition-colors w-full sm:w-auto">
                   Select existing
                 </button>
               </div>
@@ -328,7 +322,7 @@ export default function NewProductPage() {
 
             {/* Uploaded Images */}
             {images.length > 0 && (
-              <div className="grid grid-cols-4 gap-3 mt-4">
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-3 mt-4">
                 {images.map((image) => (
                   <div key={image.id} className="relative group aspect-square rounded-lg overflow-hidden border border-secondary">
                     <Image src={image.url} alt={image.name} fill className="object-cover" />
@@ -345,7 +339,7 @@ export default function NewProductPage() {
           </div>
 
           {/* Category */}
-          <div className="rounded-xl border border-secondary bg-primary p-4">
+          <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
             <label className="text-sm font-medium text-primary mb-1.5 block">Category</label>
             <Select
               size="sm"
@@ -362,9 +356,9 @@ export default function NewProductPage() {
           </div>
 
           {/* Price */}
-          <div className="rounded-xl border border-secondary bg-primary p-4">
+          <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
             <label className="text-sm font-medium text-primary mb-3 block">Price</label>
-            <div className="relative max-w-[200px]">
+            <div className="relative max-w-[160px] sm:max-w-[200px]">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-tertiary">$</span>
               <input
                 type="number"
@@ -376,10 +370,10 @@ export default function NewProductPage() {
             </div>
 
             {/* Price Options */}
-            <div className="flex items-center gap-2 mt-4 flex-wrap">
+            <div className="flex items-center gap-1.5 sm:gap-2 mt-4 flex-wrap">
               <button
                 onClick={() => setShowCompareAt(!showCompareAt)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
+                className={`px-2 sm:px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
                   showCompareAt
                     ? "bg-secondary border-secondary text-primary"
                     : "bg-primary border-secondary text-tertiary hover:bg-secondary"
@@ -389,7 +383,7 @@ export default function NewProductPage() {
               </button>
               <button
                 onClick={() => setShowUnitPrice(!showUnitPrice)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
+                className={`px-2 sm:px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
                   showUnitPrice
                     ? "bg-secondary border-secondary text-primary"
                     : "bg-primary border-secondary text-tertiary hover:bg-secondary"
@@ -398,12 +392,12 @@ export default function NewProductPage() {
                 Unit price
               </button>
               <div className="flex items-center">
-                <span className="px-3 py-1.5 text-xs font-medium text-tertiary border border-r-0 border-secondary rounded-l-lg bg-primary">
-                  Charge tax
+                <span className="px-2 sm:px-3 py-1.5 text-xs font-medium text-tertiary border border-r-0 border-secondary rounded-l-lg bg-primary">
+                  Tax
                 </span>
                 <button
                   onClick={() => setChargeTax(!chargeTax)}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-r-lg border transition-colors ${
+                  className={`px-2 sm:px-3 py-1.5 text-xs font-medium rounded-r-lg border transition-colors ${
                     chargeTax
                       ? "bg-secondary border-secondary text-primary"
                       : "bg-primary border-secondary text-tertiary"
@@ -414,13 +408,13 @@ export default function NewProductPage() {
               </div>
               <button
                 onClick={() => setShowCostPerItem(!showCostPerItem)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
+                className={`px-2 sm:px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
                   showCostPerItem
                     ? "bg-secondary border-secondary text-primary"
                     : "bg-primary border-secondary text-tertiary hover:bg-secondary"
                 }`}
               >
-                Cost per item
+                Cost
               </button>
             </div>
 
@@ -477,11 +471,12 @@ export default function NewProductPage() {
           </div>
 
           {/* Inventory */}
-          <div className="rounded-xl border border-secondary bg-primary p-4">
-            <div className="flex items-center justify-between mb-4">
+          <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
+            <div className="flex items-center justify-between mb-4 gap-2">
               <label className="text-sm font-medium text-primary">Inventory</label>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-tertiary">Inventory tracked</span>
+                <span className="text-xs text-tertiary hidden sm:inline">Inventory tracked</span>
+                <span className="text-xs text-tertiary sm:hidden">Tracked</span>
                 <Toggle
                   size="sm"
                   isSelected={inventoryTracked}
@@ -493,17 +488,17 @@ export default function NewProductPage() {
             {inventoryTracked && (
               <div className="border border-secondary rounded-lg overflow-hidden">
                 <div className="grid grid-cols-2 bg-secondary/50 px-3 py-2 text-xs font-medium text-tertiary">
-                  <span>Quantity</span>
-                  <span className="text-right">Quantity</span>
+                  <span>Location</span>
+                  <span className="text-right">Qty</span>
                 </div>
                 <div className="grid grid-cols-2 items-center px-3 py-3 border-t border-secondary">
-                  <span className="text-sm text-primary">Shop location</span>
+                  <span className="text-sm text-primary truncate">Shop location</span>
                   <div className="flex justify-end">
                     <input
                       type="number"
                       value={quantity}
                       onChange={(e) => setQuantity(e.target.value)}
-                      className="w-20 px-3 py-1.5 text-sm text-center rounded-lg border border-secondary bg-primary text-primary focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                      className="w-16 sm:w-20 px-2 sm:px-3 py-1.5 text-sm text-center rounded-lg border border-secondary bg-primary text-primary focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -557,11 +552,12 @@ export default function NewProductPage() {
           </div>
 
           {/* Shipping */}
-          <div className="rounded-xl border border-secondary bg-primary p-4">
-            <div className="flex items-center justify-between mb-4">
+          <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
+            <div className="flex items-center justify-between mb-4 gap-2">
               <label className="text-sm font-medium text-primary">Shipping</label>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-tertiary">Physical product</span>
+                <span className="text-xs text-tertiary hidden sm:inline">Physical product</span>
+                <span className="text-xs text-tertiary sm:hidden">Physical</span>
                 <Toggle
                   size="sm"
                   isSelected={isPhysicalProduct}
@@ -654,7 +650,7 @@ export default function NewProductPage() {
           )}
 
           {/* Variants */}
-          <div className="rounded-xl border border-secondary bg-primary p-4">
+          <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
             <label className="text-sm font-medium text-primary mb-3 block">Variants</label>
 
             {variants.length === 0 ? (
@@ -759,9 +755,9 @@ export default function NewProductPage() {
         </div>
 
         {/* Sidebar */}
-        <div className="space-y-4">
+        <div className="space-y-4 min-w-0">
           {/* Status */}
-          <div className="rounded-xl border border-secondary bg-primary p-4">
+          <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
             <label className="text-sm font-medium text-primary mb-2 block">Status</label>
             <Select
               size="sm"
@@ -777,7 +773,7 @@ export default function NewProductPage() {
           </div>
 
           {/* Publishing */}
-          <div className="rounded-xl border border-secondary bg-primary p-4">
+          <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
             <div className="flex items-center justify-between mb-3">
               <label className="text-sm font-medium text-primary">Publishing</label>
               <button className="text-tertiary hover:text-primary transition-colors">
@@ -809,7 +805,7 @@ export default function NewProductPage() {
           </div>
 
           {/* Product organization */}
-          <div className="rounded-xl border border-secondary bg-primary p-4">
+          <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
             <label className="text-sm font-medium text-primary mb-3 block">Product organization</label>
             <div className="space-y-4">
               <div>
@@ -857,7 +853,7 @@ export default function NewProductPage() {
           </div>
 
           {/* Theme template */}
-          <div className="rounded-xl border border-secondary bg-primary p-4">
+          <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
             <label className="text-sm font-medium text-primary mb-2 block">Theme template</label>
             <Select
               size="sm"
@@ -872,10 +868,15 @@ export default function NewProductPage() {
       </div>
 
       {/* Save Button - Fixed Bottom */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-primary border-t border-secondary lg:left-72">
-        <div className="flex justify-end max-w-screen-xl mx-auto">
+      <div className="fixed bottom-0 left-0 right-0 p-3 sm:p-4 bg-primary border-t border-secondary z-10">
+        <div className="flex items-center justify-between sm:justify-end gap-2">
+          <Link href="/seller/products" className="sm:hidden">
+            <Button color="secondary" size="sm">
+              Cancel
+            </Button>
+          </Link>
           <Button color="primary" size="sm">
-            Save
+            Save product
           </Button>
         </div>
       </div>
