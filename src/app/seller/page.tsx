@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -11,13 +10,10 @@ import {
   TrendUp01,
   TrendDown01,
   ChevronRight,
-  Clock,
   Star01,
-  Eye,
   MessageSquare01,
   BarChart01,
   Plus,
-  ArrowRight,
 } from "@untitledui/icons";
 import { Button } from "@/components/base/buttons/button";
 import { Badge } from "@/components/base/badges/badges";
@@ -57,14 +53,6 @@ const primaryStats = [
     icon: Users01,
     color: "brand",
   },
-];
-
-// Secondary Stats
-const secondaryStats = [
-  { label: "Conversion Rate", value: "3.2%", icon: TrendUp01 },
-  { label: "Avg. Order Value", value: "$289", icon: CurrencyDollar },
-  { label: "Pending Orders", value: "5", icon: Clock },
-  { label: "Unread Messages", value: "3", icon: MessageSquare01 },
 ];
 
 // Recent Orders
@@ -185,19 +173,19 @@ const statusColors: Record<string, "success" | "brand" | "warning" | "error"> = 
 
 export default function SellerDashboard() {
   return (
-    <div className="space-y-6 p-4">
+    <div className="space-y-6 overflow-x-hidden max-w-full">
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-xl font-semibold text-primary">Seller Dashboard</h1>
-          <p className="text-sm text-tertiary">Welcome back! Here's your store overview.</p>
+        <div className="min-w-0">
+          <h1 className="text-lg sm:text-xl font-semibold text-primary">Seller Dashboard</h1>
+          <p className="text-xs sm:text-sm text-tertiary">Welcome back! Here's your store overview.</p>
         </div>
-        <div className="flex items-center gap-3">
-          <Button color="secondary" size="sm" iconLeading={BarChart01}>
-            View Analytics
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <Button color="secondary" size="sm" iconLeading={BarChart01} className="text-xs sm:text-sm">
+            Analytics
           </Button>
           <Link href="/seller/products/new">
-            <Button color="primary" size="sm" iconLeading={Plus}>
+            <Button color="primary" size="sm" iconLeading={Plus} className="text-xs sm:text-sm">
               Add Product
             </Button>
           </Link>
@@ -205,25 +193,25 @@ export default function SellerDashboard() {
       </div>
 
       {/* Primary Stats */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4">
         {primaryStats.map((stat) => (
           <div
             key={stat.label}
-            className="rounded-xl border border-secondary bg-primary p-4"
+            className="rounded-xl border border-secondary bg-primary p-3 sm:p-4"
           >
             <div className="flex items-center justify-between">
-              <div className={`flex size-10 items-center justify-center rounded-lg ${
+              <div className={`flex size-8 sm:size-10 items-center justify-center rounded-lg ${
                 stat.color === "success" ? "bg-success-50" :
                 stat.color === "brand" ? "bg-brand-50" :
                 "bg-warning-50"
               }`}>
-                <stat.icon className={`size-5 ${
+                <stat.icon className={`size-4 sm:size-5 ${
                   stat.color === "success" ? "text-success-600" :
                   stat.color === "brand" ? "text-brand-600" :
                   "text-warning-600"
                 }`} />
               </div>
-              <div className={`flex items-center gap-1 text-xs font-medium ${
+              <div className={`flex items-center gap-0.5 sm:gap-1 text-xs font-medium ${
                 stat.trend === "up" ? "text-success-600" : "text-error-600"
               }`}>
                 {stat.trend === "up" ? (
@@ -231,28 +219,12 @@ export default function SellerDashboard() {
                 ) : (
                   <TrendDown01 className="size-3" />
                 )}
-                {stat.change}
+                <span className="text-[10px] sm:text-xs">{stat.change}</span>
               </div>
             </div>
-            <div className="mt-3">
-              <div className="text-2xl font-semibold text-primary">{stat.value}</div>
-              <div className="text-xs text-tertiary">{stat.label}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Secondary Stats */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {secondaryStats.map((stat) => (
-          <div
-            key={stat.label}
-            className="flex items-center gap-3 rounded-xl border border-secondary bg-primary p-4"
-          >
-            <stat.icon className="size-5 text-tertiary" />
-            <div>
-              <div className="text-lg font-semibold text-primary">{stat.value}</div>
-              <div className="text-xs text-tertiary">{stat.label}</div>
+            <div className="mt-2 sm:mt-3">
+              <div className="text-lg sm:text-2xl font-semibold text-primary">{stat.value}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">{stat.label}</div>
             </div>
           </div>
         ))}
@@ -272,10 +244,10 @@ export default function SellerDashboard() {
             </div>
             <div className="divide-y divide-secondary">
               {recentOrders.map((order) => (
-                <div key={order.id} className="flex items-center gap-4 px-4 py-3 hover:bg-secondary/50 transition-colors">
-                  <Avatar src={order.customer.avatar} alt={order.customer.name} size="sm" />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
+                <div key={order.id} className="flex items-center gap-3 px-4 py-3 hover:bg-secondary/50 transition-colors">
+                  <Avatar src={order.customer.avatar} alt={order.customer.name} size="sm" className="flex-shrink-0" />
+                  <div className="flex-1 min-w-0 overflow-hidden">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-sm font-medium text-primary">{order.id}</span>
                       <Badge type="pill-color" size="sm" color={statusColors[order.status]}>
                         {order.status}
@@ -285,11 +257,11 @@ export default function SellerDashboard() {
                       {order.customer.name} - {order.products}
                     </p>
                   </div>
-                  <div className="text-right">
+                  <div className="text-right flex-shrink-0">
                     <div className="text-sm font-semibold text-primary">${order.total}</div>
                     <div className="text-xs text-tertiary">{order.date}</div>
                   </div>
-                  <ChevronRight className="size-4 text-tertiary" />
+                  <ChevronRight className="size-4 text-tertiary flex-shrink-0 hidden sm:block" />
                 </div>
               ))}
             </div>
@@ -305,15 +277,15 @@ export default function SellerDashboard() {
             </div>
             <div className="divide-y divide-secondary">
               {topProducts.map((product) => (
-                <div key={product.id} className="flex items-center gap-4 px-4 py-3 hover:bg-secondary/50 transition-colors">
-                  <div className="relative size-12 overflow-hidden rounded-lg bg-secondary">
+                <div key={product.id} className="flex items-center gap-3 px-4 py-3 hover:bg-secondary/50 transition-colors">
+                  <div className="relative size-12 overflow-hidden rounded-lg bg-secondary flex-shrink-0">
                     <Image src={product.image} alt={product.name} fill className="object-cover" />
                   </div>
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 overflow-hidden">
                     <h3 className="text-sm font-medium text-primary truncate">{product.name}</h3>
                     <p className="text-xs text-tertiary">{product.sales} sales</p>
                   </div>
-                  <div className="text-right">
+                  <div className="text-right flex-shrink-0">
                     <div className="text-sm font-semibold text-primary">${product.revenue.toLocaleString()}</div>
                     <div className={`text-xs ${product.stock <= 10 ? "text-error-600" : "text-tertiary"}`}>
                       {product.stock} in stock
@@ -408,53 +380,53 @@ export default function SellerDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4">
         <Link
           href="/seller/products/new"
-          className="flex items-center gap-3 rounded-xl border border-secondary bg-primary p-4 transition-colors hover:border-brand-300"
+          className="flex items-center gap-2 sm:gap-3 rounded-xl border border-secondary bg-primary p-3 sm:p-4 transition-colors hover:border-brand-300"
         >
-          <div className="flex size-10 items-center justify-center rounded-lg bg-brand-50">
-            <Plus className="size-5 text-brand-600" />
+          <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg bg-brand-50 flex-shrink-0">
+            <Plus className="size-4 sm:size-5 text-brand-600" />
           </div>
-          <div>
-            <h3 className="text-sm font-medium text-primary">Add Product</h3>
-            <p className="text-xs text-tertiary">List new item</p>
+          <div className="min-w-0">
+            <h3 className="text-xs sm:text-sm font-medium text-primary truncate">Add Product</h3>
+            <p className="text-xs text-tertiary hidden sm:block">List new item</p>
           </div>
         </Link>
         <Link
           href="/seller/orders"
-          className="flex items-center gap-3 rounded-xl border border-secondary bg-primary p-4 transition-colors hover:border-brand-300"
+          className="flex items-center gap-2 sm:gap-3 rounded-xl border border-secondary bg-primary p-3 sm:p-4 transition-colors hover:border-brand-300"
         >
-          <div className="flex size-10 items-center justify-center rounded-lg bg-warning-50">
-            <ShoppingCart01 className="size-5 text-warning-600" />
+          <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg bg-warning-50 flex-shrink-0">
+            <ShoppingCart01 className="size-4 sm:size-5 text-warning-600" />
           </div>
-          <div>
-            <h3 className="text-sm font-medium text-primary">Process Orders</h3>
-            <p className="text-xs text-tertiary">5 pending</p>
+          <div className="min-w-0">
+            <h3 className="text-xs sm:text-sm font-medium text-primary truncate">Orders</h3>
+            <p className="text-xs text-tertiary hidden sm:block">5 pending</p>
           </div>
         </Link>
         <Link
           href="/seller/messages"
-          className="flex items-center gap-3 rounded-xl border border-secondary bg-primary p-4 transition-colors hover:border-brand-300"
+          className="flex items-center gap-2 sm:gap-3 rounded-xl border border-secondary bg-primary p-3 sm:p-4 transition-colors hover:border-brand-300"
         >
-          <div className="flex size-10 items-center justify-center rounded-lg bg-error-50">
-            <MessageSquare01 className="size-5 text-error-600" />
+          <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg bg-error-50 flex-shrink-0">
+            <MessageSquare01 className="size-4 sm:size-5 text-error-600" />
           </div>
-          <div>
-            <h3 className="text-sm font-medium text-primary">Messages</h3>
-            <p className="text-xs text-tertiary">3 unread</p>
+          <div className="min-w-0">
+            <h3 className="text-xs sm:text-sm font-medium text-primary truncate">Messages</h3>
+            <p className="text-xs text-tertiary hidden sm:block">3 unread</p>
           </div>
         </Link>
         <Link
           href="/seller/analytics"
-          className="flex items-center gap-3 rounded-xl border border-secondary bg-primary p-4 transition-colors hover:border-brand-300"
+          className="flex items-center gap-2 sm:gap-3 rounded-xl border border-secondary bg-primary p-3 sm:p-4 transition-colors hover:border-brand-300"
         >
-          <div className="flex size-10 items-center justify-center rounded-lg bg-success-50">
-            <BarChart01 className="size-5 text-success-600" />
+          <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg bg-success-50 flex-shrink-0">
+            <BarChart01 className="size-4 sm:size-5 text-success-600" />
           </div>
-          <div>
-            <h3 className="text-sm font-medium text-primary">Analytics</h3>
-            <p className="text-xs text-tertiary">View reports</p>
+          <div className="min-w-0">
+            <h3 className="text-xs sm:text-sm font-medium text-primary truncate">Analytics</h3>
+            <p className="text-xs text-tertiary hidden sm:block">View reports</p>
           </div>
         </Link>
       </div>
