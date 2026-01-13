@@ -267,97 +267,98 @@ export default function CustomersPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 overflow-x-hidden max-w-full">
       {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-primary">Customers</h1>
-          <p className="text-sm text-tertiary">Manage and view your customer base</p>
+          <h1 className="text-lg sm:text-xl font-semibold text-primary">Customers</h1>
+          <p className="text-xs sm:text-sm text-tertiary">Manage and view your customer base</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <Button color="secondary" size="sm" iconLeading={Download01}>
             Export
           </Button>
           <Button color="primary" size="sm" iconLeading={UserPlus01}>
-            Add Customer
+            <span className="hidden sm:inline">Add Customer</span>
+            <span className="sm:hidden">Add</span>
           </Button>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-brand-50">
-              <Users01 className="size-5 text-brand-600" />
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-brand-50 flex-shrink-0">
+              <Users01 className="size-4 sm:size-5 text-brand-600" />
             </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.total}</div>
-              <div className="text-xs text-tertiary">Total Customers</div>
-            </div>
-          </div>
-        </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-success-50">
-              <Users01 className="size-5 text-success-600" />
-            </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.active}</div>
-              <div className="text-xs text-tertiary">Active</div>
+            <div className="min-w-0">
+              <div className="text-lg sm:text-xl font-semibold text-primary">{stats.total}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Total Customers</div>
             </div>
           </div>
         </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-warning-50">
-              <UserPlus01 className="size-5 text-warning-600" />
+        <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-success-50 flex-shrink-0">
+              <Users01 className="size-4 sm:size-5 text-success-600" />
             </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.newThisMonth}</div>
-              <div className="text-xs text-tertiary">New This Month</div>
-            </div>
-          </div>
-        </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-purple-50">
-              <Star01 className="size-5 text-purple-600" />
-            </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.vip}</div>
-              <div className="text-xs text-tertiary">VIP Customers</div>
+            <div className="min-w-0">
+              <div className="text-lg sm:text-xl font-semibold text-primary">{stats.active}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Active</div>
             </div>
           </div>
         </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-success-50">
-              <CurrencyDollar className="size-5 text-success-600" />
+        <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-warning-50 flex-shrink-0">
+              <UserPlus01 className="size-4 sm:size-5 text-warning-600" />
             </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">
+            <div className="min-w-0">
+              <div className="text-lg sm:text-xl font-semibold text-primary">{stats.newThisMonth}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">New This Month</div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-purple-50 flex-shrink-0">
+              <Star01 className="size-4 sm:size-5 text-purple-600" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-lg sm:text-xl font-semibold text-primary">{stats.vip}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">VIP Customers</div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4 col-span-2 sm:col-span-1">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-success-50 flex-shrink-0">
+              <CurrencyDollar className="size-4 sm:size-5 text-success-600" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-lg sm:text-xl font-semibold text-primary truncate">
                 ${stats.totalRevenue.toLocaleString()}
               </div>
-              <div className="text-xs text-tertiary">Total Revenue</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Total Revenue</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-1 flex-wrap items-center gap-3">
-          <div className="w-full max-w-sm">
-            <Input
-              icon={SearchLg}
-              size="sm"
-              value={searchQuery}
-              onChange={(value) => setSearchQuery(value)}
-              placeholder="Search customers..."
-            />
-          </div>
-          <div className="w-36">
+      <div className="flex flex-col gap-3 sm:gap-4">
+        <div className="w-full">
+          <Input
+            icon={SearchLg}
+            size="sm"
+            value={searchQuery}
+            onChange={(value) => setSearchQuery(value)}
+            placeholder="Search customers..."
+          />
+        </div>
+        <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-3">
+          <div className="col-span-1">
             <Select
               size="sm"
               placeholder="Status"
@@ -368,7 +369,7 @@ export default function CustomersPage() {
               {(item) => <Select.Item id={item.id} label={item.label} />}
             </Select>
           </div>
-          <div className="w-36">
+          <div className="col-span-1">
             <Select
               size="sm"
               placeholder="Tags"
@@ -379,9 +380,7 @@ export default function CustomersPage() {
               {(item) => <Select.Item id={item.id} label={item.label} />}
             </Select>
           </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="w-48">
+          <div className="col-span-1">
             <Select
               size="sm"
               placeholder="Sort by"
@@ -397,16 +396,18 @@ export default function CustomersPage() {
 
       {/* Bulk Actions */}
       {selectedCustomers.length > 0 && (
-        <div className="flex items-center gap-4 rounded-lg bg-brand-50 px-4 py-3">
-          <span className="text-sm font-medium text-brand-700">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 rounded-lg bg-brand-50 px-3 sm:px-4 py-3">
+          <span className="text-xs sm:text-sm font-medium text-brand-700">
             {selectedCustomers.length} customer{selectedCustomers.length > 1 ? "s" : ""} selected
           </span>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <Button color="secondary" size="sm" iconLeading={Mail01}>
-              Send Email
+              <span className="hidden sm:inline">Send Email</span>
+              <span className="sm:hidden">Email</span>
             </Button>
             <Button color="secondary" size="sm" iconLeading={Tag01}>
-              Add Tag
+              <span className="hidden sm:inline">Add Tag</span>
+              <span className="sm:hidden">Tag</span>
             </Button>
             <Button color="secondary" size="sm" iconLeading={Download01}>
               Export
@@ -415,13 +416,13 @@ export default function CustomersPage() {
         </div>
       )}
 
-      {/* Customers Table */}
-      <div className="rounded-xl border border-secondary bg-primary overflow-hidden">
+      {/* Customers Table - Desktop */}
+      <div className="hidden md:block rounded-xl border border-secondary bg-primary overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full min-w-[800px]">
             <thead>
               <tr className="border-b border-secondary bg-secondary/50">
-                <th className="px-4 py-3 text-left">
+                <th className="px-4 py-3 text-left w-12">
                   <Checkbox
                     isSelected={
                       selectedCustomers.length === filteredCustomers.length &&
@@ -446,13 +447,13 @@ export default function CustomersPage() {
                 <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
                   Total Spent
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary hidden lg:table-cell">
                   Last Order
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary hidden xl:table-cell">
                   Tags
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-tertiary w-24">
                   Actions
                 </th>
               </tr>
@@ -473,9 +474,9 @@ export default function CustomersPage() {
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <Avatar src={customer.avatar} alt={customer.name} size="sm" />
-                      <div>
-                        <div className="text-sm font-medium text-primary">{customer.name}</div>
-                        <div className="text-xs text-tertiary">{customer.email}</div>
+                      <div className="min-w-0">
+                        <div className="text-sm font-medium text-primary truncate">{customer.name}</div>
+                        <div className="text-xs text-tertiary truncate">{customer.email}</div>
                       </div>
                     </div>
                   </td>
@@ -488,18 +489,18 @@ export default function CustomersPage() {
                       {statusConfig[customer.status].label}
                     </Badge>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <span className="text-sm text-primary">{customer.totalOrders}</span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <span className="text-sm font-medium text-primary">
                       ${customer.totalSpent.toLocaleString()}
                     </span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap hidden lg:table-cell">
                     <span className="text-sm text-secondary">{customer.lastOrderDate}</span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 hidden xl:table-cell">
                     <div className="flex flex-wrap gap-1">
                       {customer.tags.length > 0 ? (
                         customer.tags.map((tag) => (
@@ -542,10 +543,81 @@ export default function CustomersPage() {
             </tbody>
           </table>
         </div>
+      </div>
 
-        {/* Empty State */}
-        {filteredCustomers.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-16 text-center">
+      {/* Customers List - Mobile */}
+      <div className="md:hidden space-y-3">
+        {filteredCustomers.map((customer) => (
+          <div
+            key={customer.id}
+            className="rounded-xl border border-secondary bg-primary p-4 cursor-pointer hover:bg-secondary/30 transition-colors"
+            onClick={() => setSelectedCustomer(customer)}
+          >
+            <div className="flex items-start gap-3">
+              <div onClick={(e) => e.stopPropagation()}>
+                <Checkbox
+                  isSelected={selectedCustomers.includes(customer.id)}
+                  onChange={() => toggleSelectCustomer(customer.id)}
+                />
+              </div>
+              <Avatar src={customer.avatar} alt={customer.name} size="sm" />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <div className="text-sm font-medium text-primary truncate">{customer.name}</div>
+                    <div className="text-xs text-tertiary truncate">{customer.email}</div>
+                  </div>
+                  <Badge
+                    type="pill-color"
+                    size="sm"
+                    color={statusConfig[customer.status].color}
+                  >
+                    {statusConfig[customer.status].label}
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-4 mt-3 text-xs">
+                  <div>
+                    <span className="text-tertiary">Orders: </span>
+                    <span className="font-medium text-primary">{customer.totalOrders}</span>
+                  </div>
+                  <div>
+                    <span className="text-tertiary">Spent: </span>
+                    <span className="font-medium text-primary">${customer.totalSpent.toLocaleString()}</span>
+                  </div>
+                </div>
+                {customer.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {customer.tags.map((tag) => (
+                      <Badge
+                        key={tag}
+                        type="pill-color"
+                        size="sm"
+                        color={
+                          tag === "VIP"
+                            ? "brand"
+                            : tag === "Top Spender"
+                            ? "success"
+                            : tag === "New"
+                            ? "warning"
+                            : "gray"
+                        }
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <ChevronRight className="size-5 text-tertiary flex-shrink-0" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Empty State */}
+      {filteredCustomers.length === 0 && (
+        <div className="rounded-xl border border-secondary bg-primary p-8">
+          <div className="flex flex-col items-center justify-center py-8 text-center">
             <Users01 className="size-12 text-tertiary mb-4" />
             <h3 className="text-lg font-medium text-primary">No customers found</h3>
             <p className="mt-1 text-sm text-tertiary">
@@ -554,13 +626,13 @@ export default function CustomersPage() {
                 : "Customers will appear here once they make a purchase"}
             </p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Pagination */}
       {filteredCustomers.length > 0 && (
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-tertiary">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs sm:text-sm text-tertiary">
             Showing {filteredCustomers.length} of {customers.length} customers
           </p>
           <div className="flex items-center gap-2">
@@ -584,10 +656,10 @@ export default function CustomersPage() {
           />
 
           {/* Panel */}
-          <div className="relative w-full max-w-lg bg-primary shadow-xl overflow-y-auto">
+          <div className="relative w-full sm:max-w-lg bg-primary shadow-xl overflow-y-auto">
             {/* Header */}
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-secondary bg-primary px-6 py-4">
-              <h2 className="text-lg font-semibold text-primary">Customer Details</h2>
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-secondary bg-primary px-4 sm:px-6 py-3 sm:py-4">
+              <h2 className="text-base sm:text-lg font-semibold text-primary">Customer Details</h2>
               <button
                 onClick={() => setSelectedCustomer(null)}
                 className="rounded-lg p-2 hover:bg-secondary transition-colors"
@@ -597,7 +669,7 @@ export default function CustomersPage() {
             </div>
 
             {/* Content */}
-            <div className="p-6 space-y-6">
+            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               {/* Customer Info */}
               <div className="flex items-center gap-4">
                 <Avatar src={selectedCustomer.avatar} alt={selectedCustomer.name} size="xl" />

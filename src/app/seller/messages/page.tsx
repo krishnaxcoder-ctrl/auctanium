@@ -136,7 +136,7 @@ export default function MessagesPage() {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full overflow-x-hidden max-w-full">
       {/* Main Content */}
       <div className="flex flex-1 border border-secondary bg-primary overflow-hidden min-h-0">
         {/* Conversations List */}

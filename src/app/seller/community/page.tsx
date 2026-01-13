@@ -130,7 +130,7 @@ export default function CommunityPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="space-y-8 p-4">
+    <div className="space-y-8 p-4 overflow-x-hidden max-w-full">
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>

@@ -65,7 +65,7 @@ export default function ContactSupportPage() {
   };
 
   return (
-    <div className="space-y-8 p-4">
+    <div className="space-y-8 p-4 overflow-x-hidden max-w-full">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-semibold text-primary">Contact Support</h1>

@@ -121,7 +121,7 @@ export default function HelpCenterPage() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   return (
-    <div className="space-y-6 p-4">
+    <div className="space-y-6 p-4 overflow-x-hidden max-w-full">
       {/* Header */}
       <div className="text-center">
         <h1 className="text-2xl font-semibold text-primary">Help Center</h1>
