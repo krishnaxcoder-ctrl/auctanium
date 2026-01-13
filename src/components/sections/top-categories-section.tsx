@@ -67,6 +67,9 @@ const categories = [
     },
 ];
 
+// Export categories for use in other components
+export { categories };
+
 export const TopCategoriesSection = () => {
     return (
         <section className="bg-primary py-4 lg:py-6">

@@ -12,7 +12,7 @@ const trustBadges = [
 
 export const CTASection = () => {
     return (
-        <section className="relative overflow-hidden py-8 lg:py-6">
+        <section className="relative overflow-hidden py-4 lg:py-4">
             {/* Background Image */}
             <Image
                 src="/background.jpg"
