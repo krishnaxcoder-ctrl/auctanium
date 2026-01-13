@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -9,31 +9,20 @@ import {
   Trash01,
   ChevronDown,
   ChevronUp,
-  Image01,
   Globe02,
-  Package,
-  Truck01,
-  Eye,
   XClose,
   Bold01,
   Italic01,
   Underline01,
   Link01,
-  Image03,
   AlignLeft,
   AlignCenter,
   List,
-  Code01,
   Type01,
-  FaceSmile,
   DotsHorizontal,
   SearchLg,
   Edit02,
-  Upload01,
-  File06,
-  Stars01,
   ShoppingBag01,
-  Building07,
 } from "@untitledui/icons";
 import { Button } from "@/components/base/buttons/button";
 import { Input } from "@/components/base/input/input";
@@ -104,6 +93,7 @@ export default function NewProductPage() {
   // Basic Info
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const editorRef = useRef<HTMLDivElement>(null);
 
   // Media
   const [images, setImages] = useState<ProductImage[]>([]);
@@ -246,52 +236,92 @@ export default function NewProductPage() {
               <label className="text-sm font-medium text-primary mb-1.5 block">Description</label>
               {/* Toolbar */}
               <div className="flex items-center gap-0.5 sm:gap-1 p-1.5 sm:p-2 border border-secondary rounded-t-lg bg-secondary/30 overflow-x-auto">
-                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex items-center gap-0.5 text-sm text-tertiary flex-shrink-0">
-                  <Stars01 className="size-4" />
-                  <ChevronDown className="size-3" />
-                </button>
-                <div className="w-px h-5 bg-secondary mx-0.5 sm:mx-1 flex-shrink-0" />
-                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex items-center gap-0.5 text-xs sm:text-sm text-tertiary flex-shrink-0">
-                  <span className="hidden sm:inline">Paragraph</span>
-                  <span className="sm:hidden">P</span>
-                  <ChevronDown className="size-3" />
-                </button>
-                <div className="w-px h-5 bg-secondary mx-0.5 sm:mx-1 flex-shrink-0" />
-                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={() => document.execCommand('bold')}
+                  className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0"
+                  title="Bold"
+                >
                   <Bold01 className="size-4 text-tertiary" />
                 </button>
-                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={() => document.execCommand('italic')}
+                  className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0"
+                  title="Italic"
+                >
                   <Italic01 className="size-4 text-tertiary" />
                 </button>
-                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={() => document.execCommand('underline')}
+                  className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0"
+                  title="Underline"
+                >
                   <Underline01 className="size-4 text-tertiary" />
                 </button>
-                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex items-center flex-shrink-0 hidden sm:flex">
+                <button
+                  type="button"
+                  onClick={() => document.execCommand('strikeThrough')}
+                  className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0"
+                  title="Strikethrough"
+                >
                   <Type01 className="size-4 text-tertiary" />
-                  <ChevronDown className="size-3 text-tertiary" />
-                </button>
-                <div className="w-px h-5 bg-secondary mx-0.5 sm:mx-1 flex-shrink-0 hidden sm:block" />
-                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex items-center flex-shrink-0">
-                  <AlignLeft className="size-4 text-tertiary" />
-                  <ChevronDown className="size-3 text-tertiary" />
                 </button>
                 <div className="w-px h-5 bg-secondary mx-0.5 sm:mx-1 flex-shrink-0" />
-                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={() => document.execCommand('justifyLeft')}
+                  className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0"
+                  title="Align Left"
+                >
+                  <AlignLeft className="size-4 text-tertiary" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => document.execCommand('justifyCenter')}
+                  className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0"
+                  title="Align Center"
+                >
+                  <AlignCenter className="size-4 text-tertiary" />
+                </button>
+                <div className="w-px h-5 bg-secondary mx-0.5 sm:mx-1 flex-shrink-0" />
+                <button
+                  type="button"
+                  onClick={() => document.execCommand('insertUnorderedList')}
+                  className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0"
+                  title="Bullet List"
+                >
+                  <List className="size-4 text-tertiary" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const url = prompt('Enter URL:');
+                    if (url) document.execCommand('createLink', false, url);
+                  }}
+                  className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0"
+                  title="Insert Link"
+                >
                   <Link01 className="size-4 text-tertiary" />
                 </button>
-                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0 hidden sm:flex">
-                  <Image03 className="size-4 text-tertiary" />
-                </button>
-                <button className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0">
-                  <DotsHorizontal className="size-4 text-tertiary" />
+                <button
+                  type="button"
+                  onClick={() => document.execCommand('removeFormat')}
+                  className="p-1 sm:p-1.5 rounded hover:bg-secondary transition-colors flex-shrink-0"
+                  title="Clear Formatting"
+                >
+                  <XClose className="size-4 text-tertiary" />
                 </button>
               </div>
-              {/* Text Area */}
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={6}
-                className="w-full px-3 py-3 text-sm border border-t-0 border-secondary rounded-b-lg bg-primary text-primary placeholder:text-placeholder focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent resize-y"
+              {/* Rich Text Editor */}
+              <div
+                ref={editorRef}
+                contentEditable
+                onBlur={(e) => setDescription(e.currentTarget.innerHTML)}
+                className="w-full min-h-[150px] px-3 py-3 text-sm border border-t-0 border-secondary rounded-b-lg bg-primary text-primary focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent overflow-y-auto"
+                style={{ maxHeight: '300px' }}
+                suppressContentEditableWarning
               />
             </div>
           </div>
