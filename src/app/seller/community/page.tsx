@@ -130,41 +130,41 @@ export default function CommunityPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="space-y-8 p-4 overflow-x-hidden max-w-full">
+    <div className="space-y-6 sm:space-y-8 overflow-x-hidden max-w-full">
       {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold text-primary">Seller Community</h1>
-          <p className="mt-2 text-tertiary">Connect with fellow sellers, share tips, and grow together</p>
+      <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-semibold text-primary">Seller Community</h1>
+          <p className="mt-1 sm:mt-2 text-sm text-tertiary">Connect with fellow sellers, share tips, and grow together</p>
         </div>
-        <Button color="primary" size="sm" iconLeading={Plus}>
+        <Button color="primary" size="sm" iconLeading={Plus} className="flex-shrink-0 self-start sm:self-auto">
           New Discussion
         </Button>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <div className="rounded-xl border border-secondary bg-primary p-4 text-center">
-          <div className="text-2xl font-bold text-primary">12.5K</div>
-          <div className="text-sm text-tertiary">Members</div>
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4">
+        <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4 text-center">
+          <div className="text-xl sm:text-2xl font-bold text-primary">12.5K</div>
+          <div className="text-xs sm:text-sm text-tertiary">Members</div>
         </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4 text-center">
-          <div className="text-2xl font-bold text-primary">3.2K</div>
-          <div className="text-sm text-tertiary">Discussions</div>
+        <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4 text-center">
+          <div className="text-xl sm:text-2xl font-bold text-primary">3.2K</div>
+          <div className="text-xs sm:text-sm text-tertiary">Discussions</div>
         </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4 text-center">
-          <div className="text-2xl font-bold text-primary">45K</div>
-          <div className="text-sm text-tertiary">Replies</div>
+        <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4 text-center">
+          <div className="text-xl sm:text-2xl font-bold text-primary">45K</div>
+          <div className="text-xs sm:text-sm text-tertiary">Replies</div>
         </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4 text-center">
-          <div className="text-2xl font-bold text-primary">890</div>
-          <div className="text-sm text-tertiary">Online Now</div>
+        <div className="rounded-xl border border-secondary bg-primary p-3 sm:p-4 text-center">
+          <div className="text-xl sm:text-2xl font-bold text-primary">890</div>
+          <div className="text-xs sm:text-sm text-tertiary">Online Now</div>
         </div>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-3">
+      <div className="grid gap-6 lg:gap-8 lg:grid-cols-3">
         {/* Main Content */}
-        <div className="space-y-6 lg:col-span-2">
+        <div className="space-y-4 sm:space-y-6 lg:col-span-2 min-w-0">
           {/* Search */}
           <Input
             icon={SearchLg}
@@ -174,8 +174,8 @@ export default function CommunityPage() {
           />
 
           {/* Discussions */}
-          <div className="rounded-xl border border-secondary bg-primary">
-            <div className="border-b border-secondary px-4 py-3">
+          <div className="rounded-xl border border-secondary bg-primary overflow-hidden">
+            <div className="border-b border-secondary px-3 sm:px-4 py-3">
               <h2 className="font-semibold text-primary">Recent Discussions</h2>
             </div>
             <div className="divide-y divide-secondary">
@@ -183,41 +183,44 @@ export default function CommunityPage() {
                 <Link
                   key={discussion.id}
                   href="#"
-                  className="flex gap-4 p-4 hover:bg-secondary/50 transition-colors"
+                  className="flex gap-3 sm:gap-4 p-3 sm:p-4 hover:bg-secondary/50 transition-colors"
                 >
-                  <Avatar src={discussion.author.avatar} alt={discussion.author.name} size="sm" />
+                  <Avatar src={discussion.author.avatar} alt={discussion.author.name} size="sm" className="flex-shrink-0 hidden sm:block" />
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-start sm:items-center gap-2 flex-wrap">
                       {discussion.pinned && (
                         <Badge type="pill-color" size="sm" color="brand">Pinned</Badge>
                       )}
-                      <h3 className="font-medium text-primary truncate">{discussion.title}</h3>
+                      <h3 className="font-medium text-primary text-sm sm:text-base line-clamp-2 sm:truncate">{discussion.title}</h3>
                     </div>
-                    <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-tertiary">
-                      <span>{discussion.author.name}</span>
-                      <span className="text-brand-600">{discussion.category}</span>
+                    <div className="mt-1 flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-1 text-xs text-tertiary">
+                      <span className="truncate max-w-[100px]">{discussion.author.name}</span>
+                      <span className="text-brand-600 truncate">{discussion.category}</span>
                       <span>{discussion.lastActivity}</span>
                     </div>
-                    <div className="mt-2 flex items-center gap-4 text-xs text-tertiary">
+                    <div className="mt-2 flex items-center gap-3 sm:gap-4 text-xs text-tertiary">
                       <span className="flex items-center gap-1">
-                        <MessageCircle01 className="size-3" />
-                        {discussion.replies} replies
+                        <MessageCircle01 className="size-3 flex-shrink-0" />
+                        <span className="hidden sm:inline">{discussion.replies} replies</span>
+                        <span className="sm:hidden">{discussion.replies}</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <Eye className="size-3" />
-                        {discussion.views} views
+                        <Eye className="size-3 flex-shrink-0" />
+                        <span className="hidden sm:inline">{discussion.views} views</span>
+                        <span className="sm:hidden">{discussion.views}</span>
                       </span>
                       <span className="flex items-center gap-1">
-                        <Heart className="size-3" />
-                        {discussion.likes} likes
+                        <Heart className="size-3 flex-shrink-0" />
+                        <span className="hidden sm:inline">{discussion.likes} likes</span>
+                        <span className="sm:hidden">{discussion.likes}</span>
                       </span>
                     </div>
                   </div>
-                  <ChevronRight className="size-5 text-tertiary self-center" />
+                  <ChevronRight className="size-5 text-tertiary self-center flex-shrink-0" />
                 </Link>
               ))}
             </div>
-            <div className="border-t border-secondary px-4 py-3">
+            <div className="border-t border-secondary px-3 sm:px-4 py-3">
               <Link href="#" className="text-sm font-medium text-brand-600 hover:underline">
                 View all discussions
               </Link>
@@ -226,10 +229,10 @@ export default function CommunityPage() {
         </div>
 
         {/* Sidebar */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6 min-w-0">
           {/* Categories */}
-          <div className="rounded-xl border border-secondary bg-primary">
-            <div className="border-b border-secondary px-4 py-3">
+          <div className="rounded-xl border border-secondary bg-primary overflow-hidden">
+            <div className="border-b border-secondary px-3 sm:px-4 py-3">
               <h2 className="font-semibold text-primary">Categories</h2>
             </div>
             <div className="p-2">
@@ -237,43 +240,43 @@ export default function CommunityPage() {
                 <Link
                   key={category.name}
                   href="#"
-                  className="flex items-center justify-between rounded-lg px-3 py-2.5 hover:bg-secondary transition-colors"
+                  className="flex items-center justify-between rounded-lg px-2 sm:px-3 py-2.5 hover:bg-secondary transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <category.icon className="size-4 text-tertiary" />
-                    <span className="text-sm text-primary">{category.name}</span>
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <category.icon className="size-4 text-tertiary flex-shrink-0" />
+                    <span className="text-sm text-primary truncate">{category.name}</span>
                   </div>
-                  <span className="text-xs text-tertiary">{category.count}</span>
+                  <span className="text-xs text-tertiary flex-shrink-0 ml-2">{category.count}</span>
                 </Link>
               ))}
             </div>
           </div>
 
           {/* Top Contributors */}
-          <div className="rounded-xl border border-secondary bg-primary">
-            <div className="border-b border-secondary px-4 py-3">
+          <div className="rounded-xl border border-secondary bg-primary overflow-hidden">
+            <div className="border-b border-secondary px-3 sm:px-4 py-3">
               <h2 className="font-semibold text-primary">Top Contributors</h2>
             </div>
             <div className="p-2">
               {topContributors.map((contributor, index) => (
                 <div
                   key={contributor.name}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5"
+                  className="flex items-center gap-2 sm:gap-3 rounded-lg px-2 sm:px-3 py-2.5"
                 >
-                  <span className="text-sm font-medium text-tertiary w-4">{index + 1}</span>
-                  <Avatar src={contributor.avatar} alt={contributor.name} size="sm" />
+                  <span className="text-sm font-medium text-tertiary w-4 flex-shrink-0">{index + 1}</span>
+                  <Avatar src={contributor.avatar} alt={contributor.name} size="sm" className="flex-shrink-0" />
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium text-primary truncate">{contributor.name}</div>
                     <div className="text-xs text-tertiary">{contributor.posts} posts</div>
                   </div>
-                  <Badge type="pill-color" size="sm" color="brand">{contributor.badge}</Badge>
+                  <Badge type="pill-color" size="sm" color="brand" className="flex-shrink-0">{contributor.badge}</Badge>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Community Guidelines */}
-          <div className="rounded-xl border border-secondary bg-brand-50 p-4">
+          <div className="rounded-xl border border-secondary bg-brand-50 p-3 sm:p-4">
             <h3 className="font-semibold text-primary">Community Guidelines</h3>
             <p className="mt-2 text-sm text-tertiary">
               Be respectful, helpful, and constructive. No spam or self-promotion.

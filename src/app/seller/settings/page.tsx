@@ -121,11 +121,11 @@ export default function SellerSettingsPage() {
   };
 
   return (
-    <div className="space-y-6 overflow-x-hidden max-w-full">
+    <div className="space-y-4 sm:space-y-6 overflow-x-hidden max-w-full">
       {/* Header */}
       <div>
-        <h1 className="text-xl font-semibold text-primary flex items-center gap-2">
-          <Settings01 className="size-6" />
+        <h1 className="text-lg sm:text-xl font-semibold text-primary flex items-center gap-2">
+          <Settings01 className="size-5 sm:size-6 flex-shrink-0" />
           Settings
         </h1>
         <p className="mt-1 text-sm text-tertiary">
@@ -135,45 +135,45 @@ export default function SellerSettingsPage() {
 
       {/* Horizontal Tabs */}
       <div className="border-b border-secondary overflow-x-auto">
-        <nav className="flex gap-1 min-w-max">
+        <nav className="flex gap-0.5 sm:gap-1">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+              className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === tab.id
                   ? "border-brand-600 text-brand-600"
                   : "border-transparent text-tertiary hover:text-primary hover:border-gray-300"
               }`}
             >
-              <tab.icon className="size-4" />
-              {tab.label}
+              <tab.icon className="size-4 flex-shrink-0" />
+              <span className="hidden md:inline">{tab.label}</span>
             </button>
           ))}
         </nav>
       </div>
 
       {/* Content */}
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
           {/* Store Profile Tab */}
           {activeTab === "store" && (
             <>
               {/* Store Logo & Banner */}
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <h2 className="text-lg font-semibold text-primary mb-6">Store Branding</h2>
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-primary mb-4 sm:mb-6">Store Branding</h2>
 
                 <div className="space-y-6">
                   {/* Logo */}
-                  <div className="flex items-start gap-4">
-                    <div className="relative">
-                      <div className="size-20 rounded-xl overflow-hidden bg-secondary border-2 border-dashed border-gray-300 flex items-center justify-center">
-                        <Building01 className="size-8 text-tertiary" />
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="relative flex-shrink-0">
+                      <div className="size-16 sm:size-20 rounded-xl overflow-hidden bg-secondary border-2 border-dashed border-gray-300 flex items-center justify-center">
+                        <Building01 className="size-6 sm:size-8 text-tertiary" />
                       </div>
-                      <button className="absolute -bottom-1 -right-1 flex size-7 items-center justify-center rounded-full bg-brand-600 text-white hover:bg-brand-700 transition-colors">
-                        <Camera01 className="size-3.5" />
+                      <button className="absolute -bottom-1 -right-1 flex size-6 sm:size-7 items-center justify-center rounded-full bg-brand-600 text-white hover:bg-brand-700 transition-colors">
+                        <Camera01 className="size-3 sm:size-3.5" />
                       </button>
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <h3 className="text-sm font-medium text-primary">Store Logo</h3>
                       <p className="text-xs text-tertiary mt-0.5">Recommended: 400x400px, PNG or JPG</p>
                       <Button color="secondary" size="sm" className="mt-2">
@@ -199,8 +199,8 @@ export default function SellerSettingsPage() {
               </div>
 
               {/* Store Information */}
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <h2 className="text-lg font-semibold text-primary mb-6">Store Information</h2>
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-primary mb-4 sm:mb-6">Store Information</h2>
 
                 <div className="space-y-4">
                   <div>
@@ -281,10 +281,10 @@ export default function SellerSettingsPage() {
           {/* Business Info Tab */}
           {activeTab === "business" && (
             <>
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-lg font-semibold text-primary">Business Details</h2>
-                  <Badge type="pill-color" size="sm" color="success">
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <div className="flex items-center justify-between mb-4 sm:mb-6 gap-2">
+                  <h2 className="text-base sm:text-lg font-semibold text-primary">Business Details</h2>
+                  <Badge type="pill-color" size="sm" color="success" className="flex-shrink-0">
                     <ShieldTick className="size-3 mr-1" />
                     Verified
                   </Badge>
@@ -332,8 +332,8 @@ export default function SellerSettingsPage() {
                 </div>
               </div>
 
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <h2 className="text-lg font-semibold text-primary mb-6">Business Address</h2>
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-primary mb-4 sm:mb-6">Business Address</h2>
 
                 <div className="space-y-4">
                   <div>
@@ -400,20 +400,20 @@ export default function SellerSettingsPage() {
           {activeTab === "payments" && (
             <>
               {/* Payout Account */}
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <h2 className="text-lg font-semibold text-primary mb-6">Payout Account</h2>
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-primary mb-4 sm:mb-6">Payout Account</h2>
 
-                <div className="flex items-center justify-between p-4 bg-secondary/50 rounded-xl mb-4">
-                  <div className="flex items-center gap-4">
-                    <div className="flex size-12 items-center justify-center rounded-xl bg-brand-100">
-                      <Bank className="size-6 text-brand-600" />
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 sm:p-4 bg-secondary/50 rounded-xl mb-4">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="flex size-10 sm:size-12 items-center justify-center rounded-xl bg-brand-100 flex-shrink-0">
+                      <Bank className="size-5 sm:size-6 text-brand-600" />
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-primary">Bank Account ••••4567</p>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-primary truncate">Bank Account ••••4567</p>
                       <p className="text-xs text-tertiary">Chase Bank - Checking</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 self-end sm:self-auto">
                     <Badge type="pill-color" size="sm" color="success">Default</Badge>
                     <Button color="secondary" size="sm" iconLeading={Edit02}>
                       Edit
@@ -427,8 +427,8 @@ export default function SellerSettingsPage() {
               </div>
 
               {/* Payout Settings */}
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <h2 className="text-lg font-semibold text-primary mb-6">Payout Settings</h2>
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-primary mb-4 sm:mb-6">Payout Settings</h2>
 
                 <div className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
@@ -469,21 +469,21 @@ export default function SellerSettingsPage() {
               </div>
 
               {/* Balance */}
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <h2 className="text-lg font-semibold text-primary mb-4">Current Balance</h2>
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-primary mb-4">Current Balance</h2>
 
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <div className="p-4 bg-secondary/50 rounded-xl">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                  <div className="p-3 sm:p-4 bg-secondary/50 rounded-xl">
                     <p className="text-xs text-tertiary mb-1">Available</p>
-                    <p className="text-2xl font-semibold text-primary">$1,234.56</p>
+                    <p className="text-lg sm:text-2xl font-semibold text-primary">$1,234.56</p>
                   </div>
-                  <div className="p-4 bg-secondary/50 rounded-xl">
+                  <div className="p-3 sm:p-4 bg-secondary/50 rounded-xl">
                     <p className="text-xs text-tertiary mb-1">Pending</p>
-                    <p className="text-2xl font-semibold text-primary">$567.89</p>
+                    <p className="text-lg sm:text-2xl font-semibold text-primary">$567.89</p>
                   </div>
-                  <div className="p-4 bg-secondary/50 rounded-xl">
+                  <div className="p-3 sm:p-4 bg-secondary/50 rounded-xl col-span-2 sm:col-span-1">
                     <p className="text-xs text-tertiary mb-1">Next Payout</p>
-                    <p className="text-2xl font-semibold text-primary">Dec 22</p>
+                    <p className="text-lg sm:text-2xl font-semibold text-primary">Dec 22</p>
                   </div>
                 </div>
 
@@ -497,10 +497,10 @@ export default function SellerSettingsPage() {
           {/* Shipping Tab */}
           {activeTab === "shipping" && (
             <>
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-lg font-semibold text-primary">Shipping Zones</h2>
-                  <Button color="primary" size="sm" iconLeading={Plus}>
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-6">
+                  <h2 className="text-base sm:text-lg font-semibold text-primary">Shipping Zones</h2>
+                  <Button color="primary" size="sm" iconLeading={Plus} className="self-start sm:self-auto">
                     Add Zone
                   </Button>
                 </div>
@@ -509,18 +509,18 @@ export default function SellerSettingsPage() {
                   {shippingZones.map((zone) => (
                     <div
                       key={zone.id}
-                      className="flex items-center justify-between p-4 border border-secondary rounded-xl hover:bg-secondary/30 transition-colors"
+                      className="flex items-center justify-between gap-3 p-3 sm:p-4 border border-secondary rounded-xl hover:bg-secondary/30 transition-colors"
                     >
-                      <div className="flex items-center gap-4">
-                        <div className="flex size-10 items-center justify-center rounded-lg bg-brand-50">
-                          <Globe02 className="size-5 text-brand-600" />
+                      <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                        <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg bg-brand-50 flex-shrink-0">
+                          <Globe02 className="size-4 sm:size-5 text-brand-600" />
                         </div>
-                        <div>
-                          <p className="text-sm font-medium text-primary">{zone.name}</p>
-                          <p className="text-xs text-tertiary">{zone.countries}</p>
+                        <div className="min-w-0">
+                          <p className="text-sm font-medium text-primary truncate">{zone.name}</p>
+                          <p className="text-xs text-tertiary truncate">{zone.countries}</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
                         <span className="text-xs text-tertiary">{zone.rates} rates</span>
                         <ChevronRight className="size-4 text-tertiary" />
                       </div>
@@ -529,8 +529,8 @@ export default function SellerSettingsPage() {
                 </div>
               </div>
 
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <h2 className="text-lg font-semibold text-primary mb-6">Shipping Preferences</h2>
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-primary mb-4 sm:mb-6">Shipping Preferences</h2>
 
                 <div className="space-y-4">
                   <div className="flex items-center justify-between py-3 border-b border-secondary">
@@ -571,8 +571,8 @@ export default function SellerSettingsPage() {
 
           {/* Notifications Tab */}
           {activeTab === "notifications" && (
-            <div className="bg-primary border border-secondary rounded-xl p-6">
-              <h2 className="text-lg font-semibold text-primary mb-6">Email Notifications</h2>
+            <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+              <h2 className="text-base sm:text-lg font-semibold text-primary mb-4 sm:mb-6">Email Notifications</h2>
 
               <div className="space-y-1">
                 {[
@@ -628,17 +628,17 @@ export default function SellerSettingsPage() {
                   content: "We respect your privacy and protect your personal information. See our full privacy policy for details.",
                 },
               ].map((policy, index) => (
-                <div key={index} className="bg-primary border border-secondary rounded-xl p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h2 className="text-lg font-semibold text-primary">{policy.title}</h2>
+                <div key={index} className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                    <div className="min-w-0">
+                      <h2 className="text-base sm:text-lg font-semibold text-primary">{policy.title}</h2>
                       <p className="text-xs text-tertiary">{policy.description}</p>
                     </div>
-                    <Button color="secondary" size="sm" iconLeading={Edit02}>
+                    <Button color="secondary" size="sm" iconLeading={Edit02} className="self-start sm:self-auto flex-shrink-0">
                       Edit
                     </Button>
                   </div>
-                  <div className="p-4 bg-secondary/50 rounded-lg">
+                  <div className="p-3 sm:p-4 bg-secondary/50 rounded-lg">
                     <p className="text-sm text-secondary">{policy.content}</p>
                   </div>
                 </div>
@@ -650,69 +650,70 @@ export default function SellerSettingsPage() {
           {activeTab === "billing" && (
             <>
               {/* Current Plan */}
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <h2 className="text-lg font-semibold text-primary mb-6">Current Plan</h2>
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-primary mb-4 sm:mb-6">Current Plan</h2>
 
-                <div className="flex items-center justify-between p-4 bg-brand-50 rounded-xl border border-brand-200">
-                  <div className="flex items-center gap-4">
-                    <div className="flex size-12 items-center justify-center rounded-xl bg-brand-100">
-                      <CurrencyDollar className="size-6 text-brand-600" />
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 sm:p-4 bg-brand-50 rounded-xl border border-brand-200">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="flex size-10 sm:size-12 items-center justify-center rounded-xl bg-brand-100 flex-shrink-0">
+                      <CurrencyDollar className="size-5 sm:size-6 text-brand-600" />
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <p className="text-lg font-semibold text-primary">Professional Plan</p>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className="text-sm sm:text-lg font-semibold text-primary">Professional Plan</p>
                         <Badge type="pill-color" size="sm" color="brand">Active</Badge>
                       </div>
-                      <p className="text-sm text-tertiary">$29.99/month • Renews on Jan 15, 2025</p>
+                      <p className="text-xs sm:text-sm text-tertiary">$29.99/month • Renews Jan 15, 2025</p>
                     </div>
                   </div>
-                  <Button color="secondary" size="sm">
+                  <Button color="secondary" size="sm" className="self-end sm:self-auto flex-shrink-0">
                     Change Plan
                   </Button>
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-3 mt-6">
-                  <div className="p-4 border border-secondary rounded-xl">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
+                  <div className="p-3 sm:p-4 border border-secondary rounded-xl">
                     <p className="text-xs text-tertiary mb-1">Products Listed</p>
-                    <p className="text-xl font-semibold text-primary">48 / 500</p>
+                    <p className="text-lg sm:text-xl font-semibold text-primary">48 / 500</p>
                   </div>
-                  <div className="p-4 border border-secondary rounded-xl">
+                  <div className="p-3 sm:p-4 border border-secondary rounded-xl">
                     <p className="text-xs text-tertiary mb-1">Commission Rate</p>
-                    <p className="text-xl font-semibold text-primary">8%</p>
+                    <p className="text-lg sm:text-xl font-semibold text-primary">8%</p>
                   </div>
-                  <div className="p-4 border border-secondary rounded-xl">
+                  <div className="p-3 sm:p-4 border border-secondary rounded-xl col-span-2 sm:col-span-1">
                     <p className="text-xs text-tertiary mb-1">Support Level</p>
-                    <p className="text-xl font-semibold text-primary">Priority</p>
+                    <p className="text-lg sm:text-xl font-semibold text-primary">Priority</p>
                   </div>
                 </div>
               </div>
 
               {/* Payment Method */}
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <h2 className="text-lg font-semibold text-primary mb-6">Payment Method</h2>
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-primary mb-4 sm:mb-6">Payment Method</h2>
 
-                <div className="flex items-center justify-between p-4 bg-secondary/50 rounded-xl">
-                  <div className="flex items-center gap-4">
-                    <div className="flex size-12 items-center justify-center rounded-xl bg-primary border border-secondary">
-                      <CreditCard01 className="size-6 text-tertiary" />
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 sm:p-4 bg-secondary/50 rounded-xl">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="flex size-10 sm:size-12 items-center justify-center rounded-xl bg-primary border border-secondary flex-shrink-0">
+                      <CreditCard01 className="size-5 sm:size-6 text-tertiary" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-sm font-medium text-primary">Visa ending in 4242</p>
                       <p className="text-xs text-tertiary">Expires 12/2025</p>
                     </div>
                   </div>
-                  <Button color="secondary" size="sm" iconLeading={Edit02}>
+                  <Button color="secondary" size="sm" iconLeading={Edit02} className="self-end sm:self-auto flex-shrink-0">
                     Update
                   </Button>
                 </div>
               </div>
 
               {/* Billing History */}
-              <div className="bg-primary border border-secondary rounded-xl p-6">
-                <h2 className="text-lg font-semibold text-primary mb-6">Billing History</h2>
+              <div className="bg-primary border border-secondary rounded-xl p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-primary mb-4 sm:mb-6">Billing History</h2>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full">
+                {/* Desktop Table */}
+                <div className="hidden sm:block overflow-x-auto">
+                  <table className="w-full min-w-[500px]">
                     <thead>
                       <tr className="border-b border-secondary">
                         <th className="pb-3 text-left text-xs font-medium uppercase text-tertiary">Invoice</th>
@@ -742,6 +743,22 @@ export default function SellerSettingsPage() {
                       ))}
                     </tbody>
                   </table>
+                </div>
+
+                {/* Mobile Cards */}
+                <div className="sm:hidden space-y-3">
+                  {invoices.map((invoice) => (
+                    <div key={invoice.id} className="p-3 border border-secondary rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-primary">{invoice.id}</span>
+                        <Badge type="pill-color" size="sm" color="success">Paid</Badge>
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-tertiary">
+                        <span>{invoice.date}</span>
+                        <span className="font-medium text-primary">${invoice.amount}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </>

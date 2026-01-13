@@ -250,7 +250,7 @@ export default function OrdersPage() {
   };
 
   return (
-    <div className="space-y-6 p-2 overflow-x-hidden max-w-full">
+    <div className="space-y-6 overflow-x-hidden max-w-full">
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>

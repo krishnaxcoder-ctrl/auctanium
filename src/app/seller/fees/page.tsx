@@ -64,7 +64,7 @@ export default function FeeSchedulePage() {
   const netEarnings = price - totalFees;
 
   return (
-    <div className="space-y-8 p-4">
+    <div className="space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-semibold text-primary">Fee Schedule</h1>

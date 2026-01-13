@@ -117,7 +117,7 @@ export default function SellerGuidePage() {
   const progress = (completedSteps / gettingStartedSteps.length) * 100;
 
   return (
-    <div className="space-y-8 p-4 overflow-x-hidden max-w-full">
+    <div className="space-y-8 overflow-x-hidden max-w-full">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-semibold text-primary">Seller Guide</h1>

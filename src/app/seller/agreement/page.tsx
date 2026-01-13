@@ -24,7 +24,7 @@ const tableOfContents = [
 
 export default function SellerAgreementPage() {
   return (
-    <div className="space-y-8 p-4">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
