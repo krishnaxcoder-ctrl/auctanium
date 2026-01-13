@@ -37,13 +37,26 @@ export default function SettingsPage() {
     adminEmail: "admin@auctanium.com",
     supportEmail: "support@auctanium.com",
     timezone: "America/New_York",
-    currency: "USD",
+    currency: "INR",
     language: "en",
     maintenanceMode: false,
     sellerCommission: "10",
     minWithdrawal: "50",
     shippingEnabled: true,
   });
+
+  const [notifications, setNotifications] = useState({
+    newUsers: true,
+    sellerApplications: true,
+    orderUpdates: true,
+    paymentAlerts: true,
+    securityAlerts: true,
+    weeklyReports: false,
+  });
+
+  const toggleNotification = (key: keyof typeof notifications) => {
+    setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -57,7 +70,7 @@ export default function SettingsPage() {
           <h1 className="text-2xl font-semibold text-gray-900">Settings</h1>
           <p className="text-sm text-[#898989]">Manage your platform settings and configurations.</p>
         </div>
-        <Button color="primary" size="sm" iconLeading={CheckCircle} className="bg-[#000080] hover:bg-[#000080]/90">
+        <Button color="primary" size="sm" iconLeading={CheckCircle} className="bg-brand-600 hover:bg-brand-600/90">
           Save Changes
         </Button>
       </div>
@@ -73,11 +86,11 @@ export default function SettingsPage() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                     activeTab === tab.id
-                      ? "bg-[#000080]/10 text-[#000080]"
+                      ? "bg-brand-600/10 text-brand-600"
                       : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                   }`}
                 >
-                  <tab.icon className={`size-5 ${activeTab === tab.id ? "text-[#000080]" : "text-[#898989]"}`} />
+                  <tab.icon className={`size-5 ${activeTab === tab.id ? "text-brand-600" : "text-[#898989]"}`} />
                   {tab.label}
                 </button>
               ))}
@@ -103,7 +116,7 @@ export default function SettingsPage() {
                         type="text"
                         value={formData.siteName}
                         onChange={(e) => handleInputChange("siteName", e.target.value)}
-                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-[#000080] focus:outline-none focus:ring-2 focus:ring-[#000080]/20"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
                       />
                     </div>
                     <div>
@@ -112,7 +125,7 @@ export default function SettingsPage() {
                         type="url"
                         value={formData.siteUrl}
                         onChange={(e) => handleInputChange("siteUrl", e.target.value)}
-                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-[#000080] focus:outline-none focus:ring-2 focus:ring-[#000080]/20"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
                       />
                     </div>
                     <div>
@@ -121,7 +134,7 @@ export default function SettingsPage() {
                         type="email"
                         value={formData.adminEmail}
                         onChange={(e) => handleInputChange("adminEmail", e.target.value)}
-                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-[#000080] focus:outline-none focus:ring-2 focus:ring-[#000080]/20"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
                       />
                     </div>
                     <div>
@@ -130,7 +143,7 @@ export default function SettingsPage() {
                         type="email"
                         value={formData.supportEmail}
                         onChange={(e) => handleInputChange("supportEmail", e.target.value)}
-                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-[#000080] focus:outline-none focus:ring-2 focus:ring-[#000080]/20"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
                       />
                     </div>
                   </div>
@@ -149,7 +162,7 @@ export default function SettingsPage() {
                       <select
                         value={formData.timezone}
                         onChange={(e) => handleInputChange("timezone", e.target.value)}
-                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-[#000080] focus:outline-none"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-brand-600 focus:outline-none"
                       >
                         <option value="America/New_York">Eastern Time (ET)</option>
                         <option value="America/Chicago">Central Time (CT)</option>
@@ -163,12 +176,12 @@ export default function SettingsPage() {
                       <select
                         value={formData.currency}
                         onChange={(e) => handleInputChange("currency", e.target.value)}
-                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-[#000080] focus:outline-none"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-brand-600 focus:outline-none"
                       >
+                        <option value="INR">INR (₹)</option>
                         <option value="USD">USD ($)</option>
                         <option value="EUR">EUR (€)</option>
                         <option value="GBP">GBP (£)</option>
-                        <option value="CAD">CAD ($)</option>
                       </select>
                     </div>
                     <div>
@@ -176,7 +189,7 @@ export default function SettingsPage() {
                       <select
                         value={formData.language}
                         onChange={(e) => handleInputChange("language", e.target.value)}
-                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-[#000080] focus:outline-none"
+                        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm text-gray-900 focus:border-brand-600 focus:outline-none"
                       >
                         <option value="en">English</option>
                         <option value="es">Spanish</option>
@@ -202,7 +215,7 @@ export default function SettingsPage() {
                     <button
                       onClick={() => handleInputChange("maintenanceMode", !formData.maintenanceMode)}
                       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                        formData.maintenanceMode ? "bg-[#000080]" : "bg-gray-200"
+                        formData.maintenanceMode ? "bg-brand-600" : "bg-gray-200"
                       }`}
                     >
                       <span
@@ -234,22 +247,22 @@ export default function SettingsPage() {
                           type="number"
                           value={formData.sellerCommission}
                           onChange={(e) => handleInputChange("sellerCommission", e.target.value)}
-                          className="w-full rounded-lg border border-gray-200 px-4 py-2.5 pr-12 text-sm text-gray-900 focus:border-[#000080] focus:outline-none focus:ring-2 focus:ring-[#000080]/20"
+                          className="w-full rounded-lg border border-gray-200 px-4 py-2.5 pr-12 text-sm text-gray-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
                         />
                         <Percent01 className="absolute right-4 top-1/2 -translate-y-1/2 size-4 text-[#898989]" />
                       </div>
                       <p className="mt-1 text-xs text-[#898989]">Platform fee charged on each sale</p>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-900 mb-2">Minimum Withdrawal ($)</label>
+                      <label className="block text-sm font-medium text-gray-900 mb-2">Minimum Withdrawal (₹)</label>
                       <div className="relative">
                         <input
                           type="number"
                           value={formData.minWithdrawal}
                           onChange={(e) => handleInputChange("minWithdrawal", e.target.value)}
-                          className="w-full rounded-lg border border-gray-200 px-4 py-2.5 pl-8 text-sm text-gray-900 focus:border-[#000080] focus:outline-none focus:ring-2 focus:ring-[#000080]/20"
+                          className="w-full rounded-lg border border-gray-200 px-4 py-2.5 pl-8 text-sm text-gray-900 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
                         />
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#898989]">$</span>
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#898989]">₹</span>
                       </div>
                       <p className="mt-1 text-xs text-[#898989]">Minimum amount for seller payouts</p>
                     </div>
@@ -274,7 +287,7 @@ export default function SettingsPage() {
                     <button
                       onClick={() => handleInputChange("shippingEnabled", !formData.shippingEnabled)}
                       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                        formData.shippingEnabled ? "bg-[#000080]" : "bg-gray-200"
+                        formData.shippingEnabled ? "bg-brand-600" : "bg-gray-200"
                       }`}
                     >
                       <span
@@ -298,22 +311,29 @@ export default function SettingsPage() {
               </div>
               <div className="divide-y divide-gray-100">
                 {[
-                  { label: "New user registrations", description: "Get notified when new users sign up" },
-                  { label: "New seller applications", description: "Receive alerts for seller verification requests" },
-                  { label: "Order updates", description: "Get notified about order status changes" },
-                  { label: "Payment alerts", description: "Receive notifications for payment issues" },
-                  { label: "Security alerts", description: "Get notified about suspicious activity" },
-                  { label: "Weekly reports", description: "Receive weekly platform performance reports" },
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center justify-between px-6 py-4">
+                  { key: "newUsers" as const, label: "New user registrations", description: "Get notified when new users sign up" },
+                  { key: "sellerApplications" as const, label: "New seller applications", description: "Receive alerts for seller verification requests" },
+                  { key: "orderUpdates" as const, label: "Order updates", description: "Get notified about order status changes" },
+                  { key: "paymentAlerts" as const, label: "Payment alerts", description: "Receive notifications for payment issues" },
+                  { key: "securityAlerts" as const, label: "Security alerts", description: "Get notified about suspicious activity" },
+                  { key: "weeklyReports" as const, label: "Weekly reports", description: "Receive weekly platform performance reports" },
+                ].map((item) => (
+                  <div key={item.key} className="flex items-center justify-between px-6 py-4">
                     <div>
                       <h3 className="text-sm font-medium text-gray-900">{item.label}</h3>
                       <p className="text-sm text-[#898989]">{item.description}</p>
                     </div>
                     <button
-                      className="relative inline-flex h-6 w-11 items-center rounded-full bg-[#000080] transition-colors"
+                      onClick={() => toggleNotification(item.key)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        notifications[item.key] ? "bg-brand-600" : "bg-gray-200"
+                      }`}
                     >
-                      <span className="inline-block size-4 transform rounded-full bg-white translate-x-6" />
+                      <span
+                        className={`inline-block size-4 transform rounded-full bg-white transition-transform ${
+                          notifications[item.key] ? "translate-x-6" : "translate-x-1"
+                        }`}
+                      />
                     </button>
                   </div>
                 ))}
@@ -343,7 +363,7 @@ export default function SettingsPage() {
                       </div>
                       <button
                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                          item.enabled ? "bg-[#000080]" : "bg-gray-200"
+                          item.enabled ? "bg-brand-600" : "bg-gray-200"
                         }`}
                       >
                         <span
@@ -379,13 +399,13 @@ export default function SettingsPage() {
                 <p className="text-sm text-[#898989]">Manage your plan and billing information</p>
               </div>
               <div className="p-6">
-                <div className="rounded-lg border border-[#000080] bg-[#000080]/5 p-4 mb-6">
+                <div className="rounded-lg border border-brand-600 bg-brand-600/5 p-4 mb-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <Badge type="pill-color" size="sm" color="brand" className="bg-[#000080] text-white">
+                      <Badge type="pill-color" size="sm" color="brand" className="bg-brand-600 text-white">
                         Enterprise Plan
                       </Badge>
-                      <h3 className="text-lg font-semibold text-gray-900 mt-2">$499/month</h3>
+                      <h3 className="text-lg font-semibold text-gray-900 mt-2">₹41,999/month</h3>
                       <p className="text-sm text-[#898989]">Unlimited users, advanced analytics, priority support</p>
                     </div>
                     <Button color="secondary" size="sm">
@@ -424,7 +444,7 @@ export default function SettingsPage() {
                       <h2 className="text-lg font-semibold text-gray-900">API Keys</h2>
                       <p className="text-sm text-[#898989]">Manage API keys for integrations</p>
                     </div>
-                    <Button color="primary" size="sm" className="bg-[#000080] hover:bg-[#000080]/90">
+                    <Button color="primary" size="sm" className="bg-brand-600 hover:bg-brand-600/90">
                       Generate New Key
                     </Button>
                   </div>

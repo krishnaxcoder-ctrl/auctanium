@@ -8,7 +8,6 @@ import {
   HelpCircle,
   Menu01,
   X,
-  SearchLg,
   Home05,
   Users01,
   Building07,
@@ -20,7 +19,6 @@ import {
   MessageSquare01,
   File01,
   Tag01,
-  Plus,
 } from "@untitledui/icons";
 import { useState, useEffect } from "react";
 import { useAuth, UserButton } from "@clerk/nextjs";
@@ -46,7 +44,6 @@ const navLinks = [
 export function AdminHeader() {
   const { isSignedIn, isLoaded } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -80,20 +77,6 @@ export function AdminHeader() {
               </Badge>
             </div>
           </Link>
-        </div>
-
-        {/* Center - Search (Desktop) */}
-        <div className="hidden flex-1 max-w-xl mx-8 lg:block">
-          <div className="relative">
-            <SearchLg className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-500" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search users, orders, listings..."
-              className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-500 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
-            />
-          </div>
         </div>
 
         {/* Right - Actions */}
@@ -166,20 +149,6 @@ export function AdminHeader() {
       {/* Full-Screen Mobile Menu */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 top-16 bg-white lg:hidden flex flex-col z-50">
-          {/* Mobile Search */}
-          <div className="p-4 border-b border-gray-200">
-            <div className="relative">
-              <SearchLg className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-500" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search users, orders, listings..."
-                className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-500 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
-              />
-            </div>
-          </div>
-
           {/* Navigation Links */}
           <div className="flex-1 overflow-y-auto p-4">
             <nav className="space-y-1">
