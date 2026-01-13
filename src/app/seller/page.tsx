@@ -379,57 +379,6 @@ export default function SellerDashboard() {
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4">
-        <Link
-          href="/seller/products/new"
-          className="flex items-center gap-2 sm:gap-3 rounded-xl border border-secondary bg-primary p-3 sm:p-4 transition-colors hover:border-brand-300"
-        >
-          <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg bg-brand-50 flex-shrink-0">
-            <Plus className="size-4 sm:size-5 text-brand-600" />
-          </div>
-          <div className="min-w-0">
-            <h3 className="text-xs sm:text-sm font-medium text-primary truncate">Add Product</h3>
-            <p className="text-xs text-tertiary hidden sm:block">List new item</p>
-          </div>
-        </Link>
-        <Link
-          href="/seller/orders"
-          className="flex items-center gap-2 sm:gap-3 rounded-xl border border-secondary bg-primary p-3 sm:p-4 transition-colors hover:border-brand-300"
-        >
-          <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg bg-warning-50 flex-shrink-0">
-            <ShoppingCart01 className="size-4 sm:size-5 text-warning-600" />
-          </div>
-          <div className="min-w-0">
-            <h3 className="text-xs sm:text-sm font-medium text-primary truncate">Orders</h3>
-            <p className="text-xs text-tertiary hidden sm:block">5 pending</p>
-          </div>
-        </Link>
-        <Link
-          href="/seller/messages"
-          className="flex items-center gap-2 sm:gap-3 rounded-xl border border-secondary bg-primary p-3 sm:p-4 transition-colors hover:border-brand-300"
-        >
-          <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg bg-error-50 flex-shrink-0">
-            <MessageSquare01 className="size-4 sm:size-5 text-error-600" />
-          </div>
-          <div className="min-w-0">
-            <h3 className="text-xs sm:text-sm font-medium text-primary truncate">Messages</h3>
-            <p className="text-xs text-tertiary hidden sm:block">3 unread</p>
-          </div>
-        </Link>
-        <Link
-          href="/seller/analytics"
-          className="flex items-center gap-2 sm:gap-3 rounded-xl border border-secondary bg-primary p-3 sm:p-4 transition-colors hover:border-brand-300"
-        >
-          <div className="flex size-9 sm:size-10 items-center justify-center rounded-lg bg-success-50 flex-shrink-0">
-            <BarChart01 className="size-4 sm:size-5 text-success-600" />
-          </div>
-          <div className="min-w-0">
-            <h3 className="text-xs sm:text-sm font-medium text-primary truncate">Analytics</h3>
-            <p className="text-xs text-tertiary hidden sm:block">View reports</p>
-          </div>
-        </Link>
-      </div>
     </div>
   );
 }

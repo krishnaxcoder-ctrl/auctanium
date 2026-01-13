@@ -87,7 +87,7 @@ export default function AnalyticsPage() {
           <select
             value={selectedPeriod}
             onChange={(e) => setSelectedPeriod(e.target.value)}
-            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 focus:border-[#000080] focus:outline-none"
+            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 focus:border-brand-600 focus:outline-none"
           >
             {timePeriods.map((period) => (
               <option key={period.value} value={period.value}>
@@ -123,8 +123,8 @@ export default function AnalyticsPage() {
         </div>
         <div className="rounded-xl border border-gray-200 bg-white p-5">
           <div className="flex items-center justify-between">
-            <div className="flex size-12 items-center justify-center rounded-lg bg-[#000080]/10">
-              <ShoppingCart01 className="size-6 text-[#000080]" />
+            <div className="flex size-12 items-center justify-center rounded-lg bg-brand-600/10">
+              <ShoppingCart01 className="size-6 text-brand-600" />
             </div>
             <div className="flex items-center gap-1 text-sm font-medium text-green-600">
               <TrendUp01 className="size-4" />
@@ -177,7 +177,7 @@ export default function AnalyticsPage() {
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <div className="size-3 rounded bg-[#000080]" />
+              <div className="size-3 rounded bg-brand-600" />
               <span className="text-sm text-[#898989]">Revenue</span>
             </div>
             <div className="flex items-center gap-2">
@@ -191,7 +191,7 @@ export default function AnalyticsPage() {
             <div key={data.month} className="flex-1 flex flex-col items-center gap-2">
               <div className="w-full flex items-end gap-1 h-48">
                 <div
-                  className="flex-1 bg-[#000080] rounded-t transition-all hover:bg-[#000080]/80"
+                  className="flex-1 bg-brand-600 rounded-t transition-all hover:bg-brand-600/80"
                   style={{ height: `${(data.revenue / maxRevenue) * 100}%` }}
                   title={`₹${data.revenue.toLocaleString('en-IN')}`}
                 />
@@ -220,7 +220,7 @@ export default function AnalyticsPage() {
               <div key={category.name} className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="flex size-6 items-center justify-center rounded-full bg-[#000080]/10 text-xs font-bold text-[#000080]">
+                    <span className="flex size-6 items-center justify-center rounded-full bg-brand-600/10 text-xs font-bold text-brand-600">
                       {index + 1}
                     </span>
                     <span className="text-sm font-medium text-gray-900">{category.name}</span>
@@ -232,7 +232,7 @@ export default function AnalyticsPage() {
                 </div>
                 <div className="h-2 w-full rounded-full bg-gray-100 overflow-hidden">
                   <div
-                    className="h-full bg-[#000080] rounded-full transition-all"
+                    className="h-full bg-brand-600 rounded-full transition-all"
                     style={{ width: `${category.percentage}%` }}
                   />
                 </div>
@@ -251,7 +251,7 @@ export default function AnalyticsPage() {
             {topSellers.map((seller, index) => (
               <div key={seller.name} className="flex items-center justify-between px-6 py-4">
                 <div className="flex items-center gap-3">
-                  <span className="flex size-8 items-center justify-center rounded-full bg-[#000080]/10 text-sm font-bold text-[#000080]">
+                  <span className="flex size-8 items-center justify-center rounded-full bg-brand-600/10 text-sm font-bold text-brand-600">
                     {index + 1}
                   </span>
                   <div>
