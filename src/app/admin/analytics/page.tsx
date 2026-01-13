@@ -28,38 +28,38 @@ const timePeriods = [
   { label: "This Year", value: "year" },
 ];
 
-// Revenue data for chart
+// Revenue data for chart (in INR - lakhs)
 const revenueData = [
-  { month: "Jan", revenue: 45000, orders: 234 },
-  { month: "Feb", revenue: 52000, orders: 287 },
-  { month: "Mar", revenue: 48000, orders: 256 },
-  { month: "Apr", revenue: 61000, orders: 312 },
-  { month: "May", revenue: 55000, orders: 289 },
-  { month: "Jun", revenue: 67000, orders: 345 },
-  { month: "Jul", revenue: 72000, orders: 378 },
-  { month: "Aug", revenue: 69000, orders: 356 },
-  { month: "Sep", revenue: 78000, orders: 402 },
-  { month: "Oct", revenue: 82000, orders: 423 },
-  { month: "Nov", revenue: 91000, orders: 467 },
-  { month: "Dec", revenue: 98000, orders: 512 },
+  { month: "Jan", revenue: 3735000, orders: 234 },
+  { month: "Feb", revenue: 4316000, orders: 287 },
+  { month: "Mar", revenue: 3984000, orders: 256 },
+  { month: "Apr", revenue: 5063000, orders: 312 },
+  { month: "May", revenue: 4565000, orders: 289 },
+  { month: "Jun", revenue: 5561000, orders: 345 },
+  { month: "Jul", revenue: 5976000, orders: 378 },
+  { month: "Aug", revenue: 5727000, orders: 356 },
+  { month: "Sep", revenue: 6474000, orders: 402 },
+  { month: "Oct", revenue: 6806000, orders: 423 },
+  { month: "Nov", revenue: 7553000, orders: 467 },
+  { month: "Dec", revenue: 8134000, orders: 512 },
 ];
 
 // Top categories
 const topCategories = [
-  { name: "Electronics", sales: 3456, revenue: 892450, percentage: 35 },
-  { name: "Smartphones", sales: 2890, revenue: 678900, percentage: 27 },
-  { name: "Laptops", sales: 1234, revenue: 456780, percentage: 18 },
-  { name: "Audio", sales: 987, revenue: 234560, percentage: 12 },
-  { name: "Wearables", sales: 654, revenue: 189450, percentage: 8 },
+  { name: "Electronics", sales: 3456, revenue: 74073350, percentage: 35 },
+  { name: "Smartphones", sales: 2890, revenue: 56348700, percentage: 27 },
+  { name: "Laptops", sales: 1234, revenue: 37912740, percentage: 18 },
+  { name: "Audio", sales: 987, revenue: 19468480, percentage: 12 },
+  { name: "Wearables", sales: 654, revenue: 15724350, percentage: 8 },
 ];
 
 // Top performing sellers
 const topSellers = [
-  { name: "TechStore Pro", revenue: 125420, orders: 234, growth: 18.5 },
-  { name: "GadgetWorld", revenue: 98750, orders: 189, growth: 12.3 },
-  { name: "ElectroHub", revenue: 87320, orders: 156, growth: -2.4 },
-  { name: "DigitalZone", revenue: 76890, orders: 134, growth: 8.7 },
-  { name: "PremiumTech", revenue: 65430, orders: 112, growth: 15.2 },
+  { name: "Bharat Electronics", revenue: 10409860, orders: 234, growth: 18.5 },
+  { name: "Gadget Bazaar", revenue: 8196250, orders: 189, growth: 12.3 },
+  { name: "ElectroMart", revenue: 7247560, orders: 156, growth: -2.4 },
+  { name: "Digital Dukaan", revenue: 6381870, orders: 134, growth: 8.7 },
+  { name: "Tech India", revenue: 5430690, orders: 112, growth: 15.2 },
 ];
 
 // Traffic sources
@@ -117,7 +117,7 @@ export default function AnalyticsPage() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-3xl font-bold text-gray-900">$1.28M</div>
+            <div className="text-3xl font-bold text-gray-900">₹10.6Cr</div>
             <div className="text-sm text-[#898989]">Total Revenue</div>
           </div>
         </div>
@@ -193,7 +193,7 @@ export default function AnalyticsPage() {
                 <div
                   className="flex-1 bg-[#000080] rounded-t transition-all hover:bg-[#000080]/80"
                   style={{ height: `${(data.revenue / maxRevenue) * 100}%` }}
-                  title={`$${data.revenue.toLocaleString()}`}
+                  title={`₹${data.revenue.toLocaleString('en-IN')}`}
                 />
                 <div
                   className="flex-1 bg-green-500 rounded-t transition-all hover:bg-green-400"
@@ -226,7 +226,7 @@ export default function AnalyticsPage() {
                     <span className="text-sm font-medium text-gray-900">{category.name}</span>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm font-semibold text-gray-900">${category.revenue.toLocaleString()}</div>
+                    <div className="text-sm font-semibold text-gray-900">₹{category.revenue.toLocaleString('en-IN')}</div>
                     <div className="text-xs text-[#898989]">{category.sales.toLocaleString()} sales</div>
                   </div>
                 </div>
@@ -260,7 +260,7 @@ export default function AnalyticsPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm font-semibold text-gray-900">${seller.revenue.toLocaleString()}</div>
+                  <div className="text-sm font-semibold text-gray-900">₹{seller.revenue.toLocaleString('en-IN')}</div>
                   <div className={`flex items-center gap-1 text-xs ${seller.growth >= 0 ? "text-green-600" : "text-red-600"}`}>
                     {seller.growth >= 0 ? <TrendUp01 className="size-3" /> : <TrendDown01 className="size-3" />}
                     {seller.growth >= 0 ? "+" : ""}{seller.growth}%
@@ -295,7 +295,7 @@ export default function AnalyticsPage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl border border-gray-200 bg-white p-5">
           <div className="text-sm text-[#898989] mb-2">Avg. Order Value</div>
-          <div className="text-2xl font-bold text-gray-900">$485</div>
+          <div className="text-2xl font-bold text-gray-900">₹12,525</div>
           <div className="flex items-center gap-1 text-xs text-green-600 mt-2">
             <TrendUp01 className="size-3" />
             +5.2% vs last period
@@ -303,7 +303,7 @@ export default function AnalyticsPage() {
         </div>
         <div className="rounded-xl border border-gray-200 bg-white p-5">
           <div className="text-sm text-[#898989] mb-2">Customer Lifetime Value</div>
-          <div className="text-2xl font-bold text-gray-900">$1,250</div>
+          <div className="text-2xl font-bold text-gray-900">₹45,750</div>
           <div className="flex items-center gap-1 text-xs text-green-600 mt-2">
             <TrendUp01 className="size-3" />
             +8.7% vs last period

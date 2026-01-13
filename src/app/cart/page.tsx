@@ -32,20 +32,20 @@ interface CartItem {
 const initialCartItems: CartItem[] = [
   {
     id: "1",
-    name: "MacBook Pro 16\" M3 Max",
-    variant: "Space Black / 48GB / 1TB",
-    price: 2499,
-    comparePrice: 2799,
+    name: "Samsung Galaxy S24 Ultra",
+    variant: "Titanium Black / 12GB / 512GB",
+    price: 124999,
+    comparePrice: 139999,
     quantity: 1,
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=200&h=200&fit=crop",
+    image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=200&h=200&fit=crop",
     inStock: true,
     maxQuantity: 5,
   },
   {
     id: "2",
-    name: "AirPods Pro 2nd Generation",
-    variant: "White",
-    price: 249,
+    name: "boAt Airdopes 141",
+    variant: "Black",
+    price: 1499,
     quantity: 2,
     image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=200&h=200&fit=crop",
     inStock: true,
@@ -53,9 +53,9 @@ const initialCartItems: CartItem[] = [
   },
   {
     id: "3",
-    name: "Apple Watch Ultra 2",
-    variant: "Titanium / 49mm / Alpine Loop",
-    price: 799,
+    name: "Fire-Boltt Phoenix Ultra",
+    variant: "Black / 49mm / Silicon Strap",
+    price: 2999,
     quantity: 1,
     image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=200&h=200&fit=crop",
     inStock: true,
@@ -102,8 +102,8 @@ export default function CartPage() {
     0
   );
   const promoDiscountAmount = promoApplied ? (subtotal * promoDiscount) / 100 : 0;
-  const shipping = subtotal > 100 ? 0 : 9.99;
-  const tax = (subtotal - promoDiscountAmount) * 0.08;
+  const shipping = subtotal > 5000 ? 0 : 99; // Free shipping above ₹5000
+  const tax = (subtotal - promoDiscountAmount) * 0.18; // 18% GST
   const total = subtotal - promoDiscountAmount + shipping + tax;
 
   if (cartItems.length === 0) {
@@ -146,11 +146,11 @@ export default function CartPage() {
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
             {/* Free Shipping Banner */}
-            {subtotal < 100 && (
+            {subtotal < 5000 && (
               <div className="flex items-center gap-3 rounded-lg border border-brand-200 bg-brand-50 p-4">
                 <Truck01 className="size-5 text-brand-600" />
                 <p className="text-sm text-brand-700">
-                  Add <span className="font-semibold">${(100 - subtotal).toFixed(2)}</span> more to
+                  Add <span className="font-semibold">₹{(5000 - subtotal).toLocaleString('en-IN')}</span> more to
                   qualify for <span className="font-semibold">FREE shipping!</span>
                 </p>
               </div>
@@ -226,11 +226,11 @@ export default function CartPage() {
                         {/* Price */}
                         <div className="text-right">
                           <div className="text-base sm:text-lg font-semibold text-primary">
-                            ${(item.price * item.quantity).toLocaleString()}
+                            ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                           </div>
                           {item.comparePrice && (
                             <div className="text-sm text-tertiary line-through">
-                              ${(item.comparePrice * item.quantity).toLocaleString()}
+                              ₹{(item.comparePrice * item.quantity).toLocaleString('en-IN')}
                             </div>
                           )}
                         </div>
@@ -308,18 +308,18 @@ export default function CartPage() {
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center justify-between">
                     <span className="text-tertiary">Subtotal</span>
-                    <span className="text-primary">${subtotal.toLocaleString()}</span>
+                    <span className="text-primary">₹{subtotal.toLocaleString('en-IN')}</span>
                   </div>
                   {savings > 0 && (
                     <div className="flex items-center justify-between text-success-600">
                       <span>Savings</span>
-                      <span>-${savings.toLocaleString()}</span>
+                      <span>-₹{savings.toLocaleString('en-IN')}</span>
                     </div>
                   )}
                   {promoApplied && (
                     <div className="flex items-center justify-between text-success-600">
                       <span>Promo discount ({promoDiscount}%)</span>
-                      <span>-${promoDiscountAmount.toFixed(2)}</span>
+                      <span>-₹{promoDiscountAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                     </div>
                   )}
                   <div className="flex items-center justify-between">
@@ -328,19 +328,19 @@ export default function CartPage() {
                       {shipping === 0 ? (
                         <span className="text-success-600">FREE</span>
                       ) : (
-                        `$${shipping.toFixed(2)}`
+                        `₹${shipping}`
                       )}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-tertiary">Estimated tax</span>
-                    <span className="text-primary">${tax.toFixed(2)}</span>
+                    <span className="text-tertiary">GST (18%)</span>
+                    <span className="text-primary">₹{tax.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
                   <div className="border-t border-secondary pt-3 mt-3">
                     <div className="flex items-center justify-between">
                       <span className="text-base font-semibold text-primary">Total</span>
                       <span className="text-xl font-semibold text-primary">
-                        ${total.toFixed(2)}
+                        ₹{total.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </span>
                     </div>
                   </div>
@@ -366,12 +366,12 @@ export default function CartPage() {
                   <div>
                     <Truck01 className="size-6 mx-auto text-tertiary" />
                     <p className="mt-2 text-xs text-tertiary">Free Shipping</p>
-                    <p className="text-xs text-quaternary">Orders $100+</p>
+                    <p className="text-xs text-quaternary">Orders ₹5,000+</p>
                   </div>
                   <div>
                     <RefreshCw01 className="size-6 mx-auto text-tertiary" />
                     <p className="mt-2 text-xs text-tertiary">Easy Returns</p>
-                    <p className="text-xs text-quaternary">30-day policy</p>
+                    <p className="text-xs text-quaternary">7-day policy</p>
                   </div>
                   <div>
                     <Lock01 className="size-6 mx-auto text-tertiary" />
@@ -384,8 +384,8 @@ export default function CartPage() {
               {/* Payment Methods */}
               <div className="text-center">
                 <p className="text-xs text-tertiary mb-2">We accept</p>
-                <div className="flex items-center justify-center gap-2">
-                  {["Visa", "Mastercard", "Amex", "PayPal", "Apple Pay"].map((method) => (
+                <div className="flex items-center justify-center gap-2 flex-wrap">
+                  {["UPI", "Cards", "Net Banking", "Paytm", "PhonePe"].map((method) => (
                     <span
                       key={method}
                       className="text-xs border border-secondary px-2 py-1 text-tertiary rounded"

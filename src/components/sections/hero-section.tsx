@@ -50,7 +50,7 @@ const notifications = [
         icon: Check,
         iconColor: "success" as const,
         title: "Bid Placed!",
-        subtitle: "Your bid of $250 was accepted",
+        subtitle: "Your bid of ₹20,000 was accepted",
         position: "top-right",
     },
     {

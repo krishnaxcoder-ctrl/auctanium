@@ -33,17 +33,17 @@ type FormErrors = { [key: string]: string | undefined };
 const checkoutItems = [
   {
     id: "1",
-    name: "MacBook Pro 16\" M3 Max",
-    variant: "Space Black / 48GB / 1TB",
-    price: 2499,
+    name: "Samsung Galaxy S24 Ultra",
+    variant: "Titanium Black / 12GB / 512GB",
+    price: 124999,
     quantity: 1,
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=200&h=200&fit=crop",
+    image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=200&h=200&fit=crop",
   },
   {
     id: "2",
-    name: "AirPods Pro 2nd Generation",
-    variant: "White",
-    price: 249,
+    name: "boAt Airdopes 141",
+    variant: "Black",
+    price: 1499,
     quantity: 2,
     image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=200&h=200&fit=crop",
   },
@@ -51,8 +51,8 @@ const checkoutItems = [
 
 const shippingMethods = [
   { id: "standard", name: "Standard Shipping", price: 0, time: "5-7 business days" },
-  { id: "express", name: "Express Shipping", price: 14.99, time: "2-3 business days" },
-  { id: "overnight", name: "Overnight Shipping", price: 29.99, time: "Next business day" },
+  { id: "express", name: "Express Shipping", price: 149, time: "2-3 business days" },
+  { id: "overnight", name: "Same Day Delivery", price: 299, time: "Same day (Metro cities)" },
 ];
 
 export default function CheckoutPage() {
@@ -71,7 +71,7 @@ export default function CheckoutPage() {
     city: "",
     state: "",
     zipCode: "",
-    country: "United States",
+    country: "India",
     saveInfo: true,
     cardNumber: "",
     cardExpiry: "",
@@ -82,7 +82,7 @@ export default function CheckoutPage() {
 
   const subtotal = checkoutItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const shipping = shippingMethods.find((m) => m.id === selectedShipping)?.price || 0;
-  const tax = subtotal * 0.08;
+  const tax = subtotal * 0.18; // 18% GST
   const total = subtotal + shipping + tax;
 
   const clearError = (field: string) => {
@@ -177,9 +177,6 @@ export default function CheckoutPage() {
                   placeholder="Country/Region"
                   size="md"
                   items={[
-                    { id: "United States", label: "United States" },
-                    { id: "Canada", label: "Canada" },
-                    { id: "United Kingdom", label: "United Kingdom" },
                     { id: "India", label: "India" },
                   ]}
                 >
@@ -237,11 +234,14 @@ export default function CheckoutPage() {
                     isInvalid={!!errors.state}
                     hint={errors.state}
                     items={[
-                      { id: "AL", label: "Alabama" },
-                      { id: "CA", label: "California" },
-                      { id: "FL", label: "Florida" },
-                      { id: "NY", label: "New York" },
-                      { id: "TX", label: "Texas" },
+                      { id: "MH", label: "Maharashtra" },
+                      { id: "DL", label: "Delhi" },
+                      { id: "KA", label: "Karnataka" },
+                      { id: "TN", label: "Tamil Nadu" },
+                      { id: "TS", label: "Telangana" },
+                      { id: "GJ", label: "Gujarat" },
+                      { id: "UP", label: "Uttar Pradesh" },
+                      { id: "WB", label: "West Bengal" },
                     ]}
                   >
                     {(item) => <Select.Item id={item.id} label={item.label} />}
@@ -290,7 +290,7 @@ export default function CheckoutPage() {
                       </div>
                     </div>
                     <span className="text-sm font-medium text-primary">
-                      {method.price === 0 ? "FREE" : `$${method.price.toFixed(2)}`}
+                      {method.price === 0 ? "FREE" : `₹${method.price}`}
                     </span>
                   </label>
                 ))}
@@ -390,7 +390,7 @@ export default function CheckoutPage() {
                       <h3 className="text-sm font-medium text-primary line-clamp-1">{item.name}</h3>
                       <p className="text-xs text-tertiary">{item.variant}</p>
                     </div>
-                    <div className="text-sm font-medium text-primary">${(item.price * item.quantity).toLocaleString()}</div>
+                    <div className="text-sm font-medium text-primary">₹{(item.price * item.quantity).toLocaleString('en-IN')}</div>
                   </div>
                 ))}
               </div>
@@ -405,19 +405,19 @@ export default function CheckoutPage() {
               <div className="space-y-3 text-sm border-t border-secondary pt-4">
                 <div className="flex items-center justify-between">
                   <span className="text-tertiary">Subtotal</span>
-                  <span className="text-primary">${subtotal.toLocaleString()}</span>
+                  <span className="text-primary">₹{subtotal.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-tertiary">Shipping</span>
-                  <span className="text-primary">{shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}</span>
+                  <span className="text-primary">{shipping === 0 ? "FREE" : `₹${shipping}`}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-tertiary">Estimated taxes</span>
-                  <span className="text-primary">${tax.toFixed(2)}</span>
+                  <span className="text-tertiary">GST (18%)</span>
+                  <span className="text-primary">₹{tax.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
                 <div className="flex items-center justify-between pt-3 border-t border-secondary">
                   <span className="text-base font-semibold text-primary">Total</span>
-                  <span className="text-xl font-semibold text-primary">${total.toFixed(2)}</span>
+                  <span className="text-xl font-semibold text-primary">₹{total.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
               </div>
             </div>

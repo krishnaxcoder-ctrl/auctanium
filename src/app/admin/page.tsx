@@ -30,7 +30,7 @@ import { Avatar } from "@/components/base/avatar/avatar";
 const platformStats = [
   {
     label: "Total Revenue",
-    value: "$1,284,592",
+    value: "₹10,65,41,920",
     change: "+18.2%",
     trend: "up",
     icon: CurrencyDollar,
@@ -78,8 +78,8 @@ const quickStats = [
 const recentUsers = [
   {
     id: "USR-001",
-    name: "Sarah Johnson",
-    email: "sarah.j@example.com",
+    name: "Priya Sharma",
+    email: "priya.s@example.com",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
     role: "customer",
     status: "active",
@@ -87,8 +87,8 @@ const recentUsers = [
   },
   {
     id: "USR-002",
-    name: "Michael Chen",
-    email: "m.chen@example.com",
+    name: "Rahul Verma",
+    email: "rahul.v@example.com",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
     role: "seller",
     status: "active",
@@ -96,8 +96,8 @@ const recentUsers = [
   },
   {
     id: "USR-003",
-    name: "Emily Davis",
-    email: "emily.d@example.com",
+    name: "Ananya Patel",
+    email: "ananya.p@example.com",
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
     role: "customer",
     status: "pending",
@@ -105,8 +105,8 @@ const recentUsers = [
   },
   {
     id: "USR-004",
-    name: "James Wilson",
-    email: "j.wilson@example.com",
+    name: "Vikram Singh",
+    email: "vikram.s@example.com",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop",
     role: "seller",
     status: "active",
@@ -114,8 +114,8 @@ const recentUsers = [
   },
   {
     id: "USR-005",
-    name: "Lisa Anderson",
-    email: "lisa.a@example.com",
+    name: "Sneha Reddy",
+    email: "sneha.r@example.com",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop",
     role: "customer",
     status: "suspended",
@@ -127,41 +127,41 @@ const recentUsers = [
 const recentOrders = [
   {
     id: "ORD-2024-001",
-    customer: "Sarah Johnson",
-    seller: "TechStore Pro",
-    amount: 2499,
+    customer: "Priya Sharma",
+    seller: "Bharat Electronics",
+    amount: 124999,
     status: "processing",
     date: "Dec 18, 2024",
   },
   {
     id: "ORD-2024-002",
-    customer: "Michael Chen",
-    seller: "GadgetWorld",
-    amount: 1249,
+    customer: "Rahul Verma",
+    seller: "Gadget Bazaar",
+    amount: 69999,
     status: "shipped",
     date: "Dec 17, 2024",
   },
   {
     id: "ORD-2024-003",
-    customer: "Emily Davis",
-    seller: "ElectroHub",
-    amount: 249,
+    customer: "Ananya Patel",
+    seller: "ElectroMart",
+    amount: 2999,
     status: "delivered",
     date: "Dec 16, 2024",
   },
   {
     id: "ORD-2024-004",
-    customer: "James Wilson",
-    seller: "TechStore Pro",
-    amount: 899,
+    customer: "Vikram Singh",
+    seller: "Bharat Electronics",
+    amount: 44999,
     status: "pending",
     date: "Dec 18, 2024",
   },
   {
     id: "ORD-2024-005",
-    customer: "Lisa Anderson",
-    seller: "GadgetWorld",
-    amount: 799,
+    customer: "Sneha Reddy",
+    seller: "Gadget Bazaar",
+    amount: 34999,
     status: "disputed",
     date: "Dec 17, 2024",
   },
@@ -171,33 +171,33 @@ const recentOrders = [
 const topSellers = [
   {
     id: "1",
-    name: "TechStore Pro",
+    name: "Bharat Electronics",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop",
-    revenue: 125420,
+    revenue: 10409860,
     orders: 234,
     rating: 4.9,
   },
   {
     id: "2",
-    name: "GadgetWorld",
+    name: "Gadget Bazaar",
     avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop",
-    revenue: 98750,
+    revenue: 8196250,
     orders: 189,
     rating: 4.8,
   },
   {
     id: "3",
-    name: "ElectroHub",
+    name: "ElectroMart",
     avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop",
-    revenue: 87320,
+    revenue: 7247560,
     orders: 156,
     rating: 4.7,
   },
   {
     id: "4",
-    name: "DigitalZone",
+    name: "Digital Dukaan",
     avatar: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=100&h=100&fit=crop",
-    revenue: 76890,
+    revenue: 6381870,
     orders: 134,
     rating: 4.6,
   },
@@ -205,12 +205,12 @@ const topSellers = [
 
 // Recent Activity
 const recentActivity = [
-  { type: "user", message: "New user registered", detail: "sarah.j@example.com", time: "2 min ago" },
+  { type: "user", message: "New user registered", detail: "priya.s@example.com", time: "2 min ago" },
   { type: "order", message: "Order completed", detail: "ORD-2024-001", time: "5 min ago" },
-  { type: "seller", message: "New seller approved", detail: "TechStore Pro", time: "15 min ago" },
+  { type: "seller", message: "New seller approved", detail: "Bharat Electronics", time: "15 min ago" },
   { type: "dispute", message: "Dispute opened", detail: "ORD-2024-005", time: "1 hour ago" },
-  { type: "payment", message: "Payment processed", detail: "$2,499.00", time: "2 hours ago" },
-  { type: "listing", message: "New listing published", detail: "MacBook Pro 16\"", time: "3 hours ago" },
+  { type: "payment", message: "Payment processed", detail: "₹1,24,999", time: "2 hours ago" },
+  { type: "listing", message: "New listing published", detail: "Samsung Galaxy S24 Ultra", time: "3 hours ago" },
 ];
 
 // System Health
@@ -393,7 +393,7 @@ export default function AdminDashboard() {
                       <td className="px-5 py-4 text-sm font-medium text-brand-600">{order.id}</td>
                       <td className="px-5 py-4 text-sm text-gray-900">{order.customer}</td>
                       <td className="px-5 py-4 text-sm text-gray-500">{order.seller}</td>
-                      <td className="px-5 py-4 text-sm font-semibold text-gray-900">${order.amount.toLocaleString()}</td>
+                      <td className="px-5 py-4 text-sm font-semibold text-gray-900">₹{order.amount.toLocaleString('en-IN')}</td>
                       <td className="px-5 py-4">
                         <Badge type="pill-color" size="sm" color={statusColors[order.status]}>
                           {order.status}
@@ -427,7 +427,7 @@ export default function AdminDashboard() {
                     <p className="text-xs text-gray-500">{seller.orders} orders</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm font-semibold text-gray-900">${seller.revenue.toLocaleString()}</div>
+                    <div className="text-sm font-semibold text-gray-900">₹{seller.revenue.toLocaleString('en-IN')}</div>
                     <div className="text-xs text-amber-600">★ {seller.rating}</div>
                   </div>
                 </div>

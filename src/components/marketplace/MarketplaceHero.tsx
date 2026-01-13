@@ -35,11 +35,11 @@ const quickCategories = [
 
 const trendingSearches = [
     "iPhone 15 Pro",
-    "Vintage Rolex",
+    "Samsung S24",
     "PS5 Console",
-    "Air Jordan 1",
-    "Pokemon Cards",
-    "MacBook Pro",
+    "OnePlus 12",
+    "boAt Earbuds",
+    "MacBook Air",
 ];
 
 export function MarketplaceHero({
@@ -154,7 +154,7 @@ export function MarketplaceHero({
                         <p className="text-sm text-[#898989]">Happy Buyers</p>
                     </div>
                     <div className="text-center hidden sm:block">
-                        <p className="text-2xl lg:text-3xl font-bold text-[#000080]">$5M+</p>
+                        <p className="text-2xl lg:text-3xl font-bold text-[#000080]">₹50Cr+</p>
                         <p className="text-sm text-[#898989]">Items Sold</p>
                     </div>
                 </div>

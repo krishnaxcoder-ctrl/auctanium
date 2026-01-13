@@ -23,7 +23,7 @@ import { Avatar } from "@/components/base/avatar/avatar";
 const primaryStats = [
   {
     label: "Total Revenue",
-    value: "$45,231",
+    value: "₹3,75,231",
     change: "+12.5%",
     trend: "up",
     icon: CurrencyDollar,
@@ -59,43 +59,43 @@ const primaryStats = [
 const recentOrders = [
   {
     id: "ORD-2024-001",
-    customer: { name: "Sarah Johnson", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" },
-    products: "MacBook Pro 16\"",
-    total: 2499,
+    customer: { name: "Priya Sharma", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" },
+    products: "Samsung Galaxy S24 Ultra",
+    total: 124999,
     status: "processing",
-    date: "Dec 18, 2024",
+    date: "18 Dec, 2024",
   },
   {
     id: "ORD-2024-002",
-    customer: { name: "Michael Chen", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" },
-    products: "iPhone 15 Pro + Case",
-    total: 1249,
+    customer: { name: "Rahul Verma", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" },
+    products: "OnePlus 12 + Cover",
+    total: 69999,
     status: "shipped",
-    date: "Dec 17, 2024",
+    date: "17 Dec, 2024",
   },
   {
     id: "ORD-2024-003",
-    customer: { name: "Emily Davis", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" },
-    products: "AirPods Pro 2",
-    total: 249,
+    customer: { name: "Ananya Patel", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" },
+    products: "boAt Airdopes 141",
+    total: 1499,
     status: "delivered",
-    date: "Dec 16, 2024",
+    date: "16 Dec, 2024",
   },
   {
     id: "ORD-2024-004",
-    customer: { name: "James Wilson", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" },
+    customer: { name: "Vikram Singh", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" },
     products: "iPad Air + Keyboard",
-    total: 899,
+    total: 74999,
     status: "pending",
-    date: "Dec 18, 2024",
+    date: "18 Dec, 2024",
   },
   {
     id: "ORD-2024-005",
-    customer: { name: "Lisa Anderson", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop" },
-    products: "Apple Watch Ultra",
-    total: 799,
+    customer: { name: "Sneha Reddy", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop" },
+    products: "Fire-Boltt Phoenix Watch",
+    total: 2999,
     status: "processing",
-    date: "Dec 17, 2024",
+    date: "17 Dec, 2024",
   },
 ];
 
@@ -103,10 +103,10 @@ const recentOrders = [
 const topProducts = [
   {
     id: "1",
-    name: "MacBook Pro 16\" M3 Max",
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=200&h=200&fit=crop",
+    name: "Samsung Galaxy S24 Ultra",
+    image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=200&h=200&fit=crop",
     sales: 24,
-    revenue: 59976,
+    revenue: 2999976,
     stock: 12,
   },
   {
@@ -114,43 +114,43 @@ const topProducts = [
     name: "iPhone 15 Pro Max",
     image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=200&h=200&fit=crop",
     sales: 45,
-    revenue: 53955,
+    revenue: 5849955,
     stock: 28,
   },
   {
     id: "3",
-    name: "AirPods Pro 2nd Gen",
-    image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=200&h=200&fit=crop",
-    sales: 89,
-    revenue: 22161,
-    stock: 45,
+    name: "boAt Rockerz 450",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&h=200&fit=crop",
+    sales: 189,
+    revenue: 283311,
+    stock: 145,
   },
   {
     id: "4",
-    name: "Apple Watch Ultra 2",
+    name: "Noise ColorFit Pro 4",
     image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=200&h=200&fit=crop",
-    sales: 32,
-    revenue: 25568,
-    stock: 8,
+    sales: 132,
+    revenue: 395868,
+    stock: 58,
   },
   {
     id: "5",
-    name: "iPad Pro 12.9\"",
-    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=200&h=200&fit=crop",
-    sales: 18,
-    revenue: 21582,
-    stock: 15,
+    name: "OnePlus Nord CE 3",
+    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200&h=200&fit=crop",
+    sales: 67,
+    revenue: 1675933,
+    stock: 35,
   },
 ];
 
 // Recent Activity
 const recentActivity = [
   { type: "order", message: "New order received", detail: "ORD-2024-001", time: "2 min ago" },
-  { type: "review", message: "New 5-star review", detail: "MacBook Pro 16\"", time: "15 min ago" },
-  { type: "message", message: "New message from", detail: "Sarah Johnson", time: "1 hour ago" },
+  { type: "review", message: "New 5-star review", detail: "Samsung Galaxy S24", time: "15 min ago" },
+  { type: "message", message: "New message from", detail: "Priya Sharma", time: "1 hour ago" },
   { type: "view", message: "Product viewed 50 times", detail: "iPhone 15 Pro", time: "2 hours ago" },
   { type: "order", message: "Order shipped", detail: "ORD-2024-002", time: "3 hours ago" },
-  { type: "review", message: "New 4-star review", detail: "AirPods Pro", time: "5 hours ago" },
+  { type: "review", message: "New 4-star review", detail: "boAt Airdopes", time: "5 hours ago" },
 ];
 
 // Customer Reviews Summary
@@ -158,9 +158,9 @@ const reviewsSummary = {
   average: 4.8,
   total: 234,
   recent: [
-    { customer: "Sarah J.", rating: 5, comment: "Excellent product quality and fast shipping!", product: "MacBook Pro" },
-    { customer: "Mike C.", rating: 5, comment: "Great seller, highly recommend!", product: "iPhone 15" },
-    { customer: "Emily D.", rating: 4, comment: "Good product, minor delay in shipping.", product: "AirPods Pro" },
+    { customer: "Priya S.", rating: 5, comment: "Excellent product quality and fast shipping!", product: "Samsung S24" },
+    { customer: "Rahul V.", rating: 5, comment: "Great seller, highly recommend!", product: "iPhone 15" },
+    { customer: "Ananya P.", rating: 4, comment: "Good product, minor delay in shipping.", product: "boAt Airdopes" },
   ],
 };
 
@@ -258,7 +258,7 @@ export default function SellerDashboard() {
                     </p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <div className="text-sm font-semibold text-primary">${order.total}</div>
+                    <div className="text-sm font-semibold text-primary">₹{order.total.toLocaleString('en-IN')}</div>
                     <div className="text-xs text-tertiary">{order.date}</div>
                   </div>
                   <ChevronRight className="size-4 text-tertiary flex-shrink-0 hidden sm:block" />
@@ -286,7 +286,7 @@ export default function SellerDashboard() {
                     <p className="text-xs text-tertiary">{product.sales} sales</p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <div className="text-sm font-semibold text-primary">${product.revenue.toLocaleString()}</div>
+                    <div className="text-sm font-semibold text-primary">₹{product.revenue.toLocaleString('en-IN')}</div>
                     <div className={`text-xs ${product.stock <= 10 ? "text-error-600" : "text-tertiary"}`}>
                       {product.stock} in stock
                     </div>

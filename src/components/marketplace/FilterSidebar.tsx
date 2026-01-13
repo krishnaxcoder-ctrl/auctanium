@@ -44,12 +44,12 @@ const categories = [
 ];
 
 const budgetRanges = [
-    { id: "0-100", label: "Under $100" },
-    { id: "100-500", label: "$100 - $500" },
-    { id: "500-1000", label: "$500 - $1,000" },
-    { id: "1000-5000", label: "$1,000 - $5,000" },
-    { id: "5000-10000", label: "$5,000 - $10,000" },
-    { id: "10000-inf", label: "$10,000+" },
+    { id: "0-5000", label: "Under ₹5,000" },
+    { id: "5000-25000", label: "₹5,000 - ₹25,000" },
+    { id: "25000-50000", label: "₹25,000 - ₹50,000" },
+    { id: "50000-100000", label: "₹50,000 - ₹1,00,000" },
+    { id: "100000-500000", label: "₹1,00,000 - ₹5,00,000" },
+    { id: "500000-inf", label: "₹5,00,000+" },
 ];
 
 const dimensions = [
@@ -61,10 +61,10 @@ const dimensions = [
 
 const reservePrices = [
     { id: "no-reserve", label: "No Reserve" },
-    { id: "0-500", label: "Under $500" },
-    { id: "500-2000", label: "$500 - $2,000" },
-    { id: "2000-10000", label: "$2,000 - $10,000" },
-    { id: "10000-inf", label: "$10,000+" },
+    { id: "0-25000", label: "Under ₹25,000" },
+    { id: "25000-100000", label: "₹25,000 - ₹1,00,000" },
+    { id: "100000-500000", label: "₹1,00,000 - ₹5,00,000" },
+    { id: "500000-inf", label: "₹5,00,000+" },
 ];
 
 const closingDates = [
@@ -76,14 +76,14 @@ const closingDates = [
 ];
 
 const locations = [
-    { id: "us", label: "United States" },
-    { id: "uk", label: "United Kingdom" },
-    { id: "france", label: "France" },
-    { id: "germany", label: "Germany" },
-    { id: "italy", label: "Italy" },
-    { id: "netherlands", label: "Netherlands" },
-    { id: "asia", label: "Asia" },
-    { id: "worldwide", label: "Worldwide" },
+    { id: "mumbai", label: "Mumbai" },
+    { id: "delhi", label: "Delhi NCR" },
+    { id: "bangalore", label: "Bangalore" },
+    { id: "hyderabad", label: "Hyderabad" },
+    { id: "chennai", label: "Chennai" },
+    { id: "kolkata", label: "Kolkata" },
+    { id: "pune", label: "Pune" },
+    { id: "pan-india", label: "Pan India" },
 ];
 
 const brands = [

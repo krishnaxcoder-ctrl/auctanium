@@ -20,25 +20,25 @@ const feeStructure = [
     fees: [
       { name: "Standard Commission", rate: "10%", description: "Applied to the total sale price" },
       { name: "Premium Seller Commission", rate: "8%", description: "For sellers with 100+ sales and 4.8+ rating" },
-      { name: "Enterprise Commission", rate: "Custom", description: "For high-volume sellers ($50k+/month)" },
+      { name: "Enterprise Commission", rate: "Custom", description: "For high-volume sellers (₹40L+/month)" },
     ],
   },
   {
     category: "Payment Processing",
     description: "Fees charged by payment providers",
     fees: [
-      { name: "Credit/Debit Card", rate: "2.9% + $0.30", description: "Per transaction" },
-      { name: "Bank Transfer", rate: "1%", description: "Minimum $0.25, maximum $5.00" },
-      { name: "Digital Wallets", rate: "2.5%", description: "PayPal, Apple Pay, Google Pay" },
+      { name: "Credit/Debit Card", rate: "2% + ₹3", description: "Per transaction" },
+      { name: "UPI/Net Banking", rate: "0%", description: "Free instant transfers" },
+      { name: "Digital Wallets", rate: "1.5%", description: "Paytm, PhonePe, Google Pay" },
     ],
   },
   {
     category: "Optional Services",
     description: "Additional services to boost your sales",
     fees: [
-      { name: "Featured Listing", rate: "$4.99", description: "7-day homepage promotion" },
-      { name: "Promoted Products", rate: "$0.10/click", description: "Pay-per-click advertising" },
-      { name: "Store Customization", rate: "$29.99/mo", description: "Advanced store branding tools" },
+      { name: "Featured Listing", rate: "₹399", description: "7-day homepage promotion" },
+      { name: "Promoted Products", rate: "₹5/click", description: "Pay-per-click advertising" },
+      { name: "Store Customization", rate: "₹2,499/mo", description: "Advanced store branding tools" },
     ],
   },
 ];
@@ -55,11 +55,11 @@ const includedFeatures = [
 ];
 
 export default function FeeSchedulePage() {
-  const [salePrice, setSalePrice] = useState<string>("100");
+  const [salePrice, setSalePrice] = useState<string>("5000");
 
   const price = parseFloat(salePrice) || 0;
   const commission = price * 0.10;
-  const processing = price * 0.029 + 0.30;
+  const processing = price * 0.02 + 3; // 2% + ₹3 for card payments
   const totalFees = commission + processing;
   const netEarnings = price - totalFees;
 
@@ -74,11 +74,11 @@ export default function FeeSchedulePage() {
       {/* Highlights */}
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-secondary bg-primary p-6 text-center">
-          <div className="text-3xl font-bold text-brand-600">$0</div>
+          <div className="text-3xl font-bold text-brand-600">₹0</div>
           <div className="mt-1 text-sm text-tertiary">Listing fees</div>
         </div>
         <div className="rounded-xl border border-secondary bg-primary p-6 text-center">
-          <div className="text-3xl font-bold text-brand-600">$0</div>
+          <div className="text-3xl font-bold text-brand-600">₹0</div>
           <div className="mt-1 text-sm text-tertiary">Monthly subscription</div>
         </div>
         <div className="rounded-xl border border-secondary bg-primary p-6 text-center">
@@ -102,7 +102,7 @@ export default function FeeSchedulePage() {
         <div className="grid gap-6 sm:grid-cols-2">
           <div>
             <Input
-              label="Sale Price ($)"
+              label="Sale Price (₹)"
               icon={CurrencyDollar}
               size="md"
               type="number"
@@ -115,16 +115,16 @@ export default function FeeSchedulePage() {
           <div className="space-y-3">
             <div className="flex justify-between text-sm">
               <span className="text-tertiary">Commission (10%)</span>
-              <span className="text-primary">-${commission.toFixed(2)}</span>
+              <span className="text-primary">-₹{commission.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-tertiary">Payment Processing</span>
-              <span className="text-primary">-${processing.toFixed(2)}</span>
+              <span className="text-tertiary">Payment Processing (2% + ₹3)</span>
+              <span className="text-primary">-₹{processing.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
             <div className="border-t border-secondary pt-3">
               <div className="flex justify-between">
                 <span className="font-medium text-primary">Your Earnings</span>
-                <span className="text-xl font-bold text-success-600">${netEarnings.toFixed(2)}</span>
+                <span className="text-xl font-bold text-success-600">₹{netEarnings.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
             </div>
           </div>

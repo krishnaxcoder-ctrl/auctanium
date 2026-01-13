@@ -47,7 +47,7 @@ export function ProductCard({ product, showSeller = false }: Props) {
         <div className="mt-2 flex items-center justify-between">
           <div>
             <p className="text-xs text-tertiary">Current bid</p>
-            <p className="text-sm font-semibold text-primary">${product.currentBid}</p>
+            <p className="text-sm font-semibold text-primary">₹{product.currentBid.toLocaleString('en-IN')}</p>
           </div>
           <p className="text-xs text-tertiary">{product.bids} bids</p>
         </div>

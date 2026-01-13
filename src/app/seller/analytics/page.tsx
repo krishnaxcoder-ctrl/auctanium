@@ -35,10 +35,10 @@ const timePeriods = [
 const keyMetrics = [
   {
     label: "Total Revenue",
-    value: "$127,854",
+    value: "₹10,58,540",
     change: "+18.2%",
     trend: "up",
-    previousValue: "$108,234",
+    previousValue: "₹8,95,234",
     icon: CurrencyDollar,
     color: "success",
   },
@@ -71,20 +71,20 @@ const keyMetrics = [
   },
 ];
 
-// Revenue data for chart (last 12 months)
+// Revenue data for chart (last 12 months) - in INR
 const revenueData = [
-  { month: "Jan", revenue: 8500, orders: 95 },
-  { month: "Feb", revenue: 9200, orders: 108 },
-  { month: "Mar", revenue: 11500, orders: 124 },
-  { month: "Apr", revenue: 10800, orders: 118 },
-  { month: "May", revenue: 13200, orders: 142 },
-  { month: "Jun", revenue: 12100, orders: 135 },
-  { month: "Jul", revenue: 14500, orders: 156 },
-  { month: "Aug", revenue: 13800, orders: 149 },
-  { month: "Sep", revenue: 15200, orders: 168 },
-  { month: "Oct", revenue: 16800, orders: 182 },
-  { month: "Nov", revenue: 18500, orders: 198 },
-  { month: "Dec", revenue: 21200, orders: 224 },
+  { month: "Jan", revenue: 705500, orders: 95 },
+  { month: "Feb", revenue: 763600, orders: 108 },
+  { month: "Mar", revenue: 954500, orders: 124 },
+  { month: "Apr", revenue: 896400, orders: 118 },
+  { month: "May", revenue: 1095600, orders: 142 },
+  { month: "Jun", revenue: 1004300, orders: 135 },
+  { month: "Jul", revenue: 1203500, orders: 156 },
+  { month: "Aug", revenue: 1145400, orders: 149 },
+  { month: "Sep", revenue: 1261600, orders: 168 },
+  { month: "Oct", revenue: 1394400, orders: 182 },
+  { month: "Nov", revenue: 1535500, orders: 198 },
+  { month: "Dec", revenue: 1759600, orders: 224 },
 ];
 
 // Traffic sources
@@ -100,76 +100,76 @@ const trafficSources = [
 const topProducts = [
   {
     id: "1",
-    name: "MacBook Pro 16\" M3 Max",
-    category: "Laptops",
-    views: 12450,
-    sales: 124,
-    revenue: 309876,
-    conversionRate: 1.0,
-    trend: "up",
-    change: "+15.2%",
-  },
-  {
-    id: "2",
-    name: "iPhone 15 Pro Max",
+    name: "Samsung Galaxy S24 Ultra",
     category: "Smartphones",
     views: 28900,
     sales: 245,
-    revenue: 293755,
+    revenue: 3062255,
     conversionRate: 0.85,
     trend: "up",
     change: "+22.8%",
   },
   {
-    id: "3",
-    name: "AirPods Pro 2nd Gen",
-    category: "Audio",
-    views: 19200,
-    sales: 389,
-    revenue: 96861,
-    conversionRate: 2.03,
+    id: "2",
+    name: "iPhone 15 Pro Max",
+    category: "Smartphones",
+    views: 24500,
+    sales: 189,
+    revenue: 2834811,
+    conversionRate: 0.77,
     trend: "up",
-    change: "+8.5%",
+    change: "+15.2%",
+  },
+  {
+    id: "3",
+    name: "boAt Airdopes 141",
+    category: "Audio",
+    views: 42300,
+    sales: 1245,
+    revenue: 1866255,
+    conversionRate: 2.94,
+    trend: "up",
+    change: "+35.5%",
   },
   {
     id: "4",
-    name: "iPad Pro 12.9\"",
-    category: "Tablets",
-    views: 8900,
-    sales: 78,
-    revenue: 93462,
-    conversionRate: 0.88,
-    trend: "down",
-    change: "-3.2%",
+    name: "OnePlus 12",
+    category: "Smartphones",
+    views: 18900,
+    sales: 156,
+    revenue: 1091844,
+    conversionRate: 0.83,
+    trend: "up",
+    change: "+18.9%",
   },
   {
     id: "5",
-    name: "Apple Watch Ultra 2",
+    name: "Fire-Boltt Phoenix Ultra",
     category: "Wearables",
-    views: 15600,
-    sales: 156,
-    revenue: 124644,
-    conversionRate: 1.0,
+    views: 31200,
+    sales: 678,
+    revenue: 2033322,
+    conversionRate: 2.17,
     trend: "up",
-    change: "+18.9%",
+    change: "+28.4%",
   },
 ];
 
 // Customer demographics
 const customerDemographics = {
   ageGroups: [
-    { group: "18-24", percentage: 15, count: 768 },
-    { group: "25-34", percentage: 35, count: 1792 },
-    { group: "35-44", percentage: 28, count: 1434 },
-    { group: "45-54", percentage: 14, count: 717 },
-    { group: "55+", percentage: 8, count: 410 },
+    { group: "18-24", percentage: 22, count: 1126 },
+    { group: "25-34", percentage: 38, count: 1946 },
+    { group: "35-44", percentage: 24, count: 1229 },
+    { group: "45-54", percentage: 11, count: 563 },
+    { group: "55+", percentage: 5, count: 256 },
   ],
   topLocations: [
-    { location: "United States", visitors: 18500, orders: 520, revenue: 52340 },
-    { location: "United Kingdom", visitors: 8200, orders: 234, revenue: 23450 },
-    { location: "Canada", visitors: 6100, orders: 178, revenue: 18920 },
-    { location: "Germany", visitors: 4800, orders: 142, revenue: 15680 },
-    { location: "Australia", visitors: 3900, orders: 118, revenue: 12450 },
+    { location: "Mumbai", visitors: 18500, orders: 520, revenue: 4344220 },
+    { location: "Delhi NCR", visitors: 15200, orders: 434, revenue: 3612340 },
+    { location: "Bangalore", visitors: 12100, orders: 378, revenue: 3148920 },
+    { location: "Hyderabad", visitors: 8800, orders: 242, revenue: 2015680 },
+    { location: "Chennai", visitors: 6900, orders: 198, revenue: 1648450 },
   ],
 };
 
@@ -324,7 +324,7 @@ export default function SellerAnalytics() {
                     <div
                       className="absolute bottom-0 w-3/4 rounded-t bg-brand-500 transition-all hover:bg-brand-600"
                       style={{ height: `${(data.revenue / maxRevenue) * 100}%` }}
-                      title={`Revenue: $${data.revenue.toLocaleString()}`}
+                      title={`Revenue: ₹${data.revenue.toLocaleString('en-IN')}`}
                     />
                     {/* Orders indicator dot */}
                     <div
@@ -460,7 +460,7 @@ export default function SellerAnalytics() {
                     </td>
                     <td className="px-4 py-3 text-right text-sm text-primary">{product.sales}</td>
                     <td className="px-4 py-3 text-right text-sm font-medium text-primary">
-                      ${product.revenue.toLocaleString()}
+                      ₹{product.revenue.toLocaleString('en-IN')}
                     </td>
                     <td className="px-4 py-3 text-right text-sm text-primary">
                       {product.conversionRate}%
@@ -509,7 +509,7 @@ export default function SellerAnalytics() {
                 </div>
                 <div className="text-right">
                   <div className="text-sm font-medium text-primary">
-                    ${location.revenue.toLocaleString()}
+                    ₹{location.revenue.toLocaleString('en-IN')}
                   </div>
                   <div className="text-xs text-tertiary">{location.visitors.toLocaleString()} visitors</div>
                 </div>
@@ -551,7 +551,7 @@ export default function SellerAnalytics() {
                 <Package className="size-5 text-warning-600" />
               </div>
               <div>
-                <div className="text-2xl font-semibold text-primary">$99.52</div>
+                <div className="text-2xl font-semibold text-primary">₹8,260</div>
                 <div className="text-xs text-tertiary">Avg. Order Value</div>
               </div>
             </div>
