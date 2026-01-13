@@ -185,97 +185,96 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="space-y-6 overflow-x-hidden max-w-full">
+    <div className="space-y-4 sm:space-y-6 overflow-x-hidden max-w-full">
       {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-primary">Products</h1>
-          <p className="text-sm text-tertiary">Manage your product inventory</p>
+          <h1 className="text-lg sm:text-xl font-semibold text-primary">Products</h1>
+          <p className="text-xs sm:text-sm text-tertiary">Manage your product inventory</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <Button color="secondary" size="sm" iconLeading={FilterLines}>
-            Export
+            <span className="hidden sm:inline">Export</span>
           </Button>
           <Link href="/seller/products/new">
             <Button color="primary" size="sm" iconLeading={Plus}>
-              Add Product
+              <span className="hidden sm:inline">Add Product</span>
+              <span className="sm:hidden">Add</span>
             </Button>
           </Link>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-brand-50">
-              <Package className="size-5 text-brand-600" />
+      <div className="grid grid-cols-2 gap-2 sm:gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="rounded-xl border border-secondary bg-primary p-2 sm:p-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-brand-50 flex-shrink-0">
+              <Package className="size-4 text-brand-600" />
             </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.total}</div>
-              <div className="text-xs text-tertiary">Total Products</div>
-            </div>
-          </div>
-        </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-success-50">
-              <Package className="size-5 text-success-600" />
-            </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.active}</div>
-              <div className="text-xs text-tertiary">Active</div>
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-semibold text-primary">{stats.total}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Total</div>
             </div>
           </div>
         </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-gray-100">
-              <Package className="size-5 text-gray-600" />
+        <div className="rounded-xl border border-secondary bg-primary p-2 sm:p-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-success-50 flex-shrink-0">
+              <Package className="size-4 text-success-600" />
             </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.draft}</div>
-              <div className="text-xs text-tertiary">Draft</div>
-            </div>
-          </div>
-        </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-warning-50">
-              <AlertCircle className="size-5 text-warning-600" />
-            </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.lowStock}</div>
-              <div className="text-xs text-tertiary">Low Stock</div>
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-semibold text-primary">{stats.active}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Active</div>
             </div>
           </div>
         </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-error-50">
-              <Package className="size-5 text-error-600" />
+        <div className="rounded-xl border border-secondary bg-primary p-2 sm:p-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-gray-100 flex-shrink-0">
+              <Package className="size-4 text-gray-600" />
             </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.outOfStock}</div>
-              <div className="text-xs text-tertiary">Out of Stock</div>
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-semibold text-primary">{stats.draft}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Draft</div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-xl border border-secondary bg-primary p-2 sm:p-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-warning-50 flex-shrink-0">
+              <AlertCircle className="size-4 text-warning-600" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-semibold text-primary">{stats.lowStock}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Low Stock</div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-xl border border-secondary bg-primary p-2 sm:p-3 col-span-2 sm:col-span-1">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-error-50 flex-shrink-0">
+              <Package className="size-4 text-error-600" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-semibold text-primary">{stats.outOfStock}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Out of Stock</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-1 items-center gap-3">
-          <div className="w-full max-w-sm">
-            <Input
-              icon={SearchLg}
-              size="sm"
-              value={searchQuery}
-              onChange={(value) => setSearchQuery(value)}
-              placeholder="Search products..."
-            />
-          </div>
-          <div className="w-40">
+      <div className="space-y-2 sm:space-y-3">
+        <Input
+          icon={SearchLg}
+          size="sm"
+          value={searchQuery}
+          onChange={(value) => setSearchQuery(value)}
+          placeholder="Search products..."
+        />
+        <div className="flex gap-2 overflow-x-auto pb-1 -mb-1">
+          <div className="flex-shrink-0 w-24 sm:w-28">
             <Select
               size="sm"
               placeholder="Status"
@@ -286,12 +285,10 @@ export default function ProductsPage() {
               {(item) => <Select.Item id={item.id} label={item.label} />}
             </Select>
           </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="w-48">
+          <div className="flex-shrink-0 w-28 sm:w-36">
             <Select
               size="sm"
-              placeholder="Sort by"
+              placeholder="Sort"
               items={sortOptions}
               selectedKey={sortBy}
               onSelectionChange={(key) => setSortBy(key as string)}
@@ -304,31 +301,31 @@ export default function ProductsPage() {
 
       {/* Bulk Actions */}
       {selectedProducts.length > 0 && (
-        <div className="flex items-center gap-4 rounded-lg bg-brand-50 px-4 py-3">
-          <span className="text-sm font-medium text-brand-700">
-            {selectedProducts.length} product{selectedProducts.length > 1 ? "s" : ""} selected
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 rounded-lg bg-brand-50 px-3 py-2 sm:py-3">
+          <span className="text-xs sm:text-sm font-medium text-brand-700 flex-shrink-0">
+            {selectedProducts.length} selected
           </span>
-          <div className="flex items-center gap-2">
-            <Button color="secondary" size="sm">
-              Edit
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto">
+            <Button color="secondary" size="sm" iconLeading={Edit02} className="flex-shrink-0">
+              <span className="hidden sm:inline">Edit</span>
             </Button>
-            <Button color="secondary" size="sm" iconLeading={Archive}>
-              Archive
+            <Button color="secondary" size="sm" iconLeading={Archive} className="flex-shrink-0">
+              <span className="hidden sm:inline">Archive</span>
             </Button>
-            <Button color="primary-destructive" size="sm" iconLeading={Trash01}>
-              Delete
+            <Button color="primary-destructive" size="sm" iconLeading={Trash01} className="flex-shrink-0">
+              <span className="hidden sm:inline">Delete</span>
             </Button>
           </div>
         </div>
       )}
 
-      {/* Products Table */}
-      <div className="rounded-xl border border-secondary bg-primary overflow-hidden">
+      {/* Products Table - Desktop */}
+      <div className="hidden md:block rounded-xl border border-secondary bg-primary overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full min-w-[800px]">
             <thead>
               <tr className="border-b border-secondary bg-secondary/50">
-                <th className="px-4 py-3 text-left">
+                <th className="px-4 py-3 text-left w-12">
                   <Checkbox
                     isSelected={selectedProducts.length === filteredProducts.length && filteredProducts.length > 0}
                     isIndeterminate={selectedProducts.length > 0 && selectedProducts.length < filteredProducts.length}
@@ -344,16 +341,13 @@ export default function ProductsPage() {
                 <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
                   Inventory
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary hidden lg:table-cell">
                   Category
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
                   Price
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
-                  Vendor
-                </th>
-                <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-tertiary w-28">
                   Actions
                 </th>
               </tr>
@@ -369,7 +363,7 @@ export default function ProductsPage() {
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <div className="relative size-12 overflow-hidden rounded-lg bg-secondary">
+                      <div className="relative size-10 overflow-hidden rounded-lg bg-secondary flex-shrink-0">
                         <Image
                           src={product.image}
                           alt={product.name}
@@ -377,10 +371,10 @@ export default function ProductsPage() {
                           className="object-cover"
                         />
                       </div>
-                      <div>
+                      <div className="min-w-0">
                         <Link
                           href={`/seller/products/${product.id}`}
-                          className="text-sm font-medium text-primary hover:text-brand-600 transition-colors"
+                          className="text-sm font-medium text-primary hover:text-brand-600 transition-colors truncate block"
                         >
                           {product.name}
                         </Link>
@@ -397,26 +391,23 @@ export default function ProductsPage() {
                       {statusConfig[product.status].label}
                     </Badge>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <span className={`text-sm ${product.inventory <= 5 ? "text-error-600 font-medium" : "text-primary"}`}>
                       {product.inventory} in stock
                     </span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 hidden lg:table-cell">
                     <span className="text-sm text-secondary">{product.category}</span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <div>
                       <span className="text-sm font-medium text-primary">${product.price}</span>
                       {product.comparePrice && (
-                        <span className="ml-2 text-xs text-tertiary line-through">
+                        <span className="ml-1 text-xs text-tertiary line-through">
                           ${product.comparePrice}
                         </span>
                       )}
                     </div>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="text-sm text-secondary">{product.vendor}</span>
                   </td>
                   <td className="px-4 py-3">
                     <div className="relative flex items-center justify-end gap-2">
@@ -481,10 +472,79 @@ export default function ProductsPage() {
         )}
       </div>
 
+      {/* Products Cards - Mobile */}
+      <div className="md:hidden space-y-3">
+        {filteredProducts.map((product) => (
+          <Link
+            key={product.id}
+            href={`/seller/products/${product.id}`}
+            className="block rounded-xl border border-secondary bg-primary p-3 hover:bg-secondary/30 transition-colors"
+          >
+            <div className="flex items-start gap-3">
+              <div onClick={(e) => e.preventDefault()}>
+                <Checkbox
+                  isSelected={selectedProducts.includes(product.id)}
+                  onChange={() => toggleSelectProduct(product.id)}
+                />
+              </div>
+              <div className="relative size-14 overflow-hidden rounded-lg bg-secondary flex-shrink-0">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2 mb-1">
+                  <p className="text-sm font-medium text-primary truncate">{product.name}</p>
+                  <span className="text-sm font-semibold text-primary flex-shrink-0">${product.price}</span>
+                </div>
+                <p className="text-xs text-tertiary mb-2">{product.sku}</p>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge
+                    type="pill-color"
+                    size="sm"
+                    color={statusConfig[product.status].color}
+                  >
+                    {statusConfig[product.status].label}
+                  </Badge>
+                  <span className={`text-xs ${product.inventory <= 5 ? "text-error-600 font-medium" : "text-tertiary"}`}>
+                    {product.inventory} in stock
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Link>
+        ))}
+
+        {/* Empty State - Mobile */}
+        {filteredProducts.length === 0 && (
+          <div className="rounded-xl border border-secondary bg-primary p-8">
+            <div className="flex flex-col items-center justify-center text-center">
+              <Package className="size-10 text-tertiary mb-3" />
+              <h3 className="text-base font-medium text-primary">No products found</h3>
+              <p className="mt-1 text-sm text-tertiary">
+                {searchQuery || statusFilter !== "all"
+                  ? "Try adjusting your search or filters"
+                  : "Get started by adding your first product"}
+              </p>
+              {!searchQuery && statusFilter === "all" && (
+                <Link href="/seller/products/new" className="mt-4">
+                  <Button color="primary" size="sm" iconLeading={Plus}>
+                    Add Product
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Pagination */}
       {filteredProducts.length > 0 && (
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-tertiary">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs sm:text-sm text-tertiary">
             Showing {filteredProducts.length} of {products.length} products
           </p>
           <div className="flex items-center gap-2">

@@ -250,106 +250,104 @@ export default function OrdersPage() {
   };
 
   return (
-    <div className="space-y-6 overflow-x-hidden max-w-full">
+    <div className="space-y-4 sm:space-y-6 overflow-x-hidden max-w-full">
       {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-primary">Orders</h1>
-          <p className="text-sm text-tertiary">Manage and track your orders</p>
+          <h1 className="text-lg sm:text-xl font-semibold text-primary">Orders</h1>
+          <p className="text-xs sm:text-sm text-tertiary">Manage and track your orders</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <Button color="secondary" size="sm" iconLeading={Download01}>
-            Export
+            <span className="hidden sm:inline">Export</span>
           </Button>
           <Button color="secondary" size="sm" iconLeading={RefreshCw01}>
-            Sync
+            <span className="hidden sm:inline">Sync</span>
           </Button>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-brand-50">
-              <ShoppingCart01 className="size-5 text-brand-600" />
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-6">
+        <div className="rounded-xl border border-secondary bg-primary p-2 sm:p-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-brand-50 flex-shrink-0">
+              <ShoppingCart01 className="size-4 text-brand-600" />
             </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.total}</div>
-              <div className="text-xs text-tertiary">Total Orders</div>
-            </div>
-          </div>
-        </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-warning-50">
-              <Clock className="size-5 text-warning-600" />
-            </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.pending}</div>
-              <div className="text-xs text-tertiary">Pending</div>
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-semibold text-primary">{stats.total}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Total</div>
             </div>
           </div>
         </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-brand-50">
-              <RefreshCw01 className="size-5 text-brand-600" />
+        <div className="rounded-xl border border-secondary bg-primary p-2 sm:p-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-warning-50 flex-shrink-0">
+              <Clock className="size-4 text-warning-600" />
             </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.processing}</div>
-              <div className="text-xs text-tertiary">Processing</div>
-            </div>
-          </div>
-        </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-brand-50">
-              <Truck01 className="size-5 text-brand-600" />
-            </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.shipped}</div>
-              <div className="text-xs text-tertiary">Shipped</div>
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-semibold text-primary">{stats.pending}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Pending</div>
             </div>
           </div>
         </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-success-50">
-              <CheckCircle className="size-5 text-success-600" />
+        <div className="rounded-xl border border-secondary bg-primary p-2 sm:p-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-brand-50 flex-shrink-0">
+              <RefreshCw01 className="size-4 text-brand-600" />
             </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.delivered}</div>
-              <div className="text-xs text-tertiary">Delivered</div>
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-semibold text-primary">{stats.processing}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Processing</div>
             </div>
           </div>
         </div>
-        <div className="rounded-xl border border-secondary bg-primary p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-error-50">
-              <XClose className="size-5 text-error-600" />
+        <div className="rounded-xl border border-secondary bg-primary p-2 sm:p-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-brand-50 flex-shrink-0">
+              <Truck01 className="size-4 text-brand-600" />
             </div>
-            <div>
-              <div className="text-xl font-semibold text-primary">{stats.cancelled}</div>
-              <div className="text-xs text-tertiary">Cancelled</div>
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-semibold text-primary">{stats.shipped}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Shipped</div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-xl border border-secondary bg-primary p-2 sm:p-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-success-50 flex-shrink-0">
+              <CheckCircle className="size-4 text-success-600" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-semibold text-primary">{stats.delivered}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Delivered</div>
+            </div>
+          </div>
+        </div>
+        <div className="rounded-xl border border-secondary bg-primary p-2 sm:p-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-error-50 flex-shrink-0">
+              <XClose className="size-4 text-error-600" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-base sm:text-lg font-semibold text-primary">{stats.cancelled}</div>
+              <div className="text-[10px] sm:text-xs text-tertiary truncate">Cancelled</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-1 flex-wrap items-center gap-3">
-          <div className="w-full max-w-sm">
-            <Input
-              icon={SearchLg}
-              size="sm"
-              value={searchQuery}
-              onChange={(value) => setSearchQuery(value)}
-              placeholder="Search orders..."
-            />
-          </div>
-          <div className="w-36">
+      <div className="space-y-2 sm:space-y-3">
+        <Input
+          icon={SearchLg}
+          size="sm"
+          value={searchQuery}
+          onChange={(value) => setSearchQuery(value)}
+          placeholder="Search orders..."
+        />
+        <div className="flex gap-2 overflow-x-auto pb-1 -mb-1">
+          <div className="flex-shrink-0 w-28 sm:w-32">
             <Select
               size="sm"
               placeholder="Status"
@@ -360,7 +358,7 @@ export default function OrdersPage() {
               {(item) => <Select.Item id={item.id} label={item.label} />}
             </Select>
           </div>
-          <div className="w-36">
+          <div className="flex-shrink-0 w-28 sm:w-32">
             <Select
               size="sm"
               placeholder="Date"
@@ -371,12 +369,10 @@ export default function OrdersPage() {
               {(item) => <Select.Item id={item.id} label={item.label} />}
             </Select>
           </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="w-48">
+          <div className="flex-shrink-0 w-28 sm:w-36">
             <Select
               size="sm"
-              placeholder="Sort by"
+              placeholder="Sort"
               items={sortOptions}
               selectedKey={sortBy}
               onSelectionChange={(key) => setSortBy(key as string)}
@@ -389,31 +385,31 @@ export default function OrdersPage() {
 
       {/* Bulk Actions */}
       {selectedOrders.length > 0 && (
-        <div className="flex items-center gap-4 rounded-lg bg-brand-50 px-4 py-3">
-          <span className="text-sm font-medium text-brand-700">
-            {selectedOrders.length} order{selectedOrders.length > 1 ? "s" : ""} selected
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 rounded-lg bg-brand-50 px-3 py-2 sm:py-3">
+          <span className="text-xs sm:text-sm font-medium text-brand-700 flex-shrink-0">
+            {selectedOrders.length} selected
           </span>
-          <div className="flex items-center gap-2">
-            <Button color="secondary" size="sm" iconLeading={Truck01}>
-              Mark Shipped
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto">
+            <Button color="secondary" size="sm" iconLeading={Truck01} className="flex-shrink-0">
+              <span className="hidden sm:inline">Ship</span>
             </Button>
-            <Button color="secondary" size="sm" iconLeading={Mail01}>
-              Send Email
+            <Button color="secondary" size="sm" iconLeading={Mail01} className="flex-shrink-0">
+              <span className="hidden sm:inline">Email</span>
             </Button>
-            <Button color="secondary" size="sm" iconLeading={Download01}>
-              Export
+            <Button color="secondary" size="sm" iconLeading={Download01} className="flex-shrink-0">
+              <span className="hidden sm:inline">Export</span>
             </Button>
           </div>
         </div>
       )}
 
-      {/* Orders Table */}
-      <div className="rounded-xl border border-secondary bg-primary overflow-hidden">
+      {/* Orders Table - Desktop */}
+      <div className="hidden md:block rounded-xl border border-secondary bg-primary overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full min-w-[900px]">
             <thead>
               <tr className="border-b border-secondary bg-secondary/50">
-                <th className="px-4 py-3 text-left">
+                <th className="px-4 py-3 text-left w-12">
                   <Checkbox
                     isSelected={selectedOrders.length === filteredOrders.length && filteredOrders.length > 0}
                     isIndeterminate={selectedOrders.length > 0 && selectedOrders.length < filteredOrders.length}
@@ -426,19 +422,19 @@ export default function OrdersPage() {
                 <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
                   Customer
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary hidden lg:table-cell">
                   Products
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
                   Status
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary hidden lg:table-cell">
                   Payment
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-tertiary">
                   Total
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-tertiary">
+                <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-tertiary w-28">
                   Actions
                 </th>
               </tr>
@@ -455,31 +451,31 @@ export default function OrdersPage() {
                       />
                     </td>
                     <td className="px-4 py-3">
-                      <div>
+                      <div className="min-w-0">
                         <Link
                           href={`/seller/orders/${order.id}`}
                           className="text-sm font-medium text-primary hover:text-brand-600 transition-colors"
                         >
                           {order.id}
                         </Link>
-                        <p className="text-xs text-tertiary">{order.date} at {order.time}</p>
+                        <p className="text-xs text-tertiary">{order.date}</p>
                       </div>
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <Avatar src={order.customer.avatar} alt={order.customer.name} size="sm" />
-                        <div>
-                          <p className="text-sm font-medium text-primary">{order.customer.name}</p>
-                          <p className="text-xs text-tertiary">{order.customer.email}</p>
+                        <div className="min-w-0">
+                          <p className="text-sm font-medium text-primary truncate">{order.customer.name}</p>
+                          <p className="text-xs text-tertiary truncate">{order.customer.email}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3">
-                      <div>
-                        <p className="text-sm text-primary">
+                    <td className="px-4 py-3 hidden lg:table-cell">
+                      <div className="min-w-0">
+                        <p className="text-sm text-primary truncate">
                           {order.products[0].name}
                           {order.products.length > 1 && (
-                            <span className="text-tertiary"> +{order.products.length - 1} more</span>
+                            <span className="text-tertiary"> +{order.products.length - 1}</span>
                           )}
                         </p>
                         <p className="text-xs text-tertiary">
@@ -496,7 +492,7 @@ export default function OrdersPage() {
                         {statusConfig[order.status].label}
                       </Badge>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 hidden lg:table-cell">
                       <Badge
                         type="pill-color"
                         size="sm"
@@ -505,7 +501,7 @@ export default function OrdersPage() {
                         {paymentStatusConfig[order.paymentStatus].label}
                       </Badge>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 whitespace-nowrap">
                       <span className="text-sm font-semibold text-primary">${order.total.toLocaleString()}</span>
                     </td>
                     <td className="px-4 py-3">
@@ -581,10 +577,74 @@ export default function OrdersPage() {
         )}
       </div>
 
+      {/* Orders Cards - Mobile */}
+      <div className="md:hidden space-y-3">
+        {filteredOrders.map((order) => (
+          <Link
+            key={order.id}
+            href={`/seller/orders/${order.id}`}
+            className="block rounded-xl border border-secondary bg-primary p-3 hover:bg-secondary/30 transition-colors"
+          >
+            <div className="flex items-start gap-3">
+              <div onClick={(e) => e.preventDefault()}>
+                <Checkbox
+                  isSelected={selectedOrders.includes(order.id)}
+                  onChange={() => toggleSelectOrder(order.id)}
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-primary">{order.id}</p>
+                    <p className="text-xs text-tertiary">{order.date}</p>
+                  </div>
+                  <span className="text-sm font-semibold text-primary">${order.total.toLocaleString()}</span>
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Avatar src={order.customer.avatar} alt={order.customer.name} size="xs" />
+                  <span className="text-xs text-secondary truncate">{order.customer.name}</span>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge
+                    type="pill-color"
+                    size="sm"
+                    color={statusConfig[order.status].color}
+                  >
+                    {statusConfig[order.status].label}
+                  </Badge>
+                  <Badge
+                    type="pill-color"
+                    size="sm"
+                    color={paymentStatusConfig[order.paymentStatus].color}
+                  >
+                    {paymentStatusConfig[order.paymentStatus].label}
+                  </Badge>
+                </div>
+              </div>
+            </div>
+          </Link>
+        ))}
+
+        {/* Empty State - Mobile */}
+        {filteredOrders.length === 0 && (
+          <div className="rounded-xl border border-secondary bg-primary p-8">
+            <div className="flex flex-col items-center justify-center text-center">
+              <ShoppingCart01 className="size-10 text-tertiary mb-3" />
+              <h3 className="text-base font-medium text-primary">No orders found</h3>
+              <p className="mt-1 text-sm text-tertiary">
+                {searchQuery || statusFilter !== "all"
+                  ? "Try adjusting your search or filters"
+                  : "Orders will appear here once customers place them"}
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Pagination */}
       {filteredOrders.length > 0 && (
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-tertiary">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs sm:text-sm text-tertiary">
             Showing {filteredOrders.length} of {orders.length} orders
           </p>
           <div className="flex items-center gap-2">

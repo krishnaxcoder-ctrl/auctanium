@@ -87,11 +87,11 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, size, placeholder, placeho
 
                             {state.selectedItem ? (
                                 <section className="flex w-full gap-2 truncate">
-                                    <p className="truncate text-md font-medium text-primary">{state.selectedItem?.label}</p>
-                                    {state.selectedItem?.supportingText && <p className="text-md text-tertiary">{state.selectedItem?.supportingText}</p>}
+                                    <p className={cx("truncate font-medium text-primary", size === "sm" ? "text-sm" : "text-md")}>{state.selectedItem?.label}</p>
+                                    {state.selectedItem?.supportingText && <p className={cx("text-tertiary", size === "sm" ? "text-sm" : "text-md")}>{state.selectedItem?.supportingText}</p>}
                                 </section>
                             ) : (
-                                <p className={cx("text-md text-placeholder", isDisabled && "text-disabled")}>{placeholder}</p>
+                                <p className={cx("text-placeholder", size === "sm" ? "text-sm" : "text-md", isDisabled && "text-disabled")}>{placeholder}</p>
                             )}
 
                             <ChevronDown
