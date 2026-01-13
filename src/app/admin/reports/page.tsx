@@ -121,7 +121,7 @@ export default function ReportsPage() {
           <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Reports</h1>
           <p className="text-sm text-[#898989]">Generate and download platform reports.</p>
         </div>
-        <Button color="primary" size="sm" iconLeading={Plus} className="bg-[#000080] hover:bg-[#000080]/90 flex-shrink-0 self-start sm:self-auto">
+        <Button color="primary" size="sm" iconLeading={Plus} className="bg-brand-600 hover:bg-brand-600/90 flex-shrink-0 self-start sm:self-auto">
           Generate Report
         </Button>
       </div>
@@ -131,11 +131,11 @@ export default function ReportsPage() {
         {reportTemplates.map((template) => (
           <button
             key={template.id}
-            className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4 text-left hover:border-[#000080] hover:shadow-sm transition-all"
+            className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4 text-left hover:border-brand-600 hover:shadow-sm transition-all"
           >
             <div className="flex items-center gap-2 sm:gap-3">
-              <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-[#000080]/10 flex-shrink-0">
-                <template.icon className="size-4 sm:size-5 text-[#000080]" />
+              <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-brand-600/10 flex-shrink-0">
+                <template.icon className="size-4 sm:size-5 text-brand-600" />
               </div>
               <div className="min-w-0">
                 <div className="text-sm font-medium text-gray-900 truncate">{template.name}</div>
@@ -150,8 +150,8 @@ export default function ReportsPage() {
       <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         <div className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-[#000080]/10 flex-shrink-0">
-              <File01 className="size-4 sm:size-5 text-[#000080]" />
+            <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-brand-600/10 flex-shrink-0">
+              <File01 className="size-4 sm:size-5 text-brand-600" />
             </div>
             <div className="min-w-0">
               <div className="text-lg sm:text-xl font-bold text-gray-900">{reportsData.length}</div>
@@ -209,13 +209,13 @@ export default function ReportsPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search reports..."
-              className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 px-3 text-sm text-gray-900 placeholder:text-[#898989] focus:border-[#000080] focus:outline-none focus:ring-2 focus:ring-[#000080]/20"
+              className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 px-3 text-sm text-gray-900 placeholder:text-[#898989] focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
             />
           </div>
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 focus:border-[#000080] focus:outline-none"
+            className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 focus:border-brand-600 focus:outline-none"
           >
             <option value="all">All Types</option>
             <option value="sales">Sales</option>
@@ -315,7 +315,7 @@ export default function ReportsPage() {
                     <td className="px-4 py-4">
                       <div className="flex items-center justify-end gap-1">
                         {report.status === "completed" && (
-                          <button className="p-2 rounded-lg text-[#898989] hover:bg-[#000080]/10 hover:text-[#000080] transition-colors">
+                          <button className="p-2 rounded-lg text-[#898989] hover:bg-brand-600/10 hover:text-brand-600 transition-colors">
                             <Download01 className="size-4" />
                           </button>
                         )}

@@ -175,7 +175,7 @@ export function AdminHeader() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search users, orders, listings..."
-                className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-500 focus:border-[#000080] focus:outline-none focus:ring-2 focus:ring-[#000080]/20"
+                className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-500 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-600/20"
               />
             </div>
           </div>
@@ -189,7 +189,7 @@ export function AdminHeader() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium text-gray-700 hover:bg-[#000080]/5 hover:text-[#000080] transition-colors"
+                    className="flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium text-gray-700 hover:bg-brand-600/5 hover:text-brand-600 transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <span className="flex items-center gap-3">
@@ -231,7 +231,7 @@ export function AdminHeader() {
             </Link>
             {isLoaded && !isSignedIn && (
               <Link href="/login" className="block" onClick={() => setMobileMenuOpen(false)}>
-                <Button color="primary" size="md" className="w-full justify-center bg-[#000080] hover:bg-[#000080]/90">
+                <Button color="primary" size="md" className="w-full justify-center bg-brand-600 hover:bg-brand-600/90">
                   Sign In
                 </Button>
               </Link>

@@ -96,7 +96,7 @@ const notificationsData = [
 ];
 
 const typeConfig: Record<string, { icon: typeof Bell01; color: string; bgColor: string }> = {
-  order: { icon: ShoppingCart01, color: "text-[#000080]", bgColor: "bg-[#000080]/10" },
+  order: { icon: ShoppingCart01, color: "text-brand-600", bgColor: "bg-brand-600/10" },
   alert: { icon: AlertTriangle, color: "text-amber-600", bgColor: "bg-amber-50" },
   user: { icon: Users01, color: "text-purple-600", bgColor: "bg-purple-50" },
   payment: { icon: CurrencyDollar, color: "text-green-600", bgColor: "bg-green-50" },
@@ -163,7 +163,7 @@ export default function NotificationsPage() {
             <span className="sm:hidden">Read all</span>
           </Button>
           <Button color="secondary" size="sm" iconLeading={Settings01}>
-            <span className="hidden sm:inline">Settings</span>
+            Settings
           </Button>
         </div>
       </div>
@@ -172,8 +172,8 @@ export default function NotificationsPage() {
       <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         <div className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4">
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-[#000080]/10 flex-shrink-0">
-              <Bell01 className="size-4 sm:size-5 text-[#000080]" />
+            <div className="flex size-8 sm:size-10 items-center justify-center rounded-lg bg-brand-600/10 flex-shrink-0">
+              <Bell01 className="size-4 sm:size-5 text-brand-600" />
             </div>
             <div className="min-w-0">
               <div className="text-lg sm:text-xl font-bold text-gray-900">{notifications.length}</div>
@@ -228,7 +228,7 @@ export default function NotificationsPage() {
               onClick={() => setFilter("all")}
               className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filter === "all"
-                  ? "bg-[#000080] text-white"
+                  ? "bg-brand-600 text-white"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >
@@ -238,7 +238,7 @@ export default function NotificationsPage() {
               onClick={() => setFilter("unread")}
               className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filter === "unread"
-                  ? "bg-[#000080] text-white"
+                  ? "bg-brand-600 text-white"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >
@@ -249,7 +249,7 @@ export default function NotificationsPage() {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 focus:border-[#000080] focus:outline-none"
+              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 focus:border-brand-600 focus:outline-none"
             >
               <option value="all">All Types</option>
               <option value="order">Orders</option>
@@ -287,7 +287,7 @@ export default function NotificationsPage() {
                 <div
                   key={notification.id}
                   className={`p-3 sm:p-4 transition-colors hover:bg-gray-50 ${
-                    !notification.read ? "bg-[#000080]/5" : ""
+                    !notification.read ? "bg-brand-600/5" : ""
                   }`}
                 >
                   <div className="flex items-start gap-3">
@@ -302,7 +302,7 @@ export default function NotificationsPage() {
                               {notification.title}
                             </h3>
                             {!notification.read && (
-                              <span className="size-2 rounded-full bg-[#000080] flex-shrink-0" />
+                              <span className="size-2 rounded-full bg-brand-600 flex-shrink-0" />
                             )}
                             <Badge type="pill-color" size="sm" color={priorityColors[notification.priority]}>
                               {notification.priority}
