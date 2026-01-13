@@ -9,17 +9,56 @@ import {
   Menu01,
   X,
   SearchLg,
-  ChevronDown,
+  Home05,
+  Users01,
+  Building07,
+  ShoppingCart01,
+  Package,
+  BarChart01,
+  Shield01,
+  CreditCard01,
+  MessageSquare01,
+  File01,
+  Tag01,
+  Plus,
 } from "@untitledui/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/base/buttons/button";
 import { Badge } from "@/components/base/badges/badges";
+
+const navLinks = [
+  { label: "Dashboard", icon: Home05, href: "/admin" },
+  { label: "Users", icon: Users01, href: "/admin/users", badge: "142" },
+  { label: "Customers", icon: Building07, href: "/admin/customers" },
+  { label: "Sellers", icon: Shield01, href: "/admin/sellers", badge: "23" },
+  { label: "Orders", icon: ShoppingCart01, href: "/admin/orders", badge: "18" },
+  { label: "Listings", icon: Package, href: "/admin/listings" },
+  { label: "Transactions", icon: CreditCard01, href: "/admin/transactions" },
+  { label: "Categories", icon: Tag01, href: "/admin/categories" },
+  { label: "Analytics", icon: BarChart01, href: "/admin/analytics" },
+  { label: "Reports", icon: File01, href: "/admin/reports" },
+  { label: "Messages", icon: MessageSquare01, href: "/admin/messages", badge: "5" },
+  { label: "Notifications", icon: Bell01, href: "/admin/notifications" },
+  { label: "Settings", icon: Settings01, href: "/admin/settings" },
+];
 
 export function AdminHeader() {
   const { isSignedIn, isLoaded } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [mobileMenuOpen]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white">
@@ -124,57 +163,79 @@ export function AdminHeader() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Full-Screen Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="border-t border-gray-200 bg-white px-4 py-4 md:hidden">
+        <div className="fixed inset-0 top-16 bg-white lg:hidden flex flex-col z-50">
           {/* Mobile Search */}
-          <div className="relative mb-4">
-            <SearchLg className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-500" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search..."
-              className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-500 focus:border-brand-500 focus:outline-none"
-            />
+          <div className="p-4 border-b border-gray-200">
+            <div className="relative">
+              <SearchLg className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-500" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search users, orders, listings..."
+                className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-500 focus:border-[#000080] focus:outline-none focus:ring-2 focus:ring-[#000080]/20"
+              />
+            </div>
           </div>
 
-          {/* Mobile Links */}
-          <div className="space-y-1">
-            <Link
-              href="/"
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              View Site
+          {/* Navigation Links */}
+          <div className="flex-1 overflow-y-auto p-4">
+            <nav className="space-y-1">
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium text-gray-700 hover:bg-[#000080]/5 hover:text-[#000080] transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <span className="flex items-center gap-3">
+                      <Icon className="size-5 text-gray-500" />
+                      {link.label}
+                    </span>
+                    {link.badge && (
+                      <Badge type="pill-color" size="sm" color="brand">
+                        {link.badge}
+                      </Badge>
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Divider */}
+            <div className="my-4 border-t border-gray-200" />
+
+            {/* Quick Links */}
+            <div className="space-y-1">
+              <Link
+                href="/admin/help"
+                className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <HelpCircle className="size-5 text-gray-500" />
+                Help Center
+              </Link>
+            </div>
+          </div>
+
+          {/* Bottom Actions - Sticky */}
+          <div className="sticky bottom-0 border-t border-gray-200 bg-white p-4 space-y-3">
+            <Link href="/" className="block" onClick={() => setMobileMenuOpen(false)}>
+              <Button color="secondary" size="md" className="w-full justify-center">
+                View Site
+              </Button>
             </Link>
-            <Link
-              href="/admin/notifications"
-              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span className="flex items-center gap-3">
-                <Bell01 className="size-4" />
-                Notifications
-              </span>
-              <Badge type="pill-color" size="sm" color="error">7</Badge>
-            </Link>
-            <Link
-              href="/admin/help"
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <HelpCircle className="size-4" />
-              Help Center
-            </Link>
-            <Link
-              href="/admin/settings"
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <Settings01 className="size-4" />
-              Settings
-            </Link>
+            {isLoaded && !isSignedIn && (
+              <Link href="/login" className="block" onClick={() => setMobileMenuOpen(false)}>
+                <Button color="primary" size="md" className="w-full justify-center bg-[#000080] hover:bg-[#000080]/90">
+                  Sign In
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       )}
