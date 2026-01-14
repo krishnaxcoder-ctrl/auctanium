@@ -530,7 +530,7 @@ export const Header = () => {
                 )}
             >
                 <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex h-16 items-center justify-between gap-4 lg:h-18">
+                    <div className="flex h-16 items-center justify-between gap-4 lg:h-16">
                         {/* Logo & Search */}
                         <div className="flex items-center gap-4 flex-1">
                             <Logo />
@@ -562,8 +562,8 @@ export const Header = () => {
                                 {[
                                     { key: "marketplace", label: "Marketplace", href: "/marketplace" },
                                     { key: "categories", label: "Categories", href: "/marketplace" },
-                                    { key: "more", label: "More", href: "/about" },
                                     { key: "sellers", label: "Sellers", href: "/seller" },
+                                    { key: "more", label: "More", href: "/about" },
                                 ].map((item) => (
                                     <div
                                         key={item.key}
@@ -586,12 +586,30 @@ export const Header = () => {
                                         </button>
                                     </div>
                                 ))}
-                                {/* Community Link */}
+                                {/* Additional Links */}
                                 <Link
                                     href="/community"
                                     className="flex cursor-pointer items-center rounded-lg px-4 py-2 text-sm font-medium text-secondary transition-all hover:bg-secondary hover:text-primary"
                                 >
                                     Community
+                                </Link>
+                                <Link
+                                    href="/deals"
+                                    className="flex cursor-pointer items-center rounded-lg px-4 py-2 text-sm font-medium text-secondary transition-all hover:bg-secondary hover:text-primary"
+                                >
+                                    Deals
+                                </Link>
+                                <Link
+                                    href="/auctions"
+                                    className="flex cursor-pointer items-center rounded-lg px-4 py-2 text-sm font-medium text-secondary transition-all hover:bg-secondary hover:text-primary"
+                                >
+                                    Auctions
+                                </Link>
+                                <Link
+                                    href="/blog"
+                                    className="flex cursor-pointer items-center rounded-lg px-4 py-2 text-sm font-medium text-secondary transition-all hover:bg-secondary hover:text-primary"
+                                >
+                                    Blog
                                 </Link>
                             </nav>
 
@@ -862,7 +880,7 @@ export const Header = () => {
                             {/* Dynamic Columns */}
                             {currentMegaMenu.columns.map((column, index) => (
                                 <div key={index}>
-                                    <h3 className="text-xs font-semibold uppercase tracking-wider text-tertiary mb-4">
+                                    <h3 className="text-xs font-semibold uppercase tracking-wider text-tertiary mb-2">
                                         {column.title}
                                     </h3>
                                     <div className="space-y-1">
@@ -870,7 +888,7 @@ export const Header = () => {
                                             <Link
                                                 key={item.label}
                                                 href={item.href}
-                                                className="block rounded-lg px-3 py-2 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
+                                                className="block rounded-lg py-2 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
                                                 onClick={closeMegaMenu}
                                             >
                                                 {item.label}
