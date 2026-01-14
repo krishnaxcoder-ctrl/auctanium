@@ -140,12 +140,43 @@ const megaMenus: Record<string, MegaMenu> = {
                 ]
             },
             {
+                title: "New Arrivals",
+                items: [
+                    { label: "Just Listed", href: "/marketplace?sort=newest" },
+                    { label: "This Week", href: "/marketplace?listed=week" },
+                    { label: "Premium Listings", href: "/marketplace?premium=true" },
+                    { label: "Verified Sellers", href: "/marketplace?verified=true" },
+                    { label: "Local Pickup", href: "/marketplace?pickup=true" },
+                ]
+            },
+            {
+                title: "Price Range",
+                items: [
+                    { label: "Under ₹5,000", href: "/marketplace?price=0-5000" },
+                    { label: "₹5,000 - ₹25,000", href: "/marketplace?price=5000-25000" },
+                    { label: "₹25,000 - ₹1,00,000", href: "/marketplace?price=25000-100000" },
+                    { label: "Above ₹1,00,000", href: "/marketplace?price=100000+" },
+                    { label: "No Reserve", href: "/marketplace?reserve=none" },
+                ]
+            },
+            {
                 title: "Services",
                 items: [
                     { label: "Authentication", href: "/services/authentication" },
                     { label: "Appraisal", href: "/services/appraisal" },
                     { label: "Shipping Calculator", href: "/services/shipping" },
                     { label: "Price Guide", href: "/services/price-guide" },
+                    { label: "Insurance", href: "/services/insurance" },
+                ]
+            },
+            {
+                title: "Help",
+                items: [
+                    { label: "How to Buy", href: "/help/buying" },
+                    { label: "Bidding Guide", href: "/help/bidding" },
+                    { label: "Payment Options", href: "/help/payments" },
+                    { label: "Shipping Info", href: "/help/shipping" },
+                    { label: "Returns Policy", href: "/help/returns" },
                 ]
             }
         ]
@@ -181,6 +212,36 @@ const megaMenus: Record<string, MegaMenu> = {
                     { label: "GDPR", href: "/gdpr" },
                     { label: "Licenses", href: "/licenses" },
                 ]
+            },
+            {
+                title: "Community",
+                items: [
+                    { label: "Forums", href: "/community/forums" },
+                    { label: "Events", href: "/community/events" },
+                    { label: "Newsletter", href: "/community/newsletter" },
+                    { label: "Affiliate Program", href: "/affiliate" },
+                    { label: "Partner With Us", href: "/partners" },
+                ]
+            },
+            {
+                title: "Resources",
+                items: [
+                    { label: "Collector Guides", href: "/resources/guides" },
+                    { label: "Market Insights", href: "/resources/insights" },
+                    { label: "Authentication Tips", href: "/resources/authentication" },
+                    { label: "Investment Guide", href: "/resources/investment" },
+                    { label: "Glossary", href: "/resources/glossary" },
+                ]
+            },
+            {
+                title: "Connect",
+                items: [
+                    { label: "Facebook", href: "https://facebook.com" },
+                    { label: "Twitter", href: "https://twitter.com" },
+                    { label: "Instagram", href: "https://instagram.com" },
+                    { label: "YouTube", href: "https://youtube.com" },
+                    { label: "LinkedIn", href: "https://linkedin.com" },
+                ]
             }
         ]
     },
@@ -203,6 +264,7 @@ const megaMenus: Record<string, MegaMenu> = {
                     { label: "Jewellery & Precious Stones", href: "/marketplace?category=jewellery-precious-stones" },
                     { label: "Watches, Pens & Lighters", href: "/marketplace?category=watches-pens-lighters" },
                     { label: "Interiors & Decorations", href: "/marketplace?category=interiors-decorations" },
+                    { label: "Designer Handbags", href: "/marketplace?category=designer-handbags" },
                 ]
             },
             {
@@ -218,8 +280,30 @@ const megaMenus: Record<string, MegaMenu> = {
             {
                 title: "Motors & Spirits",
                 items: [
-                    { label: "Classic Cars, Motorcycles & Automobilia", href: "/marketplace?category=classic-cars-motorcycles" },
-                    { label: "Wine, Whisky & Spirits", href: "/marketplace?category=wine-whisky-spirits" },
+                    { label: "Classic Cars", href: "/marketplace?category=classic-cars" },
+                    { label: "Motorcycles", href: "/marketplace?category=motorcycles" },
+                    { label: "Automobilia", href: "/marketplace?category=automobilia" },
+                    { label: "Wine & Champagne", href: "/marketplace?category=wine" },
+                    { label: "Whisky & Spirits", href: "/marketplace?category=whisky-spirits" },
+                ]
+            },
+            {
+                title: "Electronics & Tech",
+                items: [
+                    { label: "Vintage Electronics", href: "/marketplace?category=vintage-electronics" },
+                    { label: "Audio Equipment", href: "/marketplace?category=audio" },
+                    { label: "Cameras & Photography", href: "/marketplace?category=cameras" },
+                    { label: "Gaming Consoles", href: "/marketplace?category=gaming" },
+                    { label: "Computers & Tech", href: "/marketplace?category=computers" },
+                ]
+            },
+            {
+                title: "Home & Garden",
+                items: [
+                    { label: "Antique Furniture", href: "/marketplace?category=antique-furniture" },
+                    { label: "Rugs & Carpets", href: "/marketplace?category=rugs" },
+                    { label: "Lighting & Lamps", href: "/marketplace?category=lighting" },
+                    { label: "Garden & Outdoor", href: "/marketplace?category=garden" },
                     { label: "View All Categories", href: "/marketplace" },
                 ]
             }
@@ -235,7 +319,16 @@ const megaMenus: Record<string, MegaMenu> = {
                     { label: "List an Item", href: "/sellers/list" },
                     { label: "Pricing & Fees", href: "/sellers/pricing" },
                     { label: "Seller Protection", href: "/sellers/protection" },
+                ]
+            },
+            {
+                title: "Seller Tools",
+                items: [
                     { label: "Shipping Labels", href: "/sellers/shipping" },
+                    { label: "Inventory Manager", href: "/sellers/inventory" },
+                    { label: "Analytics Dashboard", href: "/sellers/analytics" },
+                    { label: "Bulk Upload", href: "/sellers/bulk-upload" },
+                    { label: "Promotion Tools", href: "/sellers/promotions" },
                 ]
             },
             {
@@ -255,6 +348,27 @@ const megaMenus: Record<string, MegaMenu> = {
                     { label: "Top Rated", href: "/sellers/top-rated" },
                     { label: "New Sellers", href: "/sellers/new" },
                     { label: "Verified Sellers", href: "/sellers/verified" },
+                    { label: "Power Sellers", href: "/sellers/power-sellers" },
+                ]
+            },
+            {
+                title: "Support",
+                items: [
+                    { label: "Seller Help Center", href: "/sellers/help" },
+                    { label: "Dispute Resolution", href: "/sellers/disputes" },
+                    { label: "Tax Information", href: "/sellers/taxes" },
+                    { label: "Seller Forums", href: "/sellers/forums" },
+                    { label: "Contact Support", href: "/sellers/contact" },
+                ]
+            },
+            {
+                title: "Programs",
+                items: [
+                    { label: "Pro Seller Program", href: "/sellers/pro" },
+                    { label: "Verified Badge", href: "/sellers/verification" },
+                    { label: "Featured Listings", href: "/sellers/featured-listings" },
+                    { label: "Referral Program", href: "/sellers/referral" },
+                    { label: "Seller Academy", href: "/sellers/academy" },
                 ]
             }
         ]
@@ -275,7 +389,6 @@ export const Header = () => {
     const [isListening, setIsListening] = useState(false);
     const [showResults, setShowResults] = useState(false);
     const searchInputRef = useRef<HTMLInputElement>(null);
-    const megaMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     // Load recent searches from localStorage
     useEffect(() => {
@@ -353,17 +466,12 @@ export const Header = () => {
           )
         : [];
 
-    const handleMegaMenuEnter = (menu: string) => {
-        if (megaMenuTimeoutRef.current) {
-            clearTimeout(megaMenuTimeoutRef.current);
-        }
-        setActiveMegaMenu(menu);
+    const handleMegaMenuToggle = (menu: string) => {
+        setActiveMegaMenu(prev => prev === menu ? null : menu);
     };
 
-    const handleMegaMenuLeave = () => {
-        megaMenuTimeoutRef.current = setTimeout(() => {
-            setActiveMegaMenu(null);
-        }, 150);
+    const closeMegaMenu = () => {
+        setActiveMegaMenu(null);
     };
 
     const currentMegaMenu = activeMegaMenu ? megaMenus[activeMegaMenu as keyof typeof megaMenus] : null;
@@ -428,7 +536,7 @@ export const Header = () => {
                             <Logo />
 
                             {/* Desktop Search Bar */}
-                            <div className="relative hidden lg:block flex-1 max-w-md">
+                            <div className="relative hidden lg:block w-48">
                                 <SearchLg className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-tertiary" />
                                 <input
                                     type="text"
@@ -454,17 +562,15 @@ export const Header = () => {
                                 {[
                                     { key: "marketplace", label: "Marketplace", href: "/marketplace" },
                                     { key: "categories", label: "Categories", href: "/marketplace" },
-                                    { key: "sellers", label: "Sellers", href: "/seller" },
                                     { key: "more", label: "More", href: "/about" },
+                                    { key: "sellers", label: "Sellers", href: "/seller" },
                                 ].map((item) => (
                                     <div
                                         key={item.key}
                                         className="relative"
-                                        onMouseEnter={() => handleMegaMenuEnter(item.key)}
-                                        onMouseLeave={handleMegaMenuLeave}
                                     >
-                                        <Link
-                                            href={item.href}
+                                        <button
+                                            onClick={() => handleMegaMenuToggle(item.key)}
                                             className={cx(
                                                 "flex cursor-pointer items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium transition-all",
                                                 activeMegaMenu === item.key
@@ -477,7 +583,7 @@ export const Header = () => {
                                                 "size-4 transition-transform duration-200",
                                                 activeMegaMenu === item.key && "rotate-180"
                                             )} />
-                                        </Link>
+                                        </button>
                                     </div>
                                 ))}
                                 {/* Community Link */}
@@ -749,12 +855,10 @@ export const Header = () => {
                         : "opacity-0 -translate-y-4 invisible"
                 )}
                 style={{ top: "64px" }}
-                onMouseEnter={() => activeMegaMenu && handleMegaMenuEnter(activeMegaMenu)}
-                onMouseLeave={handleMegaMenuLeave}
             >
                 {currentMegaMenu && (
                     <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 py-8">
-                        <div className="grid grid-cols-4 gap-8">
+                        <div className="grid grid-cols-6 gap-6">
                             {/* Dynamic Columns */}
                             {currentMegaMenu.columns.map((column, index) => (
                                 <div key={index}>
@@ -767,7 +871,7 @@ export const Header = () => {
                                                 key={item.label}
                                                 href={item.href}
                                                 className="block rounded-lg px-3 py-2 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
-                                                onClick={() => setActiveMegaMenu(null)}
+                                                onClick={closeMegaMenu}
                                             >
                                                 {item.label}
                                             </Link>
@@ -784,7 +888,7 @@ export const Header = () => {
             {activeMegaMenu && (
                 <div
                     className="fixed inset-0 z-30 bg-overlay/40 backdrop-blur-sm transition-opacity"
-                    onClick={() => setActiveMegaMenu(null)}
+                    onClick={closeMegaMenu}
                     style={{ top: "64px" }}
                 />
             )}

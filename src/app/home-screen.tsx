@@ -22,9 +22,7 @@ const LookingNowSection = lazy(() => import("@/components/sections/looking-now-s
 const LearningArticlesSection = lazy(() => import("@/components/sections/learning-articles-section").then(mod => ({ default: mod.LearningArticlesSection })));
 const LatestFromCommunitySection = lazy(() => import("@/components/sections/latest-from-community-section").then(mod => ({ default: mod.LatestFromCommunitySection })));
 const HowItWorksSection = lazy(() => import("@/components/sections/how-it-works-section").then(mod => ({ default: mod.HowItWorksSection })));
-const FeaturesSection = lazy(() => import("@/components/sections/features-section").then(mod => ({ default: mod.FeaturesSection })));
 const TestimonialsSection = lazy(() => import("@/components/sections/testimonials-section").then(mod => ({ default: mod.TestimonialsSection })));
-const MembershipSection = lazy(() => import("@/components/sections/membership-section").then(mod => ({ default: mod.MembershipSection })));
 const CTASection = lazy(() => import("@/components/sections/cta-section").then(mod => ({ default: mod.CTASection })));
 
 // Loading skeleton component
@@ -137,16 +135,6 @@ export const HomeScreen = () => {
             {/* How It Works */}
             <Suspense fallback={<SectionSkeleton />}>
                 <HowItWorksSection />
-            </Suspense>
-
-            {/* Features */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <FeaturesSection />
-            </Suspense>
-
-            {/* Membership Plans */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <MembershipSection />
             </Suspense>
 
             {/* Final CTA */}
