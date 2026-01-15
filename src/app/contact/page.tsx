@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Mail01, ChevronRight, Home05, Phone, MarkerPin01, Clock, MessageChatCircle, User01 } from "@untitledui/icons";
+import { ArrowLeft, Mail01, Phone, MarkerPin01, MessageChatCircle, User01, Send01, Clock, Star01, Zap, CheckCircle } from "@untitledui/icons";
 import { Button } from "@/components/base/buttons/button";
 import { Input } from "@/components/base/input/input";
 import { Select, SelectItemType } from "@/components/base/select/select";
@@ -24,28 +24,18 @@ const contactMethods = [
   {
     icon: Mail01,
     title: "Email",
-    description: "Our team will respond within 24 hours",
     value: "auctanium@gmail.com",
     action: "mailto:auctanium@gmail.com",
   },
   {
-    icon: MessageChatCircle,
-    title: "Live Chat",
-    description: "Available 24/7 for instant support",
-    value: "Start a conversation",
-    action: "#",
-  },
-  {
     icon: Phone,
     title: "Phone",
-    description: "Mon-Fri from 8am to 6pm EST",
     value: "+1 (555) 123-4567",
     action: "tel:+15551234567",
   },
   {
     icon: MarkerPin01,
     title: "Office",
-    description: "Visit us at our headquarters",
     value: "San Francisco, CA",
     action: "#",
   },
@@ -96,77 +86,177 @@ export default function ContactPage() {
     }
 
     setIsSubmitting(true);
-    // Handle form submission here
     console.log("Form submitted:", result.data);
     setIsSubmitting(false);
   };
 
   return (
-    <div className="min-h-screen bg-primary">
-      {/* Header */}
-      <div className="relative overflow-hidden bg-brand-solid">
-        {/* Background decorations */}
+    <div className="flex min-h-screen">
+      {/* Left Panel - Brand Section */}
+      <div className="relative hidden lg:flex lg:w-1/2 flex-col bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 p-10 xl:p-14 overflow-hidden">
+        {/* Background Elements */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-40 -right-40 size-80 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 size-80 rounded-full bg-white/10 blur-3xl" />
+          {/* Gradient orbs */}
+          <div className="absolute -top-40 -left-40 size-[500px] rounded-full bg-brand-500/30 blur-[120px]" />
+          <div className="absolute -bottom-40 -right-40 size-[500px] rounded-full bg-brand-400/20 blur-[120px]" />
+          <div className="absolute top-1/3 right-1/4 size-[300px] rounded-full bg-purple-500/10 blur-[100px]" />
+
+          {/* Grid pattern */}
           <div
-            className="absolute inset-0 opacity-[0.07]"
+            className="absolute inset-0 opacity-[0.03]"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1.5' fill='%23ffffff'/%3E%3C/svg%3E")`,
-              backgroundSize: '24px 24px',
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: '60px 60px',
             }}
           />
+
+          {/* Floating shapes */}
+          <div className="absolute top-20 right-20 size-3 rounded-full bg-white/20 animate-pulse" />
+          <div className="absolute top-40 right-40 size-2 rounded-full bg-white/30 animate-pulse delay-300" />
+          <div className="absolute bottom-32 left-20 size-4 rounded-full bg-white/10 animate-pulse delay-500" />
         </div>
 
-        <div className="relative mx-auto max-w-8xl px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
-          {/* Breadcrumb */}
-          <nav className="mb-4 flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
-            <Link
-              href="/"
-              className="flex items-center gap-1 sm:gap-1.5 text-white/70 transition-colors hover:text-white"
-            >
-              <Home05 className="size-3 sm:size-4" />
-              <span>Home</span>
-            </Link>
-            <ChevronRight className="size-3 sm:size-4 text-white/40" />
-            <span className="text-white">Contact</span>
-          </nav>
+        {/* Header */}
+        <div className="relative z-10 flex items-center justify-between">
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-white/80 backdrop-blur-sm transition-all hover:bg-white/20 hover:text-white"
+          >
+            <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
+            <span className="text-sm font-medium">Back</span>
+          </Link>
 
-          {/* Header content */}
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-3 sm:gap-5">
-              <div className="flex size-10 sm:size-14 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
-                <Mail01 className="size-5 sm:size-7 text-white" />
-              </div>
-              <div>
-                <h1 className="text-lg sm:text-2xl font-bold tracking-tight text-white">
-                  Contact Us
-                </h1>
-                <p className="mt-2 hidden text-brand-200 sm:block">
-                  We&apos;d love to hear from you
-                </p>
-              </div>
+          <div className="flex items-center gap-2 rounded-full bg-green-500/20 px-3 py-1.5 backdrop-blur-sm">
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex size-2 rounded-full bg-green-500" />
+            </span>
+            <span className="text-xs font-medium text-green-300">Online Now</span>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="relative z-10 flex flex-1 flex-col justify-center py-8">
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
+              <MessageChatCircle className="size-4 text-brand-300" />
+              <span className="text-sm font-medium text-white/90">24/7 Support Available</span>
             </div>
 
-            <Link
-              href="/"
-              className="group mt-3 hidden items-center justify-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-all hover:bg-white/20 sm:flex"
-            >
-              <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
-              Back to Home
-            </Link>
+            <h1 className="text-4xl xl:text-5xl 2xl:text-6xl font-bold tracking-tight text-white leading-[1.1]">
+              We&apos;re here to
+              <span className="block mt-2 bg-gradient-to-r from-brand-200 via-purple-300 to-pink-300 bg-clip-text text-transparent">
+                help you succeed
+              </span>
+            </h1>
+
+            <p className="text-base xl:text-lg text-white/60 max-w-md leading-relaxed">
+              Got questions? We&apos;ve got answers. Our team is ready to assist you with anything you need.
+            </p>
+          </div>
+
+          {/* Stats */}
+          <div className="mt-10 grid grid-cols-3 gap-4">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+              <div className="flex items-center gap-2 text-brand-300 mb-2">
+                <Clock className="size-4" />
+              </div>
+              <p className="text-2xl xl:text-3xl font-bold text-white">&lt;2h</p>
+              <p className="text-xs text-white/50 mt-1">Avg. Response</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+              <div className="flex items-center gap-2 text-yellow-400 mb-2">
+                <Star01 className="size-4 fill-yellow-400" />
+              </div>
+              <p className="text-2xl xl:text-3xl font-bold text-white">4.9/5</p>
+              <p className="text-xs text-white/50 mt-1">Satisfaction</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+              <div className="flex items-center gap-2 text-green-400 mb-2">
+                <Zap className="size-4" />
+              </div>
+              <p className="text-2xl xl:text-3xl font-bold text-white">50K+</p>
+              <p className="text-xs text-white/50 mt-1">Users Helped</p>
+            </div>
+          </div>
+
+          {/* Testimonial Card */}
+          <div className="mt-8 rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 to-white/5 p-5 backdrop-blur-sm">
+            <div className="flex gap-1 mb-3">
+              {[...Array(5)].map((_, i) => (
+                <Star01 key={i} className="size-4 fill-yellow-400 text-yellow-400" />
+              ))}
+            </div>
+            <p className="text-sm text-white/80 leading-relaxed">
+              &ldquo;The support team was incredibly helpful and responsive. They resolved my issue within minutes!&rdquo;
+            </p>
+            <div className="mt-4 flex items-center gap-3">
+              <div className="size-10 rounded-full bg-gradient-to-br from-brand-400 to-purple-500 flex items-center justify-center text-white font-semibold text-sm">
+                SK
+              </div>
+              <div>
+                <p className="text-sm font-medium text-white">Sarah K.</p>
+                <p className="text-xs text-white/50">Verified Customer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer - Contact Methods */}
+        <div className="relative z-10 space-y-4">
+          <div className="flex flex-wrap gap-3">
+            {contactMethods.map((method, index) => (
+              <a
+                key={index}
+                href={method.action}
+                className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/20"
+              >
+                <method.icon className="size-4 text-white/70" />
+                <span className="text-sm text-white/80 group-hover:text-white">{method.value}</span>
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2 text-white/40">
+            <CheckCircle className="size-4" />
+            <span className="text-xs">Secure & encrypted communication</span>
           </div>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="mx-auto max-w-8xl px-4 py-6 sm:py-12 sm:px-6 lg:px-8 lg:py-16">
-        <div className="grid gap-8 lg:grid-cols-2">
-          {/* Contact Form */}
-          <div className="rounded-2xl border border-secondary bg-primary p-6 shadow-sm sm:p-8 lg:p-10">
-            <h2 className="text-lg sm:text-2xl font-semibold text-primary mb-2">Send us a message</h2>
-            <p className="text-tertiary mb-6">Fill out the form below and we&apos;ll get back to you as soon as possible.</p>
+      {/* Right Panel - Form Section */}
+      <div className="flex flex-1 flex-col bg-primary">
+        {/* Mobile Header */}
+        <div className="flex items-center justify-between p-4 lg:hidden">
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-2 text-tertiary transition-colors hover:text-primary"
+          >
+            <ArrowLeft className="size-5 transition-transform group-hover:-translate-x-1" />
+            <span className="text-sm font-medium">Back</span>
+          </Link>
+        </div>
 
+        {/* Form Container */}
+        <div className="flex flex-1 items-center justify-center p-6 sm:p-8 lg:p-12">
+          <div className="w-full max-w-lg">
+            {/* Mobile Title */}
+            <div className="mb-8 lg:hidden">
+              <div className="inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1.5 mb-4">
+                <MessageChatCircle className="size-4 text-brand-600" />
+                <span className="text-xs font-medium text-brand-600">Get in Touch</span>
+              </div>
+              <h1 className="text-2xl font-bold text-primary">Contact Us</h1>
+              <p className="mt-2 text-tertiary">We&apos;d love to hear from you</p>
+            </div>
+
+            {/* Desktop Title */}
+            <div className="hidden lg:block mb-8">
+              <h2 className="text-2xl xl:text-3xl font-bold text-primary">Send us a message</h2>
+              <p className="mt-2 text-tertiary">Fill out the form below and we&apos;ll get back to you shortly.</p>
+            </div>
+
+            {/* Form */}
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div className="grid gap-5 sm:grid-cols-2">
                 <Input
@@ -217,67 +307,41 @@ export default function ContactPage() {
 
               <TextArea
                 label="Message"
-                placeholder="How can we help you?"
-                rows={5}
+                placeholder="Tell us how we can help you..."
+                rows={4}
                 value={formData.message}
                 onChange={(value) => handleChange("message", value)}
                 isInvalid={!!errors.message}
                 hint={errors.message}
               />
 
-              <Button color="primary" size="lg" className="w-full" type="submit" isDisabled={isSubmitting}>
-                {isSubmitting ? "Sending..." : "Send Message"}
+              <Button color="primary" size="lg" className="w-full gap-2" type="submit" isDisabled={isSubmitting}>
+                {isSubmitting ? (
+                  "Sending..."
+                ) : (
+                  <>
+                    Send Message
+                    <Send01 className="size-5" />
+                  </>
+                )}
               </Button>
             </form>
-          </div>
 
-          {/* Contact Methods */}
-          <div className="space-y-6">
-            <div className="rounded-2xl border border-secondary bg-primary p-6 shadow-sm sm:p-8">
-              <h2 className="text-lg sm:text-2xl font-semibold text-primary mb-6">Other ways to reach us</h2>
-              <div className="space-y-4">
+            {/* Mobile Contact Info */}
+            <div className="mt-8 pt-8 border-t border-secondary lg:hidden">
+              <p className="text-sm text-tertiary mb-4">Or reach us directly:</p>
+              <div className="flex flex-wrap gap-4">
                 {contactMethods.map((method, index) => (
                   <a
                     key={index}
                     href={method.action}
-                    className="flex items-start gap-4 rounded-xl border border-secondary p-4 transition-all hover:border-brand-300 hover:bg-secondary"
+                    className="inline-flex items-center gap-2 rounded-lg bg-secondary px-3 py-2 text-sm font-medium text-primary transition-colors hover:bg-tertiary"
                   >
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-brand-100">
-                      <method.icon className="size-6 text-brand-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-primary">{method.title}</h3>
-                      <p className="text-sm text-tertiary">{method.description}</p>
-                      <p className="mt-1 text-sm font-medium text-brand-600">{method.value}</p>
-                    </div>
+                    <method.icon className="size-4 text-brand-600" />
+                    {method.value}
                   </a>
                 ))}
               </div>
-            </div>
-
-            {/* Business Hours */}
-            <div className="rounded-2xl border border-secondary bg-primary p-6 shadow-sm sm:p-8">
-              <div className="flex items-center gap-3 mb-4">
-                <Clock className="size-5 text-brand-600" />
-                <h3 className="font-semibold text-primary">Business Hours</h3>
-              </div>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-tertiary">Monday - Friday</span>
-                  <span className="text-primary font-medium">8:00 AM - 6:00 PM EST</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-tertiary">Saturday</span>
-                  <span className="text-primary font-medium">9:00 AM - 4:00 PM EST</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-tertiary">Sunday</span>
-                  <span className="text-primary font-medium">Closed</span>
-                </div>
-              </div>
-              <p className="mt-4 text-sm text-tertiary">
-                Live chat support is available 24/7 for urgent inquiries.
-              </p>
             </div>
           </div>
         </div>
