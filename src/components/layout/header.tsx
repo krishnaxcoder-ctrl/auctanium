@@ -1338,7 +1338,7 @@ export const Header = () => {
 
             {/* Categories Bar */}
             {!isCommunityPage && (
-            <div className="bg-primary border-b-2 border-brand-300 hidden lg:block">
+            <div className="bg-primary border-b border-gray-300 dark:border-gray-600 hidden lg:block">
                 <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-center gap-1 py-2">
                         {parentCategories.map((category) => (
@@ -1346,10 +1346,10 @@ export const Header = () => {
                                 key={category.key}
                                 onClick={() => setActiveCategoryMenu(prev => prev === category.key ? null : category.key)}
                                 className={cx(
-                                    "flex items-center gap-1 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-all cursor-pointer",
+                                    "relative flex items-center gap-1 whitespace-nowrap px-4 py-2 text-sm font-medium transition-all cursor-pointer",
                                     activeCategoryMenu === category.key
-                                        ? "bg-brand-600 text-white"
-                                        : "text-secondary hover:bg-secondary hover:text-primary"
+                                        ? "text-brand-600"
+                                        : "text-secondary hover:text-primary"
                                 )}
                             >
                                 {category.label}
@@ -1357,6 +1357,9 @@ export const Header = () => {
                                     "size-4 transition-transform duration-200",
                                     activeCategoryMenu === category.key && "rotate-180"
                                 )} />
+                                {activeCategoryMenu === category.key && (
+                                    <span className="absolute -bottom-2 left-0 right-0 h-[2px] bg-purple-500 z-50" />
+                                )}
                             </button>
                         ))}
                     </div>
@@ -1366,7 +1369,7 @@ export const Header = () => {
 
             {/* Mobile Categories Bar */}
             {!isCommunityPage && (
-            <div className="bg-primary border-b-2 border-brand-300 lg:hidden">
+            <div className="bg-primary border-b border-gray-300 dark:border-gray-600 lg:hidden">
                 <div className="relative">
                     {/* Left Fade Gradient */}
                     <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-primary to-transparent z-10" />
@@ -1380,10 +1383,10 @@ export const Header = () => {
                                 key={category.key}
                                 onClick={() => setActiveCategoryMenu(prev => prev === category.key ? null : category.key)}
                                 className={cx(
-                                    "flex items-center gap-1 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-medium transition-all cursor-pointer",
+                                    "relative flex items-center gap-1 whitespace-nowrap px-3 py-1.5 text-xs font-medium transition-all cursor-pointer",
                                     activeCategoryMenu === category.key
-                                        ? "bg-brand-600 text-white"
-                                        : "text-secondary hover:bg-secondary hover:text-primary"
+                                        ? "text-brand-600"
+                                        : "text-secondary hover:text-primary"
                                 )}
                             >
                                 {category.label}
@@ -1391,6 +1394,9 @@ export const Header = () => {
                                     "size-3 transition-transform duration-200",
                                     activeCategoryMenu === category.key && "rotate-180"
                                 )} />
+                                {activeCategoryMenu === category.key && (
+                                    <span className="absolute -bottom-2 left-0 right-0 h-[2px] bg-purple-500 z-50" />
+                                )}
                             </button>
                         ))}
                     </div>
@@ -1412,7 +1418,7 @@ export const Header = () => {
                 style={{ top: "116px" }}
             >
                 {activeCategoryMenu && categoryMegaMenus[activeCategoryMenu] && (
-                    <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 py-8">
+                    <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 py-8 border-t border-gray-300 dark:border-gray-600">
                         <div className="grid grid-cols-6 gap-6">
                             {categoryMegaMenus[activeCategoryMenu].map((section, index) => (
                                 <div key={index}>
