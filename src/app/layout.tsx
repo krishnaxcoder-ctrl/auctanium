@@ -88,7 +88,12 @@ export default function RootLayout({
                     zIndex={1600}
                 />
                 <ClarityProvider>
-                    <ClerkProvider dynamic>
+                    <ClerkProvider
+                        signInUrl="/login"
+                        signUpUrl="/signup"
+                        signInFallbackRedirectUrl="/dashboard"
+                        signUpFallbackRedirectUrl="/dashboard"
+                    >
                         <RouteProvider>
                             <Theme>
                                 <LayoutWrapper>{children}</LayoutWrapper>

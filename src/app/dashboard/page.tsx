@@ -133,8 +133,8 @@ export default function DashboardPage() {
 
       {/* Tabs */}
       <div className="bg-primary border border-secondary rounded-xl">
-        <div className="border-b border-secondary">
-          <div className="flex">
+        <div className="border-b border-secondary overflow-x-auto">
+          <div className="flex min-w-max">
             {[
               { id: "bids", label: "Active Bids", count: activeBids.length },
               { id: "won", label: "Won Auctions", count: wonAuctions.length },
@@ -143,7 +143,7 @@ export default function DashboardPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
+                className={`flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === tab.id
                     ? "border-brand-600 text-brand-600"
                     : "border-transparent text-tertiary hover:text-primary"

@@ -42,16 +42,16 @@ export default function SettingsPage() {
         </p>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-4">
-        {/* Sidebar Tabs */}
+      <div className="grid gap-6 lg:gap-8 lg:grid-cols-4">
+        {/* Sidebar Tabs - Horizontal scroll on mobile */}
         <div className="lg:col-span-1">
-          <div className="bg-primary border border-secondary rounded-xl p-2">
-            <nav className="space-y-1">
+          <div className="bg-primary border border-secondary rounded-xl p-2 overflow-x-auto">
+            <nav className="flex lg:flex-col gap-1 min-w-max lg:min-w-0">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                  className={`w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                  className={`flex items-center gap-2 lg:gap-3 rounded-lg px-3 py-2 lg:py-2.5 text-sm font-medium transition-colors whitespace-nowrap lg:w-full ${
                     activeTab === tab.id
                       ? "bg-brand-50 text-brand-700"
                       : "text-secondary hover:bg-secondary hover:text-primary"
