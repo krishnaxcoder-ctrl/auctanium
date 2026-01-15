@@ -1410,15 +1410,15 @@ export const Header = () => {
             {/* Category Mega Menu - Desktop */}
             <div
                 className={cx(
-                    "fixed left-0 right-0 z-40 bg-primary border-b border-secondary shadow-xl transition-all duration-300 ease-in-out hidden lg:block",
+                    "fixed left-0 right-0 z-40 bg-primary shadow-sm transition-all duration-200 ease-out hidden lg:block",
                     activeCategoryMenu
                         ? "opacity-100 translate-y-0 visible"
-                        : "opacity-0 -translate-y-4 invisible"
+                        : "opacity-0 -translate-y-2 invisible"
                 )}
                 style={{ top: "116px" }}
             >
                 {activeCategoryMenu && categoryMegaMenus[activeCategoryMenu] && (
-                    <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 py-8 border-t border-gray-300 dark:border-gray-600">
+                    <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 py-5">
                         <div className="grid grid-cols-6 gap-6">
                             {categoryMegaMenus[activeCategoryMenu].map((section, index) => (
                                 <div key={index}>
@@ -1447,7 +1447,7 @@ export const Header = () => {
             {/* Category Mega Menu - Mobile */}
             <div
                 className={cx(
-                    "fixed left-0 right-0 bottom-0 z-40 bg-primary border-t border-secondary shadow-xl transition-all duration-300 ease-in-out lg:hidden overflow-hidden",
+                    "fixed left-0 right-0 bottom-0 z-40 bg-primary border-t border-secondary shadow-sm transition-all duration-200 ease-out lg:hidden overflow-hidden",
                     activeCategoryMenu
                         ? "opacity-100 translate-y-0 visible"
                         : "opacity-100 translate-y-full invisible"
