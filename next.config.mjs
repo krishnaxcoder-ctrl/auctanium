@@ -17,8 +17,6 @@ const nextConfig = {
         ],
     },
 
-    // Enable partial prerendering / component caching for faster TTFB
-    cacheComponents: true,
 
     // Image optimization settings
     images: {
