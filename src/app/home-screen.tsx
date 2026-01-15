@@ -103,21 +103,9 @@ const sectionFactories = {
         import("@/components/sections/featured-sellers-section").then((mod) => ({
             default: mod.FeaturedSellersSection,
         })),
-    buyerProtection: () =>
-        import("@/components/sections/buyer-protection-section").then((mod) => ({
-            default: mod.BuyerProtectionSection,
-        })),
-    joinCommunity: () =>
-        import("@/components/sections/join-community-section").then((mod) => ({
-            default: mod.JoinCommunitySection,
-        })),
     lookingNow: () =>
         import("@/components/sections/looking-now-section").then((mod) => ({
             default: mod.LookingNowSection,
-        })),
-    learningArticles: () =>
-        import("@/components/sections/learning-articles-section").then((mod) => ({
-            default: mod.LearningArticlesSection,
         })),
     latestFromCommunity: () =>
         import("@/components/sections/latest-from-community-section").then((mod) => ({
@@ -199,20 +187,8 @@ export const HomeScreen = () => {
 
             {/* Deferred sections - Load closer to viewport (100px) */}
             <DeferredSection
-                factory={sectionFactories.buyerProtection}
-                minHeight="300px"
-            />
-            <DeferredSection
-                factory={sectionFactories.joinCommunity}
-                minHeight="300px"
-            />
-            <DeferredSection
                 factory={sectionFactories.lookingNow}
                 minHeight="300px"
-            />
-            <DeferredSection
-                factory={sectionFactories.learningArticles}
-                minHeight="400px"
             />
             <DeferredSection
                 factory={sectionFactories.latestFromCommunity}
