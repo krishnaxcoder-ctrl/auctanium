@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSignIn, useAuth } from "@clerk/nextjs";
 import { Mail01, Lock01, Eye, EyeOff } from "@untitledui/icons";
 import { Button } from "@/components/base/buttons/button";
@@ -14,19 +14,15 @@ import { AuthMobileHeader, AuthMobileFooter } from "@/components/layout/auth-mob
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { isSignedIn } = useAuth();
   const { isLoaded, signIn, setActive } = useSignIn();
-
-  // Get redirect URL from query params
-  const redirectUrl = searchParams.get("redirect_url") || "/dashboard";
 
   // Redirect if already signed in
   useEffect(() => {
     if (isSignedIn) {
-      router.push(redirectUrl);
+      router.push("/dashboard");
     }
-  }, [isSignedIn, router, redirectUrl]);
+  }, [isSignedIn, router]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +46,7 @@ export default function LoginPage() {
 
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
-        router.push(redirectUrl);
+        router.push("/dashboard");
       } else {
         // Handle other statuses like 2FA
         console.log("Sign in result:", result);
@@ -70,7 +66,7 @@ export default function LoginPage() {
       await signIn.authenticateWithRedirect({
         strategy: "oauth_google",
         redirectUrl: "/sso-callback",
-        redirectUrlComplete: redirectUrl,
+        redirectUrlComplete: "/dashboard",
       });
     } catch (err: unknown) {
       const error = err as { errors?: { message: string }[] };
