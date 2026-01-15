@@ -1,146 +1,204 @@
 "use client";
 
-import { lazy, Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { HeroSection } from "@/components/sections/hero-section";
+import {
+    LazySection,
+    CriticalSection,
+    StandardSection,
+    DeferredSection,
+} from "@/components/shared-assets/lazy-section";
 
-// Lazy load all sections except hero for better initial load performance
-const TrustAssuranceStrip = lazy(() => import("@/components/sections/trust-assurance-strip").then(mod => ({ default: mod.TrustAssuranceStrip })));
-const TopCategoriesSection = lazy(() => import("@/components/sections/top-categories-section").then(mod => ({ default: mod.TopCategoriesSection })));
-const BestDealsSection = lazy(() => import("@/components/sections/best-deals-section").then(mod => ({ default: mod.BestDealsSection })));
-const MostViewedSection = lazy(() => import("@/components/sections/most-viewed-section").then(mod => ({ default: mod.MostViewedSection })));
-const FeaturedPromotionsBanner = lazy(() => import("@/components/sections/featured-promotions-banner").then(mod => ({ default: mod.FeaturedPromotionsBanner })));
-const DealsOfTheDaySection = lazy(() => import("@/components/sections/deals-of-the-day-section").then(mod => ({ default: mod.DealsOfTheDaySection })));
-const PremiumCollectionSection = lazy(() => import("@/components/sections/premium-collection-section").then(mod => ({ default: mod.PremiumCollectionSection })));
-const TrendingProductsSection = lazy(() => import("@/components/sections/trending-products-section").then(mod => ({ default: mod.TrendingProductsSection })));
-const CertifiedItemsSection = lazy(() => import("@/components/sections/certified-items-section").then(mod => ({ default: mod.CertifiedItemsSection })));
-const StaffPicksSection = lazy(() => import("@/components/sections/staff-picks-section").then(mod => ({ default: mod.StaffPicksSection })));
-const FeaturedCollectionSection = lazy(() => import("@/components/sections/featured-collection-section").then(mod => ({ default: mod.FeaturedCollectionSection })));
-const FeaturedSellersSection = lazy(() => import("@/components/sections/featured-sellers-section").then(mod => ({ default: mod.FeaturedSellersSection })));
-const BuyerProtectionSection = lazy(() => import("@/components/sections/buyer-protection-section").then(mod => ({ default: mod.BuyerProtectionSection })));
-const JoinCommunitySection = lazy(() => import("@/components/sections/join-community-section").then(mod => ({ default: mod.JoinCommunitySection })));
-const LookingNowSection = lazy(() => import("@/components/sections/looking-now-section").then(mod => ({ default: mod.LookingNowSection })));
-const LearningArticlesSection = lazy(() => import("@/components/sections/learning-articles-section").then(mod => ({ default: mod.LearningArticlesSection })));
-const LatestFromCommunitySection = lazy(() => import("@/components/sections/latest-from-community-section").then(mod => ({ default: mod.LatestFromCommunitySection })));
-const HowItWorksSection = lazy(() => import("@/components/sections/how-it-works-section").then(mod => ({ default: mod.HowItWorksSection })));
-const TestimonialsSection = lazy(() => import("@/components/sections/testimonials-section").then(mod => ({ default: mod.TestimonialsSection })));
-const CTASection = lazy(() => import("@/components/sections/cta-section").then(mod => ({ default: mod.CTASection })));
+// Only preload immediately visible sections (above the fold)
+const TrustAssuranceStrip = lazy(() =>
+    import("@/components/sections/trust-assurance-strip").then((mod) => ({
+        default: mod.TrustAssuranceStrip,
+    }))
+);
 
 // Loading skeleton component
 const SectionSkeleton = () => (
     <div className="w-full py-16 animate-pulse">
         <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <div className="h-8 bg-secondary rounded w-1/3 mx-auto mb-4"></div>
-            <div className="h-4 bg-secondary rounded w-2/3 mx-auto"></div>
+            <div className="h-8 bg-secondary rounded w-1/3 mx-auto mb-4" />
+            <div className="h-4 bg-secondary rounded w-2/3 mx-auto" />
         </div>
     </div>
 );
 
-// Main Home Screen Component
+// Section import factories - only loaded when in viewport
+const sectionFactories = {
+    topCategories: () =>
+        import("@/components/sections/top-categories-section").then((mod) => ({
+            default: mod.TopCategoriesSection,
+        })),
+    bestDeals: () =>
+        import("@/components/sections/best-deals-section").then((mod) => ({
+            default: mod.BestDealsSection,
+        })),
+    mostViewed: () =>
+        import("@/components/sections/most-viewed-section").then((mod) => ({
+            default: mod.MostViewedSection,
+        })),
+    featuredPromotions: () =>
+        import("@/components/sections/featured-promotions-banner").then((mod) => ({
+            default: mod.FeaturedPromotionsBanner,
+        })),
+    dealsOfTheDay: () =>
+        import("@/components/sections/deals-of-the-day-section").then((mod) => ({
+            default: mod.DealsOfTheDaySection,
+        })),
+    premiumCollection: () =>
+        import("@/components/sections/premium-collection-section").then((mod) => ({
+            default: mod.PremiumCollectionSection,
+        })),
+    trendingProducts: () =>
+        import("@/components/sections/trending-products-section").then((mod) => ({
+            default: mod.TrendingProductsSection,
+        })),
+    certifiedItems: () =>
+        import("@/components/sections/certified-items-section").then((mod) => ({
+            default: mod.CertifiedItemsSection,
+        })),
+    staffPicks: () =>
+        import("@/components/sections/staff-picks-section").then((mod) => ({
+            default: mod.StaffPicksSection,
+        })),
+    featuredCollection: () =>
+        import("@/components/sections/featured-collection-section").then((mod) => ({
+            default: mod.FeaturedCollectionSection,
+        })),
+    featuredSellers: () =>
+        import("@/components/sections/featured-sellers-section").then((mod) => ({
+            default: mod.FeaturedSellersSection,
+        })),
+    buyerProtection: () =>
+        import("@/components/sections/buyer-protection-section").then((mod) => ({
+            default: mod.BuyerProtectionSection,
+        })),
+    joinCommunity: () =>
+        import("@/components/sections/join-community-section").then((mod) => ({
+            default: mod.JoinCommunitySection,
+        })),
+    lookingNow: () =>
+        import("@/components/sections/looking-now-section").then((mod) => ({
+            default: mod.LookingNowSection,
+        })),
+    learningArticles: () =>
+        import("@/components/sections/learning-articles-section").then((mod) => ({
+            default: mod.LearningArticlesSection,
+        })),
+    latestFromCommunity: () =>
+        import("@/components/sections/latest-from-community-section").then((mod) => ({
+            default: mod.LatestFromCommunitySection,
+        })),
+    howItWorks: () =>
+        import("@/components/sections/how-it-works-section").then((mod) => ({
+            default: mod.HowItWorksSection,
+        })),
+    testimonials: () =>
+        import("@/components/sections/testimonials-section").then((mod) => ({
+            default: mod.TestimonialsSection,
+        })),
+    cta: () =>
+        import("@/components/sections/cta-section").then((mod) => ({
+            default: mod.CTASection,
+        })),
+};
+
+// Main Home Screen Component with viewport-aware lazy loading
 export const HomeScreen = () => {
     return (
         <div className="bg-primary">
-            {/* Hero */}
+            {/* Hero - Eagerly loaded for fastest LCP */}
             <HeroSection />
 
-            {/* Trust & Assurance Strip */}
+            {/* Trust Strip - Eagerly loaded as it's immediately visible */}
             <Suspense fallback={<SectionSkeleton />}>
                 <TrustAssuranceStrip />
             </Suspense>
 
-            {/* Top Categories - Electronics, Fashion, Collectibles, etc. */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <TopCategoriesSection />
-            </Suspense>
+            {/* Critical sections - Load slightly earlier (800px before viewport) */}
+            <CriticalSection
+                factory={sectionFactories.topCategories}
+                minHeight="400px"
+            />
+            <CriticalSection
+                factory={sectionFactories.bestDeals}
+                minHeight="500px"
+            />
 
-            {/* Best Deals & Discounts */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <BestDealsSection />
-            </Suspense>
+            {/* Standard sections - Load at 400px before viewport */}
+            <StandardSection
+                factory={sectionFactories.mostViewed}
+                minHeight="400px"
+            />
+            <StandardSection
+                factory={sectionFactories.featuredPromotions}
+                minHeight="300px"
+            />
+            <StandardSection
+                factory={sectionFactories.dealsOfTheDay}
+                minHeight="500px"
+            />
+            <StandardSection
+                factory={sectionFactories.premiumCollection}
+                minHeight="400px"
+            />
+            <StandardSection
+                factory={sectionFactories.trendingProducts}
+                minHeight="400px"
+            />
+            <StandardSection
+                factory={sectionFactories.certifiedItems}
+                minHeight="400px"
+            />
+            <StandardSection
+                factory={sectionFactories.staffPicks}
+                minHeight="400px"
+            />
+            <StandardSection
+                factory={sectionFactories.featuredCollection}
+                minHeight="400px"
+            />
+            <StandardSection
+                factory={sectionFactories.featuredSellers}
+                minHeight="400px"
+            />
 
-            {/* Most Viewed Products */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <MostViewedSection />
-            </Suspense>
-
-            {/* Featured Promotions / Mid-Page Banner */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <FeaturedPromotionsBanner />
-            </Suspense>
-
-            {/* Deals of the Day - Time-sensitive offers */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <DealsOfTheDaySection />
-            </Suspense>
-
-            {/* Premium Collection - Luxury & High-Value Items */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <PremiumCollectionSection />
-            </Suspense>
-
-            {/* Trending Products */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <TrendingProductsSection />
-            </Suspense>
-
-            {/* Certified & Authenticated Items */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <CertifiedItemsSection />
-            </Suspense>
-
-            {/* Staff Picks / Editor's Choice */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <StaffPicksSection />
-            </Suspense>
-
-            {/* Featured Collection */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <FeaturedCollectionSection />
-            </Suspense>
-
-            {/* Featured Sellers */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <FeaturedSellersSection />
-            </Suspense>
-
-            {/* Buyer Protection Highlights */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <BuyerProtectionSection />
-            </Suspense>
-
-            {/* Join the Community / Educational CTA */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <JoinCommunitySection />
-            </Suspense>
-
-            {/* Looking Now - Live Activity / Recently Viewed */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <LookingNowSection />
-            </Suspense>
-
-            {/* Learning Articles / Educational Content */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <LearningArticlesSection />
-            </Suspense>
-
-            {/* Latest from Our Community */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <LatestFromCommunitySection />
-            </Suspense>
-
-            {/* Customer Reviews & Ratings (Testimonials) */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <TestimonialsSection />
-            </Suspense>
-
-            {/* How It Works */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <HowItWorksSection />
-            </Suspense>
-
-            {/* Final CTA */}
-            <Suspense fallback={<SectionSkeleton />}>
-                <CTASection />
-            </Suspense>
+            {/* Deferred sections - Load closer to viewport (100px) */}
+            <DeferredSection
+                factory={sectionFactories.buyerProtection}
+                minHeight="300px"
+            />
+            <DeferredSection
+                factory={sectionFactories.joinCommunity}
+                minHeight="300px"
+            />
+            <DeferredSection
+                factory={sectionFactories.lookingNow}
+                minHeight="300px"
+            />
+            <DeferredSection
+                factory={sectionFactories.learningArticles}
+                minHeight="400px"
+            />
+            <DeferredSection
+                factory={sectionFactories.latestFromCommunity}
+                minHeight="400px"
+            />
+            <DeferredSection
+                factory={sectionFactories.testimonials}
+                minHeight="400px"
+            />
+            <DeferredSection
+                factory={sectionFactories.howItWorks}
+                minHeight="400px"
+            />
+            <DeferredSection
+                factory={sectionFactories.cta}
+                minHeight="300px"
+            />
         </div>
     );
 };

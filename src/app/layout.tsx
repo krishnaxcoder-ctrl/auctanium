@@ -61,8 +61,19 @@ export default function RootLayout({
                 <link rel="preconnect" href="https://randomuser.me" crossOrigin="anonymous" />
                 <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
                 <link rel="preconnect" href="https://img.clerk.com" crossOrigin="anonymous" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+                {/* DNS prefetch for faster domain resolution */}
                 <link rel="dns-prefetch" href="https://randomuser.me" />
                 <link rel="dns-prefetch" href="https://images.unsplash.com" />
+                <link rel="dns-prefetch" href="https://img.clerk.com" />
+                <link rel="dns-prefetch" href="https://api.clerk.dev" />
+                {/* Preload critical hero images for faster LCP */}
+                <link
+                    rel="preload"
+                    as="image"
+                    href="https://randomuser.me/api/portraits/women/44.jpg"
+                    fetchPriority="high"
+                />
             </head>
             <body className={cx(inter.variable, "bg-primary antialiased")} suppressHydrationWarning>
                 <NextTopLoader

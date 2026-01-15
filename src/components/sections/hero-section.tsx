@@ -1,30 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import {
     ArrowRight,
     Play,
-    Check,
-    Zap,
-    CurrencyDollar,
     Shield01,
     Clock,
-    Star01,
     TrendUp01,
 } from "@untitledui/icons";
 import Link from "next/link";
 import { Button } from "@/components/base/buttons/button";
-import { Badge, BadgeWithDot, BadgeWithIcon } from "@/components/base/badges/badges";
-import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
+import { Badge } from "@/components/base/badges/badges";
 import { Avatar } from "@/components/base/avatar/avatar";
 import { RatingStars } from "@/components/foundations/rating-stars";
 import { cx } from "@/utils/cx";
 
-// Animated counter hook
+// Animated counter hook - starts after hydration
 const useAnimatedCounter = (end: number, duration: number = 2000) => {
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(end); // Start at end value to avoid layout shift
 
     useEffect(() => {
+        // Reset to 0 and animate after mount
+        setCount(0);
         let startTime: number;
         let animationFrame: number;
 
@@ -37,82 +34,86 @@ const useAnimatedCounter = (end: number, duration: number = 2000) => {
             }
         };
 
-        animationFrame = requestAnimationFrame(animate);
-        return () => cancelAnimationFrame(animationFrame);
+        // Small delay to prioritize LCP
+        const timeoutId = setTimeout(() => {
+            animationFrame = requestAnimationFrame(animate);
+        }, 100);
+
+        return () => {
+            clearTimeout(timeoutId);
+            if (animationFrame) cancelAnimationFrame(animationFrame);
+        };
     }, [end, duration]);
 
     return count;
 };
 
-// Floating notification cards data
-const notifications = [
-    {
-        icon: Check,
-        iconColor: "success" as const,
-        title: "Bid Placed!",
-        subtitle: "Your bid of ₹20,000 was accepted",
-        position: "top-right",
-    },
-    {
-        icon: Zap,
-        iconColor: "brand" as const,
-        title: "Auction Ending Soon",
-        subtitle: "5 minutes left to bid",
-        position: "bottom-left",
-    },
-];
-
-// Trust badges
+// Trust badges - memoized to prevent re-renders
 const trustBadges = [
     { icon: Shield01, label: "Verified Sellers" },
     { icon: Clock, label: "Real-time Bidding" },
     { icon: TrendUp01, label: "Best Deals" },
-];
+] as const;
 
-export const HeroSection = () => {
+// Memoized trust badge component
+const TrustBadge = memo(function TrustBadge({
+    icon: Icon,
+    label,
+    hidden,
+}: {
+    icon: typeof Shield01;
+    label: string;
+    hidden?: boolean;
+}) {
+    return (
+        <div
+            className={cx(
+                "flex items-center gap-2 rounded-full bg-secondary px-3 py-1.5 transition-all duration-200 hover:scale-105 cursor-pointer ring-1 ring-[#404040] hover:ring-brand-400",
+                hidden && "hidden sm:flex"
+            )}
+        >
+            <Icon className="size-4 text-brand-secondary" />
+            <span className="text-xs font-medium text-secondary">{label}</span>
+        </div>
+    );
+});
+
+// Main hero section - optimized for LCP
+export const HeroSection = memo(function HeroSection() {
     const userCount = useAnimatedCounter(50000, 2500);
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
 
     return (
-        <section className="relative overflow-hidden bg-primary pt-8 pb-16 lg:pt-16 lg:pb-24">
-            {/* Background Elements */}
-            <div className="pointer-events-none absolute inset-0">
-                {/* Gradient orbs */}
-                <div className="absolute -top-40 -right-40 size-96 rounded-full bg-brand-primary/20 blur-3xl" />
-                <div className="absolute top-1/2 -left-40 size-96 rounded-full bg-success-primary/10 blur-3xl" />
-                <div className="absolute -bottom-40 right-1/4 size-64 rounded-full bg-warning-primary/10 blur-3xl" />
+        <section
+            className="relative overflow-hidden bg-primary pt-8 pb-16 lg:pt-16 lg:pb-24"
+            style={{ contain: "layout style" }}
+        >
+            {/* Simplified background - uses CSS instead of multiple divs */}
+            <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                    background: `
+                        radial-gradient(ellipse 80% 50% at 90% 10%, rgba(127, 86, 217, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse 60% 40% at 10% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse 50% 30% at 60% 90%, rgba(245, 158, 11, 0.08) 0%, transparent 50%)
+                    `,
+                }}
+            />
 
-                {/* Dot pattern */}
-                <div
-                    className="absolute inset-0 opacity-[0.2]"
-                    style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='2' fill='%237F56D9'/%3E%3C/svg%3E")`,
-                        backgroundSize: '24px 24px',
-                    }}
-                />
-
-                {/* Radial gradient overlay to fade dots at edges */}
-                <div
-                    className="absolute inset-0"
-                    style={{
-                        background: 'radial-gradient(circle at 50% 50%, transparent 0%, transparent 20%, var(--color-bg-primary) 70%)',
-                    }}
-                />
-            </div>
+            {/* Dot pattern - simplified with CSS */}
+            <div
+                className="pointer-events-none absolute inset-0 opacity-[0.15]"
+                style={{
+                    backgroundImage: `radial-gradient(circle at center, #7F56D9 1px, transparent 1px)`,
+                    backgroundSize: "24px 24px",
+                    maskImage: "radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%)",
+                    WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%)",
+                }}
+            />
 
             <div className="relative mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col items-center">
-                    {/* Left Content */}
-                    <div
-                        className={cx(
-                            "text-center transition-all duration-700",
-                            isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-                        )}
-                    >
+                    {/* Content - no hydration-dependent animations */}
+                    <div className="text-center animate-fade-in">
                         {/* Status Badge */}
                         <div className="mb-6 inline-flex">
                             <Badge type="pill-color" size="lg" color="success">
@@ -126,7 +127,7 @@ export const HeroSection = () => {
                             </Badge>
                         </div>
 
-                        {/* Main Heading */}
+                        {/* Main Heading - prioritized for LCP */}
                         <h1 className="w-full font-semibold tracking-tight text-primary text-[7vw] sm:text-[5vw] lg:text-[4vw] leading-[1.2]">
                             <span className="block whitespace-nowrap">Discover Exclusive Auctions.</span>
                             <span className="block whitespace-nowrap bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">
@@ -143,7 +144,7 @@ export const HeroSection = () => {
 
                         {/* CTA Buttons */}
                         <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-                            <Link href="/signup" className="w-full sm:w-64">
+                            <Link href="/signup" className="w-full sm:w-64" prefetch>
                                 <Button
                                     color="primary"
                                     size="xl"
@@ -211,16 +212,12 @@ export const HeroSection = () => {
                             {/* Trust Badges */}
                             <div className="flex flex-wrap items-center justify-center gap-4">
                                 {trustBadges.map((badge) => (
-                                    <div
+                                    <TrustBadge
                                         key={badge.label}
-                                        className={cx(
-                                            "flex items-center gap-2 rounded-full bg-secondary px-3 py-1.5 transition-all duration-200 hover:scale-105 cursor-pointer ring-1 ring-[#404040] hover:ring-brand-400",
-                                            badge.label === "Best Deals" && "hidden sm:flex"
-                                        )}
-                                    >
-                                        <badge.icon className="size-4 text-brand-secondary" />
-                                        <span className="text-xs font-medium text-secondary">{badge.label}</span>
-                                    </div>
+                                        icon={badge.icon}
+                                        label={badge.label}
+                                        hidden={badge.label === "Best Deals"}
+                                    />
                                 ))}
                             </div>
                         </div>
@@ -229,4 +226,4 @@ export const HeroSection = () => {
             </div>
         </section>
     );
-};
+});
