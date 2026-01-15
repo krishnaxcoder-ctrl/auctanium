@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import {
     Menu01,
     X,
@@ -890,6 +891,8 @@ const parentCategories = [
 export const Header = () => {
     const { isSignedIn, isLoaded } = useAuth();
     const { signOut } = useClerk();
+    const pathname = usePathname();
+    const isCommunityPage = pathname?.startsWith("/community");
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
@@ -1334,6 +1337,7 @@ export const Header = () => {
             </header>
 
             {/* Categories Bar */}
+            {!isCommunityPage && (
             <div className="bg-primary border-b-2 border-brand-300 hidden lg:block">
                 <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-center gap-1 py-2">
@@ -1358,8 +1362,10 @@ export const Header = () => {
                     </div>
                 </div>
             </div>
+            )}
 
             {/* Mobile Categories Bar */}
+            {!isCommunityPage && (
             <div className="bg-primary border-b-2 border-brand-300 lg:hidden">
                 <div className="relative">
                     {/* Left Fade Gradient */}
@@ -1393,6 +1399,7 @@ export const Header = () => {
                     <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-primary to-transparent z-10" />
                 </div>
             </div>
+            )}
 
             {/* Category Mega Menu - Desktop */}
             <div

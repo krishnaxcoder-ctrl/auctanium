@@ -17,7 +17,8 @@
       "Bash(del:*)",
       "Bash(copy:*)",
       "Bash(copy \"C:\\\\Users\\\\krishna\\\\Videos\\\\newproject\\\\untitled-ui\\\\faces\\\\Screenshot 2025-12-19 010009.png\" \"C:\\\\Users\\\\krishna\\\\Videos\\\\newproject\\\\untitled-ui\\\\public\\\\face2.png\")",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(claude mcp add:*)"
     ]
   }
 }
