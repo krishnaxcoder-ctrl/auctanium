@@ -8,9 +8,11 @@ import {
     Menu01,
     X,
     ArrowRight,
+    ArrowLeft,
     SearchLg,
     LogOut01,
     ChevronDown,
+    ChevronRight,
     Clock,
     TrendUp01,
     XClose,
@@ -1021,9 +1023,9 @@ export const Header = () => {
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, []);
 
-    // Prevent body scroll when mobile menu is open
+    // Prevent body scroll when mobile menu or category menu is open
     useEffect(() => {
-        if (mobileMenuOpen) {
+        if (mobileMenuOpen || activeCategoryMenu) {
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "";
@@ -1031,7 +1033,7 @@ export const Header = () => {
         return () => {
             document.body.style.overflow = "";
         };
-    }, [mobileMenuOpen]);
+    }, [mobileMenuOpen, activeCategoryMenu]);
 
     return (
         <>
@@ -1447,50 +1449,58 @@ export const Header = () => {
             {/* Category Mega Menu - Mobile */}
             <div
                 className={cx(
-                    "fixed left-0 right-0 bottom-0 z-40 bg-primary border-t border-secondary shadow-sm transition-all duration-200 ease-out lg:hidden overflow-hidden",
+                    "fixed inset-0 z-50 bg-primary lg:hidden overflow-hidden",
                     activeCategoryMenu
-                        ? "opacity-100 translate-y-0 visible"
-                        : "opacity-100 translate-y-full invisible"
+                        ? "visible"
+                        : "invisible"
                 )}
-                style={{ top: "auto", maxHeight: "84vh" }}
             >
                 {activeCategoryMenu && categoryMegaMenus[activeCategoryMenu] && (
                     <div className="flex flex-col h-full">
                         {/* Header */}
                         <div className="flex items-center justify-between px-4 py-3 border-b border-secondary">
+                            <button
+                                onClick={() => setActiveCategoryMenu(null)}
+                                className="p-2 -ml-2 rounded-lg hover:bg-secondary transition-colors"
+                            >
+                                <ArrowLeft className="size-5 text-primary" />
+                            </button>
                             <h2 className="text-base font-semibold text-primary">
                                 {parentCategories.find(c => c.key === activeCategoryMenu)?.label}
                             </h2>
                             <button
                                 onClick={() => setActiveCategoryMenu(null)}
-                                className="p-2 rounded-lg hover:bg-secondary transition-colors"
+                                className="p-2 -mr-2 rounded-lg hover:bg-secondary transition-colors"
                             >
                                 <X className="size-5 text-secondary" />
                             </button>
                         </div>
                         {/* Scrollable Content */}
-                        <div className="flex-1 overflow-y-auto px-4 py-4">
-                            <div className="grid grid-cols-2 gap-4">
-                                {categoryMegaMenus[activeCategoryMenu].map((section, index) => (
-                                    <div key={index} className="mb-4">
-                                        <h3 className="text-xs font-semibold text-tertiary uppercase tracking-wider mb-2">
-                                            {section.title}
-                                        </h3>
-                                        <div className="space-y-1">
-                                            {section.subcategories.map((item) => (
-                                                <Link
-                                                    key={item.name}
-                                                    href={item.href}
-                                                    className="block rounded-lg py-1.5 text-sm text-secondary hover:text-primary transition-colors"
-                                                    onClick={() => setActiveCategoryMenu(null)}
-                                                >
-                                                    {item.name}
-                                                </Link>
-                                            ))}
-                                        </div>
+                        <div className="flex-1 overflow-y-auto px-4 py-6">
+                            {categoryMegaMenus[activeCategoryMenu].map((section, index) => (
+                                <div key={index} className="mb-6">
+                                    <Link
+                                        href={`/category/${activeCategoryMenu}`}
+                                        className="inline-flex items-center gap-1 text-sm font-semibold text-primary mb-3 hover:text-brand-600 transition-colors"
+                                        onClick={() => setActiveCategoryMenu(null)}
+                                    >
+                                        {section.title}
+                                        <ArrowRight className="size-4" />
+                                    </Link>
+                                    <div className="space-y-0.5">
+                                        {section.subcategories.map((item) => (
+                                            <Link
+                                                key={item.name}
+                                                href={item.href}
+                                                className="block py-2 text-sm text-secondary hover:text-primary transition-colors"
+                                                onClick={() => setActiveCategoryMenu(null)}
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 )}
