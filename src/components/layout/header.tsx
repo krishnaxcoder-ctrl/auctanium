@@ -375,6 +375,517 @@ const megaMenus: Record<string, MegaMenu> = {
     },
 };
 
+// Parent categories with mega menu content
+const categoryMegaMenus: Record<string, { title: string; subcategories: { name: string; href: string }[] }[]> = {
+    "art-culture": [
+        {
+            title: "Fine Art",
+            subcategories: [
+                { name: "Paintings", href: "/marketplace?category=paintings" },
+                { name: "Sculptures", href: "/marketplace?category=sculptures" },
+                { name: "Prints & Multiples", href: "/marketplace?category=prints" },
+                { name: "Photography", href: "/marketplace?category=photography" },
+                { name: "Mixed Media", href: "/marketplace?category=mixed-media" },
+            ]
+        },
+        {
+            title: "Asian & Tribal Art",
+            subcategories: [
+                { name: "Chinese Art", href: "/marketplace?category=chinese-art" },
+                { name: "Japanese Art", href: "/marketplace?category=japanese-art" },
+                { name: "Indian Art", href: "/marketplace?category=indian-art" },
+                { name: "African Art", href: "/marketplace?category=african-art" },
+                { name: "Oceanic Art", href: "/marketplace?category=oceanic-art" },
+            ]
+        },
+        {
+            title: "Antiques",
+            subcategories: [
+                { name: "Archaeology", href: "/marketplace?category=archaeology" },
+                { name: "Natural History", href: "/marketplace?category=natural-history" },
+                { name: "Ancient Artifacts", href: "/marketplace?category=ancient-artifacts" },
+                { name: "Maps & Globes", href: "/marketplace?category=maps-globes" },
+                { name: "Manuscripts", href: "/marketplace?category=manuscripts" },
+            ]
+        },
+        {
+            title: "Books & Literature",
+            subcategories: [
+                { name: "Rare Books", href: "/marketplace?category=rare-books" },
+                { name: "First Editions", href: "/marketplace?category=first-editions" },
+                { name: "Signed Books", href: "/marketplace?category=signed-books" },
+                { name: "Historical Documents", href: "/marketplace?category=historical-documents" },
+                { name: "Autographs", href: "/marketplace?category=autographs" },
+            ]
+        },
+        {
+            title: "Religious & Spiritual",
+            subcategories: [
+                { name: "Religious Art", href: "/marketplace?category=religious-art" },
+                { name: "Icons & Statues", href: "/marketplace?category=icons-statues" },
+                { name: "Sacred Texts", href: "/marketplace?category=sacred-texts" },
+                { name: "Ritual Objects", href: "/marketplace?category=ritual-objects" },
+                { name: "Meditation Art", href: "/marketplace?category=meditation-art" },
+            ]
+        },
+        {
+            title: "Contemporary",
+            subcategories: [
+                { name: "Street Art", href: "/marketplace?category=street-art" },
+                { name: "Digital Art", href: "/marketplace?category=digital-art" },
+                { name: "Pop Art", href: "/marketplace?category=pop-art" },
+                { name: "Emerging Artists", href: "/marketplace?category=emerging-artists" },
+                { name: "Art Installations", href: "/marketplace?category=art-installations" },
+            ]
+        },
+    ],
+    "fashion-luxury": [
+        {
+            title: "Designer Fashion",
+            subcategories: [
+                { name: "Women's Clothing", href: "/marketplace?category=womens-clothing" },
+                { name: "Men's Clothing", href: "/marketplace?category=mens-clothing" },
+                { name: "Vintage Fashion", href: "/marketplace?category=vintage-fashion" },
+                { name: "Streetwear", href: "/marketplace?category=streetwear" },
+                { name: "Haute Couture", href: "/marketplace?category=haute-couture" },
+            ]
+        },
+        {
+            title: "Handbags & Accessories",
+            subcategories: [
+                { name: "Designer Handbags", href: "/marketplace?category=designer-handbags" },
+                { name: "Luxury Wallets", href: "/marketplace?category=luxury-wallets" },
+                { name: "Belts & Scarves", href: "/marketplace?category=belts-scarves" },
+                { name: "Sunglasses", href: "/marketplace?category=sunglasses" },
+                { name: "Hats & Headwear", href: "/marketplace?category=hats" },
+            ]
+        },
+        {
+            title: "Jewelry",
+            subcategories: [
+                { name: "Fine Jewelry", href: "/marketplace?category=fine-jewelry" },
+                { name: "Diamonds", href: "/marketplace?category=diamonds" },
+                { name: "Gemstones", href: "/marketplace?category=gemstones" },
+                { name: "Vintage Jewelry", href: "/marketplace?category=vintage-jewelry" },
+                { name: "Costume Jewelry", href: "/marketplace?category=costume-jewelry" },
+            ]
+        },
+        {
+            title: "Watches",
+            subcategories: [
+                { name: "Luxury Watches", href: "/marketplace?category=luxury-watches" },
+                { name: "Vintage Watches", href: "/marketplace?category=vintage-watches" },
+                { name: "Smart Watches", href: "/marketplace?category=smart-watches" },
+                { name: "Watch Accessories", href: "/marketplace?category=watch-accessories" },
+                { name: "Pocket Watches", href: "/marketplace?category=pocket-watches" },
+            ]
+        },
+        {
+            title: "Shoes & Footwear",
+            subcategories: [
+                { name: "Designer Heels", href: "/marketplace?category=designer-heels" },
+                { name: "Luxury Sneakers", href: "/marketplace?category=luxury-sneakers" },
+                { name: "Boots", href: "/marketplace?category=boots" },
+                { name: "Loafers & Flats", href: "/marketplace?category=loafers-flats" },
+                { name: "Vintage Shoes", href: "/marketplace?category=vintage-shoes" },
+            ]
+        },
+        {
+            title: "Pens & Writing",
+            subcategories: [
+                { name: "Fountain Pens", href: "/marketplace?category=fountain-pens" },
+                { name: "Luxury Pens", href: "/marketplace?category=luxury-pens" },
+                { name: "Vintage Pens", href: "/marketplace?category=vintage-pens" },
+                { name: "Pen Sets", href: "/marketplace?category=pen-sets" },
+                { name: "Writing Accessories", href: "/marketplace?category=writing-accessories" },
+            ]
+        },
+    ],
+    "home-interiors": [
+        {
+            title: "Furniture",
+            subcategories: [
+                { name: "Antique Furniture", href: "/marketplace?category=antique-furniture" },
+                { name: "Modern Furniture", href: "/marketplace?category=modern-furniture" },
+                { name: "Mid-Century", href: "/marketplace?category=mid-century" },
+                { name: "Outdoor Furniture", href: "/marketplace?category=outdoor-furniture" },
+                { name: "Office Furniture", href: "/marketplace?category=office-furniture" },
+            ]
+        },
+        {
+            title: "Decor",
+            subcategories: [
+                { name: "Rugs & Carpets", href: "/marketplace?category=rugs-carpets" },
+                { name: "Lighting", href: "/marketplace?category=lighting" },
+                { name: "Mirrors", href: "/marketplace?category=mirrors" },
+                { name: "Clocks", href: "/marketplace?category=clocks" },
+                { name: "Vases & Ceramics", href: "/marketplace?category=vases-ceramics" },
+            ]
+        },
+        {
+            title: "Tableware",
+            subcategories: [
+                { name: "Fine China", href: "/marketplace?category=fine-china" },
+                { name: "Silverware", href: "/marketplace?category=silverware" },
+                { name: "Crystal & Glass", href: "/marketplace?category=crystal-glass" },
+                { name: "Porcelain", href: "/marketplace?category=porcelain" },
+                { name: "Flatware Sets", href: "/marketplace?category=flatware" },
+            ]
+        },
+        {
+            title: "Garden & Outdoor",
+            subcategories: [
+                { name: "Garden Sculptures", href: "/marketplace?category=garden-sculptures" },
+                { name: "Planters", href: "/marketplace?category=planters" },
+                { name: "Fountains", href: "/marketplace?category=fountains" },
+                { name: "Patio Decor", href: "/marketplace?category=patio-decor" },
+                { name: "Garden Tools", href: "/marketplace?category=garden-tools" },
+            ]
+        },
+        {
+            title: "Textiles",
+            subcategories: [
+                { name: "Curtains & Drapes", href: "/marketplace?category=curtains-drapes" },
+                { name: "Bed Linens", href: "/marketplace?category=bed-linens" },
+                { name: "Tapestries", href: "/marketplace?category=tapestries" },
+                { name: "Throw Pillows", href: "/marketplace?category=throw-pillows" },
+                { name: "Table Linens", href: "/marketplace?category=table-linens" },
+            ]
+        },
+        {
+            title: "Art & Wall Decor",
+            subcategories: [
+                { name: "Wall Art", href: "/marketplace?category=wall-art" },
+                { name: "Picture Frames", href: "/marketplace?category=picture-frames" },
+                { name: "Wall Sculptures", href: "/marketplace?category=wall-sculptures" },
+                { name: "Tapestry Art", href: "/marketplace?category=tapestry-art" },
+                { name: "Wall Clocks", href: "/marketplace?category=wall-clocks" },
+            ]
+        },
+    ],
+    "collectibles": [
+        {
+            title: "Trading Cards",
+            subcategories: [
+                { name: "Pokemon Cards", href: "/marketplace?category=pokemon-cards" },
+                { name: "Sports Cards", href: "/marketplace?category=sports-cards" },
+                { name: "Magic: The Gathering", href: "/marketplace?category=mtg-cards" },
+                { name: "Yu-Gi-Oh!", href: "/marketplace?category=yugioh-cards" },
+                { name: "Vintage Cards", href: "/marketplace?category=vintage-cards" },
+            ]
+        },
+        {
+            title: "Comics & Animation",
+            subcategories: [
+                { name: "Vintage Comics", href: "/marketplace?category=vintage-comics" },
+                { name: "Manga", href: "/marketplace?category=manga" },
+                { name: "Animation Cels", href: "/marketplace?category=animation-cels" },
+                { name: "Graphic Novels", href: "/marketplace?category=graphic-novels" },
+                { name: "Comic Art", href: "/marketplace?category=comic-art" },
+            ]
+        },
+        {
+            title: "Coins & Stamps",
+            subcategories: [
+                { name: "Rare Coins", href: "/marketplace?category=rare-coins" },
+                { name: "Ancient Coins", href: "/marketplace?category=ancient-coins" },
+                { name: "Stamp Collections", href: "/marketplace?category=stamp-collections" },
+                { name: "Banknotes", href: "/marketplace?category=banknotes" },
+                { name: "Medallions", href: "/marketplace?category=medallions" },
+            ]
+        },
+        {
+            title: "Memorabilia",
+            subcategories: [
+                { name: "Celebrity Memorabilia", href: "/marketplace?category=celebrity-memorabilia" },
+                { name: "Historical Memorabilia", href: "/marketplace?category=historical-memorabilia" },
+                { name: "Music Memorabilia", href: "/marketplace?category=music-memorabilia" },
+                { name: "Movie Props", href: "/marketplace?category=movie-props" },
+                { name: "Signed Items", href: "/marketplace?category=signed-items" },
+            ]
+        },
+        {
+            title: "Figurines & Statues",
+            subcategories: [
+                { name: "Anime Figures", href: "/marketplace?category=anime-figures" },
+                { name: "Superhero Statues", href: "/marketplace?category=superhero-statues" },
+                { name: "Movie Figures", href: "/marketplace?category=movie-figures" },
+                { name: "Gaming Figures", href: "/marketplace?category=gaming-figures" },
+                { name: "Limited Editions", href: "/marketplace?category=limited-editions" },
+            ]
+        },
+        {
+            title: "Vintage Advertising",
+            subcategories: [
+                { name: "Enamel Signs", href: "/marketplace?category=enamel-signs" },
+                { name: "Posters", href: "/marketplace?category=posters" },
+                { name: "Neon Signs", href: "/marketplace?category=neon-signs" },
+                { name: "Tin Signs", href: "/marketplace?category=tin-signs" },
+                { name: "Promotional Items", href: "/marketplace?category=promotional-items" },
+            ]
+        },
+    ],
+    "vehicles-sports": [
+        {
+            title: "Classic Cars",
+            subcategories: [
+                { name: "Vintage Cars", href: "/marketplace?category=vintage-cars" },
+                { name: "Muscle Cars", href: "/marketplace?category=muscle-cars" },
+                { name: "European Classics", href: "/marketplace?category=european-classics" },
+                { name: "American Classics", href: "/marketplace?category=american-classics" },
+                { name: "Project Cars", href: "/marketplace?category=project-cars" },
+            ]
+        },
+        {
+            title: "Motorcycles",
+            subcategories: [
+                { name: "Classic Motorcycles", href: "/marketplace?category=classic-motorcycles" },
+                { name: "Vintage Bikes", href: "/marketplace?category=vintage-bikes" },
+                { name: "Custom Motorcycles", href: "/marketplace?category=custom-motorcycles" },
+                { name: "Racing Bikes", href: "/marketplace?category=racing-bikes" },
+                { name: "Scooters", href: "/marketplace?category=scooters" },
+            ]
+        },
+        {
+            title: "Sports Equipment",
+            subcategories: [
+                { name: "Golf Equipment", href: "/marketplace?category=golf-equipment" },
+                { name: "Tennis Equipment", href: "/marketplace?category=tennis-equipment" },
+                { name: "Cycling", href: "/marketplace?category=cycling" },
+                { name: "Water Sports", href: "/marketplace?category=water-sports" },
+                { name: "Winter Sports", href: "/marketplace?category=winter-sports" },
+            ]
+        },
+        {
+            title: "Automobilia",
+            subcategories: [
+                { name: "Car Parts", href: "/marketplace?category=car-parts" },
+                { name: "Vintage Signs", href: "/marketplace?category=vintage-signs" },
+                { name: "Racing Memorabilia", href: "/marketplace?category=racing-memorabilia" },
+                { name: "License Plates", href: "/marketplace?category=license-plates" },
+                { name: "Model Cars", href: "/marketplace?category=model-cars" },
+            ]
+        },
+        {
+            title: "Boats & Marine",
+            subcategories: [
+                { name: "Sailboats", href: "/marketplace?category=sailboats" },
+                { name: "Yachts", href: "/marketplace?category=yachts" },
+                { name: "Vintage Boats", href: "/marketplace?category=vintage-boats" },
+                { name: "Marine Equipment", href: "/marketplace?category=marine-equipment" },
+                { name: "Nautical Decor", href: "/marketplace?category=nautical-decor" },
+            ]
+        },
+        {
+            title: "Aviation",
+            subcategories: [
+                { name: "Aircraft Models", href: "/marketplace?category=aircraft-models" },
+                { name: "Aviation Memorabilia", href: "/marketplace?category=aviation-memorabilia" },
+                { name: "Pilot Gear", href: "/marketplace?category=pilot-gear" },
+                { name: "Vintage Aviation", href: "/marketplace?category=vintage-aviation" },
+                { name: "Flight Instruments", href: "/marketplace?category=flight-instruments" },
+            ]
+        },
+    ],
+    "lifestyle": [
+        {
+            title: "Wine & Spirits",
+            subcategories: [
+                { name: "Fine Wine", href: "/marketplace?category=fine-wine" },
+                { name: "Whisky", href: "/marketplace?category=whisky" },
+                { name: "Champagne", href: "/marketplace?category=champagne" },
+                { name: "Rare Spirits", href: "/marketplace?category=rare-spirits" },
+                { name: "Wine Accessories", href: "/marketplace?category=wine-accessories" },
+            ]
+        },
+        {
+            title: "Music & Audio",
+            subcategories: [
+                { name: "Vinyl Records", href: "/marketplace?category=vinyl-records" },
+                { name: "Musical Instruments", href: "/marketplace?category=musical-instruments" },
+                { name: "Vintage Audio", href: "/marketplace?category=vintage-audio" },
+                { name: "Guitars", href: "/marketplace?category=guitars" },
+                { name: "DJ Equipment", href: "/marketplace?category=dj-equipment" },
+            ]
+        },
+        {
+            title: "Toys & Games",
+            subcategories: [
+                { name: "Vintage Toys", href: "/marketplace?category=vintage-toys" },
+                { name: "Action Figures", href: "/marketplace?category=action-figures" },
+                { name: "Board Games", href: "/marketplace?category=board-games" },
+                { name: "LEGO", href: "/marketplace?category=lego" },
+                { name: "Dolls", href: "/marketplace?category=dolls" },
+            ]
+        },
+        {
+            title: "Cameras & Tech",
+            subcategories: [
+                { name: "Vintage Cameras", href: "/marketplace?category=vintage-cameras" },
+                { name: "Film Cameras", href: "/marketplace?category=film-cameras" },
+                { name: "Camera Lenses", href: "/marketplace?category=camera-lenses" },
+                { name: "Gaming Consoles", href: "/marketplace?category=gaming-consoles" },
+                { name: "Retro Tech", href: "/marketplace?category=retro-tech" },
+            ]
+        },
+        {
+            title: "Cigars & Smoking",
+            subcategories: [
+                { name: "Premium Cigars", href: "/marketplace?category=premium-cigars" },
+                { name: "Humidors", href: "/marketplace?category=humidors" },
+                { name: "Lighters", href: "/marketplace?category=lighters" },
+                { name: "Pipes", href: "/marketplace?category=pipes" },
+                { name: "Smoking Accessories", href: "/marketplace?category=smoking-accessories" },
+            ]
+        },
+        {
+            title: "Outdoor & Travel",
+            subcategories: [
+                { name: "Luxury Luggage", href: "/marketplace?category=luxury-luggage" },
+                { name: "Camping Gear", href: "/marketplace?category=camping-gear" },
+                { name: "Binoculars", href: "/marketplace?category=binoculars" },
+                { name: "Travel Accessories", href: "/marketplace?category=travel-accessories" },
+                { name: "Hiking Equipment", href: "/marketplace?category=hiking-equipment" },
+            ]
+        },
+    ],
+    "electronics": [
+        {
+            title: "Audio & Sound",
+            subcategories: [
+                { name: "Hi-Fi Systems", href: "/marketplace?category=hifi-systems" },
+                { name: "Speakers", href: "/marketplace?category=speakers" },
+                { name: "Headphones", href: "/marketplace?category=headphones" },
+                { name: "Turntables", href: "/marketplace?category=turntables" },
+                { name: "Amplifiers", href: "/marketplace?category=amplifiers" },
+            ]
+        },
+        {
+            title: "Computers",
+            subcategories: [
+                { name: "Vintage Computers", href: "/marketplace?category=vintage-computers" },
+                { name: "Apple Products", href: "/marketplace?category=apple-products" },
+                { name: "Gaming PCs", href: "/marketplace?category=gaming-pcs" },
+                { name: "Laptops", href: "/marketplace?category=laptops" },
+                { name: "Computer Parts", href: "/marketplace?category=computer-parts" },
+            ]
+        },
+        {
+            title: "Gaming",
+            subcategories: [
+                { name: "Retro Consoles", href: "/marketplace?category=retro-consoles" },
+                { name: "Modern Consoles", href: "/marketplace?category=modern-consoles" },
+                { name: "Handheld Gaming", href: "/marketplace?category=handheld-gaming" },
+                { name: "Video Games", href: "/marketplace?category=video-games" },
+                { name: "Gaming Accessories", href: "/marketplace?category=gaming-accessories" },
+            ]
+        },
+        {
+            title: "Photography",
+            subcategories: [
+                { name: "DSLR Cameras", href: "/marketplace?category=dslr-cameras" },
+                { name: "Mirrorless Cameras", href: "/marketplace?category=mirrorless-cameras" },
+                { name: "Medium Format", href: "/marketplace?category=medium-format" },
+                { name: "Camera Accessories", href: "/marketplace?category=camera-accessories" },
+                { name: "Studio Equipment", href: "/marketplace?category=studio-equipment" },
+            ]
+        },
+        {
+            title: "Home Theater",
+            subcategories: [
+                { name: "Projectors", href: "/marketplace?category=projectors" },
+                { name: "TVs & Displays", href: "/marketplace?category=tvs-displays" },
+                { name: "Receivers", href: "/marketplace?category=receivers" },
+                { name: "Streaming Devices", href: "/marketplace?category=streaming-devices" },
+                { name: "Sound Bars", href: "/marketplace?category=sound-bars" },
+            ]
+        },
+        {
+            title: "Wearables",
+            subcategories: [
+                { name: "Smartwatches", href: "/marketplace?category=smartwatches" },
+                { name: "Fitness Trackers", href: "/marketplace?category=fitness-trackers" },
+                { name: "VR Headsets", href: "/marketplace?category=vr-headsets" },
+                { name: "Smart Glasses", href: "/marketplace?category=smart-glasses" },
+                { name: "Health Monitors", href: "/marketplace?category=health-monitors" },
+            ]
+        },
+    ],
+    "services": [
+        {
+            title: "Authentication",
+            subcategories: [
+                { name: "Art Authentication", href: "/services/art-authentication" },
+                { name: "Watch Authentication", href: "/services/watch-authentication" },
+                { name: "Jewelry Appraisal", href: "/services/jewelry-appraisal" },
+                { name: "Coin Grading", href: "/services/coin-grading" },
+                { name: "Card Grading", href: "/services/card-grading" },
+            ]
+        },
+        {
+            title: "Shipping & Logistics",
+            subcategories: [
+                { name: "International Shipping", href: "/services/international-shipping" },
+                { name: "Insurance", href: "/services/insurance" },
+                { name: "White Glove Delivery", href: "/services/white-glove" },
+                { name: "Packaging Services", href: "/services/packaging" },
+                { name: "Customs Assistance", href: "/services/customs" },
+            ]
+        },
+        {
+            title: "Restoration",
+            subcategories: [
+                { name: "Art Restoration", href: "/services/art-restoration" },
+                { name: "Furniture Restoration", href: "/services/furniture-restoration" },
+                { name: "Watch Repair", href: "/services/watch-repair" },
+                { name: "Jewelry Repair", href: "/services/jewelry-repair" },
+                { name: "Book Conservation", href: "/services/book-conservation" },
+            ]
+        },
+        {
+            title: "Consulting",
+            subcategories: [
+                { name: "Collection Management", href: "/services/collection-management" },
+                { name: "Investment Advice", href: "/services/investment-advice" },
+                { name: "Estate Planning", href: "/services/estate-planning" },
+                { name: "Tax Guidance", href: "/services/tax-guidance" },
+                { name: "Auction Strategy", href: "/services/auction-strategy" },
+            ]
+        },
+        {
+            title: "Storage",
+            subcategories: [
+                { name: "Climate Controlled", href: "/services/climate-storage" },
+                { name: "Art Storage", href: "/services/art-storage" },
+                { name: "Wine Storage", href: "/services/wine-storage" },
+                { name: "Vehicle Storage", href: "/services/vehicle-storage" },
+                { name: "Document Archiving", href: "/services/document-archiving" },
+            ]
+        },
+        {
+            title: "Events",
+            subcategories: [
+                { name: "Live Auctions", href: "/events/live-auctions" },
+                { name: "Exhibition Tours", href: "/events/exhibitions" },
+                { name: "Collector Meetups", href: "/events/meetups" },
+                { name: "Workshops", href: "/events/workshops" },
+                { name: "Private Viewings", href: "/events/private-viewings" },
+            ]
+        },
+    ],
+};
+
+const parentCategories = [
+    { key: "art-culture", label: "Art & Culture" },
+    { key: "fashion-luxury", label: "Fashion & Personal Luxury" },
+    { key: "home-interiors", label: "Home & Interiors" },
+    { key: "collectibles", label: "Collectibles & Memorabilia" },
+    { key: "vehicles-sports", label: "Vehicles & Sports" },
+    { key: "lifestyle", label: "Lifestyle & Entertainment" },
+    { key: "electronics", label: "Electronics & Tech" },
+    { key: "services", label: "Services" },
+];
+
 
 export const Header = () => {
     const { isSignedIn, isLoaded } = useAuth();
@@ -388,6 +899,7 @@ export const Header = () => {
     const [recentSearches, setRecentSearches] = useState<string[]>([]);
     const [isListening, setIsListening] = useState(false);
     const [showResults, setShowResults] = useState(false);
+    const [activeCategoryMenu, setActiveCategoryMenu] = useState<string | null>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
 
     // Load recent searches from localStorage
@@ -823,46 +1335,75 @@ export const Header = () => {
 
             {/* Categories Bar */}
             <div className="bg-primary border-b-2 border-brand-300">
-                <div className="relative mx-auto max-w-8xl sm:px-2 lg:px-4">
-                    {/* Left Fade Gradient */}
-                    <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-primary to-transparent z-10" />
-
-                    <div
-                        className="flex items-center gap-1 overflow-x-auto py-3 px-2 [&::-webkit-scrollbar]:hidden"
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                    >
-                        {[
-                            { label: "Archaeology & Natural History", href: "/marketplace?category=archaeology-natural-history" },
-                            { label: "Art", href: "/marketplace?category=art" },
-                            { label: "Asian & Tribal Art", href: "/marketplace?category=asian-tribal-art" },
-                            { label: "Books & Historical Memorabilia", href: "/marketplace?category=books-historical-memorabilia" },
-                            { label: "Classic Cars, Motorcycles & Automobilia", href: "/marketplace?category=classic-cars-motorcycles" },
-                            { label: "Coins & Stamps", href: "/marketplace?category=coins-stamps" },
-                            { label: "Comics & Animation", href: "/marketplace?category=comics-animation" },
-                            { label: "Fashion", href: "/marketplace?category=fashion" },
-                            { label: "Interiors & Decorations", href: "/marketplace?category=interiors-decorations" },
-                            { label: "Jewellery & Precious Stones", href: "/marketplace?category=jewellery-precious-stones" },
-                            { label: "Music, Movies & Cameras", href: "/marketplace?category=music-movies-cameras" },
-                            { label: "Sports", href: "/marketplace?category=sports" },
-                            { label: "Toys & Models", href: "/marketplace?category=toys-models" },
-                            { label: "Trading Cards", href: "/marketplace?category=trading-cards" },
-                            { label: "Watches, Pens & Lighters", href: "/marketplace?category=watches-pens-lighters" },
-                            { label: "Wine, Whisky & Spirits", href: "/marketplace?category=wine-whisky-spirits" },
-                        ].map((category) => (
-                            <Link
-                                key={category.label}
-                                href={category.href}
-                                className="whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium text-secondary transition-all hover:bg-secondary hover:text-primary"
+                <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+                    <div className="flex items-center justify-center gap-1 py-2">
+                        {parentCategories.map((category) => (
+                            <button
+                                key={category.key}
+                                onClick={() => setActiveCategoryMenu(prev => prev === category.key ? null : category.key)}
+                                className={cx(
+                                    "flex items-center gap-1 whitespace-nowrap rounded-lg px-4 py-2 text-sm font-medium transition-all cursor-pointer",
+                                    activeCategoryMenu === category.key
+                                        ? "bg-brand-600 text-white"
+                                        : "text-secondary hover:bg-secondary hover:text-primary"
+                                )}
                             >
                                 {category.label}
-                            </Link>
+                                <ChevronDown className={cx(
+                                    "size-4 transition-transform duration-200",
+                                    activeCategoryMenu === category.key && "rotate-180"
+                                )} />
+                            </button>
                         ))}
                     </div>
-
-                    {/* Right Fade Gradient */}
-                    <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-primary to-transparent z-10" />
                 </div>
             </div>
+
+            {/* Category Mega Menu */}
+            <div
+                className={cx(
+                    "fixed left-0 right-0 z-40 bg-primary border-b border-secondary shadow-xl transition-all duration-300 ease-in-out",
+                    activeCategoryMenu
+                        ? "opacity-100 translate-y-0 visible"
+                        : "opacity-0 -translate-y-4 invisible"
+                )}
+                style={{ top: "116px" }}
+            >
+                {activeCategoryMenu && categoryMegaMenus[activeCategoryMenu] && (
+                    <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 py-8">
+                        <div className="grid grid-cols-6 gap-6">
+                            {categoryMegaMenus[activeCategoryMenu].map((section, index) => (
+                                <div key={index}>
+                                    <h3 className="text-sm font-semibold text-primary mb-3">
+                                        {section.title}
+                                    </h3>
+                                    <div className="space-y-1">
+                                        {section.subcategories.map((item) => (
+                                            <Link
+                                                key={item.name}
+                                                href={item.href}
+                                                className="block rounded-lg py-2 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
+                                                onClick={() => setActiveCategoryMenu(null)}
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Category Menu Backdrop */}
+            {activeCategoryMenu && (
+                <div
+                    className="fixed inset-0 z-30 bg-overlay/40 backdrop-blur-sm transition-opacity"
+                    onClick={() => setActiveCategoryMenu(null)}
+                    style={{ top: "116px" }}
+                />
+            )}
 
             {/* Mega Menu */}
             <div
