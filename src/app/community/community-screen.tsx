@@ -203,34 +203,6 @@ const PostCard = ({ post }: { post: typeof posts[0] }) => {
     return (
         <div className="bg-primary border border-secondary rounded-lg hover:border-tertiary/30 transition-colors">
             <div className="flex">
-                {/* Vote column */}
-                <div className="flex flex-col items-center gap-1 p-2 bg-secondary/30 rounded-l-lg">
-                    <button
-                        onClick={() => handleVote(true)}
-                        className={cx(
-                            "p-1 rounded hover:bg-secondary transition-colors",
-                            voteState === true ? "text-brand-600" : "text-tertiary hover:text-primary"
-                        )}
-                    >
-                        <ArrowUp className="size-5" />
-                    </button>
-                    <span className={cx(
-                        "text-xs font-bold",
-                        voteState === true ? "text-brand-600" : voteState === false ? "text-blue-600" : "text-primary"
-                    )}>
-                        {formatVotes(votes)}
-                    </span>
-                    <button
-                        onClick={() => handleVote(false)}
-                        className={cx(
-                            "p-1 rounded hover:bg-secondary transition-colors",
-                            voteState === false ? "text-blue-600" : "text-tertiary hover:text-primary"
-                        )}
-                    >
-                        <ArrowDown className="size-5" />
-                    </button>
-                </div>
-
                 {/* Content */}
                 <div className="flex-1 p-3">
                     {/* Header */}
@@ -319,7 +291,7 @@ export const CommunityScreen = () => {
 
     return (
         <div className="bg-secondary min-h-screen">
-            <div className="mx-auto max-w-[1400px] px-4 py-4">
+            <div className="w-full px-4 lg:px-6 xl:px-8 py-4">
                 <div className="flex gap-6">
                     {/* Left Sidebar */}
                     <aside className="hidden lg:block w-[270px] flex-shrink-0">
@@ -422,7 +394,7 @@ export const CommunityScreen = () => {
                     </aside>
 
                     {/* Main Content */}
-                    <main className="flex-1 min-w-0 max-w-[700px]">
+                    <main className="flex-1 min-w-0">
                         {/* Sort Bar */}
                         <div className="bg-primary border border-secondary rounded-lg p-2 mb-4">
                             <div className="flex items-center gap-2">

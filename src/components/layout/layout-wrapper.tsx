@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
 // Routes that should not show header/footer
-const authRoutes = ["/login", "/signup", "/forgot-password", "/reset-password", "/verify-email", "/verify-otp", "/sso-callback", "/seller", "/admin", "/checkout", "/contact"];
+const authRoutes = ["/login", "/signup", "/forgot-password", "/reset-password", "/verify-email", "/verify-otp", "/sso-callback", "/seller", "/admin", "/checkout", "/contact", "/community"];
 
 interface LayoutWrapperProps {
     children: React.ReactNode;
