@@ -115,3 +115,26 @@ input[type="search"]::-webkit-search-cancel-button {
 @utility max-w-8xl {
     max-width: 95rem;
 }
+
+/* Shimmer Loading Animation */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@utility animate-shimmer {
+    background: linear-gradient(
+        90deg,
+        var(--color-bg-secondary) 0%,
+        var(--color-bg-tertiary) 20%,
+        var(--color-bg-quaternary, var(--color-bg-secondary-hover)) 40%,
+        var(--color-bg-tertiary) 60%,
+        var(--color-bg-secondary) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+}

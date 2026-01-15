@@ -87,29 +87,6 @@ export const HeroSection = memo(function HeroSection() {
             className="relative overflow-hidden bg-primary pt-8 pb-16 lg:pt-16 lg:pb-24"
             style={{ contain: "layout style" }}
         >
-            {/* Simplified background - uses CSS instead of multiple divs */}
-            <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                    background: `
-                        radial-gradient(ellipse 80% 50% at 90% 10%, rgba(127, 86, 217, 0.15) 0%, transparent 50%),
-                        radial-gradient(ellipse 60% 40% at 10% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
-                        radial-gradient(ellipse 50% 30% at 60% 90%, rgba(245, 158, 11, 0.08) 0%, transparent 50%)
-                    `,
-                }}
-            />
-
-            {/* Dot pattern - simplified with CSS */}
-            <div
-                className="pointer-events-none absolute inset-0 opacity-[0.15]"
-                style={{
-                    backgroundImage: `radial-gradient(circle at center, #7F56D9 1px, transparent 1px)`,
-                    backgroundSize: "24px 24px",
-                    maskImage: "radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%)",
-                    WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%)",
-                }}
-            />
-
             <div className="relative mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col items-center">
                     {/* Content - no hydration-dependent animations */}

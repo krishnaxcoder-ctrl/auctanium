@@ -16,12 +16,30 @@ interface LazySectionProps {
     className?: string;
 }
 
+// Shimmer skeleton element
+const ShimmerBox = ({ className }: { className?: string }) => (
+    <div
+        className={`relative overflow-hidden rounded bg-secondary ${className}`}
+    >
+        <div className="absolute inset-0 animate-shimmer" />
+    </div>
+);
+
 // Default skeleton that matches SectionSkeleton in home-screen
 const DefaultSkeleton = () => (
-    <div className="w-full py-16 animate-pulse">
+    <div className="w-full py-16">
         <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <div className="h-8 bg-secondary rounded w-1/3 mx-auto mb-4" />
-            <div className="h-4 bg-secondary rounded w-2/3 mx-auto" />
+            <ShimmerBox className="h-8 w-1/3 mx-auto mb-4" />
+            <ShimmerBox className="h-4 w-2/3 mx-auto mb-8" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[...Array(4)].map((_, i) => (
+                    <div key={i} className="space-y-3">
+                        <ShimmerBox className="aspect-square w-full" />
+                        <ShimmerBox className="h-4 w-3/4" />
+                        <ShimmerBox className="h-3 w-1/2" />
+                    </div>
+                ))}
+            </div>
         </div>
     </div>
 );

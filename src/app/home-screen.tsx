@@ -16,14 +16,45 @@ const TrustAssuranceStrip = lazy(() =>
     }))
 );
 
-// Loading skeleton component
+// Shimmer skeleton element
+const ShimmerBox = ({ className }: { className?: string }) => (
+    <div
+        className={`relative overflow-hidden rounded bg-secondary ${className}`}
+    >
+        <div className="absolute inset-0 animate-shimmer" />
+    </div>
+);
+
+// Loading skeleton component with shimmer effect
 const SectionSkeleton = () => (
-    <div className="w-full py-16 animate-pulse">
+    <div className="w-full py-16">
         <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <div className="h-8 bg-secondary rounded w-1/3 mx-auto mb-4" />
-            <div className="h-4 bg-secondary rounded w-2/3 mx-auto" />
+            <ShimmerBox className="h-8 w-1/3 mx-auto mb-4" />
+            <ShimmerBox className="h-4 w-2/3 mx-auto" />
         </div>
     </div>
+);
+
+// Trust strip skeleton with shimmer
+const TrustStripSkeleton = () => (
+    <section className="bg-secondary border-y border-secondary">
+        <div className="mx-auto max-w-8xl px-0 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4">
+                {[...Array(4)].map((_, i) => (
+                    <div
+                        key={i}
+                        className="flex items-center gap-2 sm:gap-3 py-3 sm:py-4 px-2 sm:px-2 border-b sm:border-b-0 border-primary"
+                    >
+                        <ShimmerBox className="size-8 sm:size-10 shrink-0 rounded-full" />
+                        <div className="min-w-0 flex-1 space-y-2">
+                            <ShimmerBox className="h-3 sm:h-4 w-24" />
+                            <ShimmerBox className="h-2 sm:h-3 w-32" />
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
 );
 
 // Section import factories - only loaded when in viewport
@@ -114,7 +145,7 @@ export const HomeScreen = () => {
             <HeroSection />
 
             {/* Trust Strip - Eagerly loaded as it's immediately visible */}
-            <Suspense fallback={<SectionSkeleton />}>
+            <Suspense fallback={<TrustStripSkeleton />}>
                 <TrustAssuranceStrip />
             </Suspense>
 
