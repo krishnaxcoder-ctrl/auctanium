@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Mail01, ChevronRight, Home05, Phone, MarkerPin01, Clock, MessageChatCircle, User01 } from "@untitledui/icons";
 import { Button } from "@/components/base/buttons/button";
@@ -7,6 +8,17 @@ import { Input } from "@/components/base/input/input";
 import { Select, SelectItemType } from "@/components/base/select/select";
 import { SelectItem } from "@/components/base/select/select-item";
 import { TextArea } from "@/components/base/textarea/textarea";
+import { z } from "zod";
+
+const contactFormSchema = z.object({
+  firstName: z.string().min(1, "First name is required").min(2, "First name must be at least 2 characters"),
+  lastName: z.string().min(1, "Last name is required").min(2, "Last name must be at least 2 characters"),
+  email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
+  subject: z.string().min(1, "Please select a subject"),
+  message: z.string().min(1, "Message is required").min(10, "Message must be at least 10 characters"),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 const contactMethods = [
   {
@@ -48,6 +60,47 @@ const subjectOptions: SelectItemType[] = [
 ];
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState<ContactFormData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (field: keyof ContactFormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({});
+
+    const result = contactFormSchema.safeParse(formData);
+
+    if (!result.success) {
+      const fieldErrors: Partial<Record<keyof ContactFormData, string>> = {};
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0] as keyof ContactFormData;
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = issue.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setIsSubmitting(true);
+    // Handle form submission here
+    console.log("Form submitted:", result.data);
+    setIsSubmitting(false);
+  };
+
   return (
     <div className="min-h-screen bg-primary">
       {/* Header */}
@@ -114,18 +167,26 @@ export default function ContactPage() {
             <h2 className="text-lg sm:text-2xl font-semibold text-primary mb-2">Send us a message</h2>
             <p className="text-tertiary mb-6">Fill out the form below and we&apos;ll get back to you as soon as possible.</p>
 
-            <form className="space-y-5">
+            <form className="space-y-5" onSubmit={handleSubmit}>
               <div className="grid gap-5 sm:grid-cols-2">
                 <Input
                   label="First Name"
                   placeholder="John"
                   icon={User01}
                   size="md"
+                  value={formData.firstName}
+                  onChange={(value) => handleChange("firstName", value)}
+                  isInvalid={!!errors.firstName}
+                  hint={errors.firstName}
                 />
                 <Input
                   label="Last Name"
                   placeholder="Doe"
                   size="md"
+                  value={formData.lastName}
+                  onChange={(value) => handleChange("lastName", value)}
+                  isInvalid={!!errors.lastName}
+                  hint={errors.lastName}
                 />
               </div>
 
@@ -135,6 +196,10 @@ export default function ContactPage() {
                 type="email"
                 icon={Mail01}
                 size="md"
+                value={formData.email}
+                onChange={(value) => handleChange("email", value)}
+                isInvalid={!!errors.email}
+                hint={errors.email}
               />
 
               <Select
@@ -142,6 +207,10 @@ export default function ContactPage() {
                 placeholder="Select a topic"
                 items={subjectOptions}
                 size="md"
+                selectedKey={formData.subject || null}
+                onSelectionChange={(key) => handleChange("subject", key as string)}
+                isInvalid={!!errors.subject}
+                hint={errors.subject}
               >
                 {(item) => <SelectItem id={item.id} label={item.label} />}
               </Select>
@@ -150,10 +219,14 @@ export default function ContactPage() {
                 label="Message"
                 placeholder="How can we help you?"
                 rows={5}
+                value={formData.message}
+                onChange={(value) => handleChange("message", value)}
+                isInvalid={!!errors.message}
+                hint={errors.message}
               />
 
-              <Button color="primary" size="lg" className="w-full">
-                Send Message
+              <Button color="primary" size="lg" className="w-full" type="submit" isDisabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>
