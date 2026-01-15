@@ -1452,7 +1452,7 @@ export const Header = () => {
                         ? "opacity-100 translate-y-0 visible"
                         : "opacity-100 translate-y-full invisible"
                 )}
-                style={{ top: "auto", maxHeight: "70vh" }}
+                style={{ top: "auto", maxHeight: "84vh" }}
             >
                 {activeCategoryMenu && categoryMegaMenus[activeCategoryMenu] && (
                     <div className="flex flex-col h-full">
