@@ -905,6 +905,7 @@ export const Header = () => {
     const [isListening, setIsListening] = useState(false);
     const [showResults, setShowResults] = useState(false);
     const [activeCategoryMenu, setActiveCategoryMenu] = useState<string | null>(null);
+    const [mobileSubMenu, setMobileSubMenu] = useState<string | null>(null);
     const searchInputRef = useRef<HTMLInputElement>(null);
 
     // Load recent searches from localStorage
@@ -1194,102 +1195,103 @@ export const Header = () => {
                     </div>
                 </div>
 
-                {/* Mobile Navigation */}
+                {/* Mobile Navigation - Full Screen Overlay */}
                 <div
                     className={cx(
-                        "overflow-hidden border-t border-secondary bg-primary transition-all duration-300 ease-in-out lg:hidden",
-                        mobileMenuOpen ? "max-h-[900px] opacity-100" : "max-h-0 opacity-0 border-transparent"
+                        "fixed inset-0 z-50 bg-primary lg:hidden overflow-hidden",
+                        mobileMenuOpen ? "visible" : "invisible"
                     )}
                 >
-                    <div className="px-4 py-4">
-                        {/* Mobile Nav Links */}
-                        <div className="space-y-4">
-                            {/* Marketplace */}
-                            <div>
-                                <p className="text-xs font-semibold uppercase tracking-wider text-tertiary mb-2 px-4">Marketplace</p>
-                                {megaMenus.marketplace.columns[0].items.slice(0, 4).map((item) => (
-                                    <Link
-                                        key={item.label}
-                                        href={item.href}
-                                        className="block rounded-xl px-4 py-2 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                    >
-                                        {item.label}
-                                    </Link>
-                                ))}
-                            </div>
-                            {/* Categories */}
-                            <div className="border-t border-secondary pt-4">
-                                <p className="text-xs font-semibold uppercase tracking-wider text-tertiary mb-2 px-4">Categories</p>
-                                {megaMenus.categories.columns[0].items.slice(0, 4).map((item) => (
-                                    <Link
-                                        key={item.label}
-                                        href={item.href}
-                                        className="block rounded-xl px-4 py-2 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                    >
-                                        {item.label}
-                                    </Link>
-                                ))}
-                            </div>
-                            {/* Quick Links */}
-                            <div className="border-t border-secondary pt-4">
-                                <Link
-                                    href="/marketplace"
-                                    className="block cursor-pointer rounded-xl px-4 py-3 text-sm font-medium text-primary hover:bg-secondary transition-colors"
-                                    onClick={() => setMobileMenuOpen(false)}
+                    <div className="flex flex-col h-full">
+                        {/* Header */}
+                        <div className="flex h-16 items-center justify-between px-4 border-b border-secondary">
+                            <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+                                <Image
+                                    src="/sitelogo.png"
+                                    alt="Auctanium"
+                                    width={1000}
+                                    height={20}
+                                    className="h-8 w-auto"
+                                />
+                            </Link>
+                            <button
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="p-2 -mr-2 rounded-lg hover:bg-secondary transition-colors"
+                            >
+                                <X className="size-5 text-secondary" />
+                            </button>
+                        </div>
+
+                        {/* Scrollable Content */}
+                        <div className="flex-1 overflow-y-auto">
+                            <div className="py-2">
+                                {/* Parent Categories with Drill-down */}
+                                <button
+                                    onClick={() => setMobileSubMenu("marketplace")}
+                                    className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-primary hover:bg-secondary transition-colors"
                                 >
-                                    Marketplace
-                                </Link>
+                                    <span>Marketplace</span>
+                                    <ChevronRight className="size-5 text-tertiary" />
+                                </button>
+                                <button
+                                    onClick={() => setMobileSubMenu("categories")}
+                                    className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-primary hover:bg-secondary transition-colors"
+                                >
+                                    <span>Categories</span>
+                                    <ChevronRight className="size-5 text-tertiary" />
+                                </button>
                                 <Link
                                     href="/seller"
-                                    className="block cursor-pointer rounded-xl px-4 py-3 text-sm font-medium text-primary hover:bg-secondary transition-colors"
+                                    className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-primary hover:bg-secondary transition-colors"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
-                                    Sellers
+                                    <span>Sellers</span>
+                                    <ChevronRight className="size-5 text-tertiary" />
                                 </Link>
                                 <Link
                                     href="/community"
-                                    className="block cursor-pointer rounded-xl px-4 py-3 text-sm font-medium text-primary hover:bg-secondary transition-colors"
+                                    className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-primary hover:bg-secondary transition-colors"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
-                                    Community
+                                    <span>Community</span>
+                                    <ChevronRight className="size-5 text-tertiary" />
                                 </Link>
-                            </div>
-                            {/* More Pages */}
-                            <div className="border-t border-secondary pt-4">
-                                <p className="text-xs font-semibold uppercase tracking-wider text-tertiary mb-2 px-4">Company & Support</p>
+
+                                {/* Divider */}
+                                <div className="border-t border-secondary my-2" />
+
+                                {/* Simple Links */}
                                 <Link
                                     href="/about"
-                                    className="block rounded-xl px-4 py-2 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
+                                    className="block px-4 py-3 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     About Us
                                 </Link>
                                 <Link
                                     href="/blog"
-                                    className="block rounded-xl px-4 py-2 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
+                                    className="block px-4 py-3 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     Blog
                                 </Link>
                                 <Link
                                     href="/careers"
-                                    className="block rounded-xl px-4 py-2 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
+                                    className="block px-4 py-3 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     Careers
                                 </Link>
                                 <Link
                                     href="/contact"
-                                    className="block rounded-xl px-4 py-2 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
+                                    className="block px-4 py-3 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     Contact
                                 </Link>
                                 <Link
                                     href="/help"
-                                    className="block rounded-xl px-4 py-2 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
+                                    className="block px-4 py-3 text-sm text-secondary hover:bg-secondary hover:text-primary transition-colors"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     Help Center
@@ -1297,42 +1299,140 @@ export const Header = () => {
                             </div>
                         </div>
 
-                        {/* Mobile CTA */}
-                        <div className="mt-4 grid gap-2 border-t border-secondary pt-4">
-                            {isLoaded && isSignedIn ? (
-                                <>
-                                    <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                                        <Button color="primary" size="lg" className="w-full justify-center">
-                                            Dashboard
+                        {/* Bottom CTA */}
+                        <div className="px-4 py-4 border-t border-secondary">
+                            <div className="grid gap-2">
+                                {isLoaded && isSignedIn ? (
+                                    <>
+                                        <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                                            <Button color="primary" size="lg" className="w-full justify-center">
+                                                Dashboard
+                                            </Button>
+                                        </Link>
+                                        <Button
+                                            color="secondary"
+                                            size="lg"
+                                            className="w-full justify-center"
+                                            iconLeading={LogOut01}
+                                            onClick={() => {
+                                                setMobileMenuOpen(false);
+                                                signOut({ redirectUrl: "/" });
+                                            }}
+                                        >
+                                            Sign Out
                                         </Button>
-                                    </Link>
-                                    <Button
-                                        color="secondary"
-                                        size="lg"
-                                        className="w-full justify-center"
-                                        iconLeading={LogOut01}
-                                        onClick={() => {
-                                            setMobileMenuOpen(false);
-                                            signOut({ redirectUrl: "/" });
-                                        }}
-                                    >
-                                        Sign Out
-                                    </Button>
-                                </>
-                            ) : (
-                                <>
-                                    <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                                        <Button color="secondary" size="lg" className="w-full justify-center">
-                                            Log In
-                                        </Button>
-                                    </Link>
-                                    <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
-                                        <Button color="primary" size="lg" className="w-full justify-center" iconTrailing={ArrowRight}>
-                                            Sign Up Free
-                                        </Button>
-                                    </Link>
-                                </>
-                            )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                                            <Button color="secondary" size="lg" className="w-full justify-center">
+                                                Log In
+                                            </Button>
+                                        </Link>
+                                        <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
+                                            <Button color="primary" size="lg" className="w-full justify-center" iconTrailing={ArrowRight}>
+                                                Sign Up Free
+                                            </Button>
+                                        </Link>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Sub Menu Overlay - Marketplace */}
+                    <div
+                        className={cx(
+                            "absolute inset-0 bg-primary",
+                            mobileSubMenu === "marketplace" ? "visible" : "invisible"
+                        )}
+                    >
+                        <div className="flex flex-col h-full">
+                            <div className="flex items-center justify-between px-4 py-3 border-b border-secondary">
+                                <button
+                                    onClick={() => setMobileSubMenu(null)}
+                                    className="p-2 -ml-2 rounded-lg hover:bg-secondary transition-colors"
+                                >
+                                    <ArrowLeft className="size-5 text-primary" />
+                                </button>
+                                <h2 className="text-base font-semibold text-primary">Marketplace</h2>
+                                <button
+                                    onClick={() => { setMobileSubMenu(null); setMobileMenuOpen(false); }}
+                                    className="p-2 -mr-2 rounded-lg hover:bg-secondary transition-colors"
+                                >
+                                    <X className="size-5 text-secondary" />
+                                </button>
+                            </div>
+                            <div className="flex-1 overflow-y-auto py-4">
+                                <Link
+                                    href="/marketplace"
+                                    className="flex items-center gap-1 px-4 py-2 text-sm font-semibold text-primary hover:text-brand-600 transition-colors"
+                                    onClick={() => { setMobileSubMenu(null); setMobileMenuOpen(false); }}
+                                >
+                                    All Marketplace
+                                    <ArrowRight className="size-4" />
+                                </Link>
+                                <div className="mt-2">
+                                    {megaMenus.marketplace.columns[0].items.map((item) => (
+                                        <Link
+                                            key={item.label}
+                                            href={item.href}
+                                            className="block px-4 py-2.5 text-sm text-secondary hover:text-primary transition-colors"
+                                            onClick={() => { setMobileSubMenu(null); setMobileMenuOpen(false); }}
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Sub Menu Overlay - Categories */}
+                    <div
+                        className={cx(
+                            "absolute inset-0 bg-primary",
+                            mobileSubMenu === "categories" ? "visible" : "invisible"
+                        )}
+                    >
+                        <div className="flex flex-col h-full">
+                            <div className="flex items-center justify-between px-4 py-3 border-b border-secondary">
+                                <button
+                                    onClick={() => setMobileSubMenu(null)}
+                                    className="p-2 -ml-2 rounded-lg hover:bg-secondary transition-colors"
+                                >
+                                    <ArrowLeft className="size-5 text-primary" />
+                                </button>
+                                <h2 className="text-base font-semibold text-primary">Categories</h2>
+                                <button
+                                    onClick={() => { setMobileSubMenu(null); setMobileMenuOpen(false); }}
+                                    className="p-2 -mr-2 rounded-lg hover:bg-secondary transition-colors"
+                                >
+                                    <X className="size-5 text-secondary" />
+                                </button>
+                            </div>
+                            <div className="flex-1 overflow-y-auto py-4">
+                                <Link
+                                    href="/category"
+                                    className="flex items-center gap-1 px-4 py-2 text-sm font-semibold text-primary hover:text-brand-600 transition-colors"
+                                    onClick={() => { setMobileSubMenu(null); setMobileMenuOpen(false); }}
+                                >
+                                    All Categories
+                                    <ArrowRight className="size-4" />
+                                </Link>
+                                <div className="mt-2">
+                                    {megaMenus.categories.columns[0].items.map((item) => (
+                                        <Link
+                                            key={item.label}
+                                            href={item.href}
+                                            className="block px-4 py-2.5 text-sm text-secondary hover:text-primary transition-colors"
+                                            onClick={() => { setMobileSubMenu(null); setMobileMenuOpen(false); }}
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
