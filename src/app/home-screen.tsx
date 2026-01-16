@@ -107,10 +107,6 @@ const sectionFactories = {
         import("@/components/sections/looking-now-section").then((mod) => ({
             default: mod.LookingNowSection,
         })),
-    latestFromCommunity: () =>
-        import("@/components/sections/latest-from-community-section").then((mod) => ({
-            default: mod.LatestFromCommunitySection,
-        })),
     howItWorks: () =>
         import("@/components/sections/how-it-works-section").then((mod) => ({
             default: mod.HowItWorksSection,
@@ -189,10 +185,6 @@ export const HomeScreen = () => {
             <DeferredSection
                 factory={sectionFactories.lookingNow}
                 minHeight="300px"
-            />
-            <DeferredSection
-                factory={sectionFactories.latestFromCommunity}
-                minHeight="400px"
             />
             <DeferredSection
                 factory={sectionFactories.testimonials}

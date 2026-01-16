@@ -25,5 +25,9 @@
       "WebSearch",
       "Bash(findstr:*)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "supabase"
+  ],
+  "enableAllProjectMcpServers": true
 }
