@@ -69,6 +69,7 @@ export default function ContactPage() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (field: keyof typeof formData, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -86,6 +87,7 @@ export default function ContactPage() {
     e.preventDefault();
     setErrors({});
     setIsSuccess(false);
+    setSubmitError(null);
 
     const result = contactFormSchema.safeParse(formData);
 
@@ -103,10 +105,28 @@ export default function ContactPage() {
 
     setIsSubmitting(true);
 
-    // Simulate API call
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log("Form submitted:", result.data);
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          countryCode: formData.countryCode,
+          message: formData.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
+
       setIsSuccess(true);
       // Reset form after successful submission
       setFormData({
@@ -120,6 +140,7 @@ export default function ContactPage() {
       });
     } catch (error) {
       console.error("Submission error:", error);
+      setSubmitError(error instanceof Error ? error.message : "Failed to send message. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -140,49 +161,87 @@ export default function ContactPage() {
 
             {/* Success Message */}
             {isSuccess && (
-              <div className="mb-6 rounded-lg bg-green-50 border border-green-200 p-4">
+              <div className="mb-4 rounded-lg bg-green-50 border border-green-200 p-4">
                 <p className="text-sm font-medium text-green-800">
                   Thank you for reaching out! We&apos;ll get back to you shortly.
                 </p>
               </div>
             )}
 
+            {/* Submit Error */}
+            {submitError && (
+              <div className="mb-4 rounded-lg bg-red-50 border border-red-200 p-4">
+                <p className="text-sm font-medium text-red-800">
+                  {submitError}
+                </p>
+              </div>
+            )}
+
+            {/* Error Summary */}
+            {Object.keys(errors).length > 0 && !isSuccess && !submitError && (
+              <div className="mb-4 rounded-lg bg-red-50 border border-red-200 p-4">
+                <p className="text-sm font-medium text-red-800 mb-2">
+                  Please fix the following errors:
+                </p>
+                <ul className="list-disc list-inside text-sm text-red-700 space-y-1">
+                  {errors.firstName && <li>{errors.firstName}</li>}
+                  {errors.lastName && <li>{errors.lastName}</li>}
+                  {errors.email && <li>{errors.email}</li>}
+                  {errors.phone && <li>{errors.phone}</li>}
+                  {errors.message && <li>{errors.message}</li>}
+                  {errors.agreeToPrivacy && <li>{errors.agreeToPrivacy}</li>}
+                </ul>
+              </div>
+            )}
+
             {/* Form */}
-            <form className="space-y-5" onSubmit={handleSubmit}>
+            <form className="space-y-5" onSubmit={handleSubmit} noValidate>
               <div className="grid gap-2 sm:grid-cols-2">
-                <Input
-                  label="First name"
-                  placeholder="First name"
-                  size="md"
-                  value={formData.firstName}
-                  onChange={(value) => handleChange("firstName", value)}
-                  isInvalid={!!errors.firstName}
-                  hint={errors.firstName}
-                  isRequired
-                />
-                <Input
-                  label="Last name"
-                  placeholder="Last name"
-                  size="md"
-                  value={formData.lastName}
-                  onChange={(value) => handleChange("lastName", value)}
-                  isInvalid={!!errors.lastName}
-                  hint={errors.lastName}
-                  isRequired
-                />
+                <div className="space-y-1.5">
+                  <Input
+                    label="First name"
+                    placeholder="First name"
+                    size="md"
+                    value={formData.firstName}
+                    onChange={(value) => handleChange("firstName", value)}
+                    isInvalid={!!errors.firstName}
+                    isRequired
+                  />
+                  {errors.firstName && (
+                    <p className="text-sm text-red-500">{errors.firstName}</p>
+                  )}
+                </div>
+                <div className="space-y-1.5">
+                  <Input
+                    label="Last name"
+                    placeholder="Last name"
+                    size="md"
+                    value={formData.lastName}
+                    onChange={(value) => handleChange("lastName", value)}
+                    isInvalid={!!errors.lastName}
+                    isRequired
+                  />
+                  {errors.lastName && (
+                    <p className="text-sm text-red-500">{errors.lastName}</p>
+                  )}
+                </div>
               </div>
 
-              <Input
-                label="Email"
-                placeholder="you@company.com"
-                type="email"
-                size="md"
-                value={formData.email}
-                onChange={(value) => handleChange("email", value)}
-                isInvalid={!!errors.email}
-                hint={errors.email}
-                isRequired
-              />
+              <div className="space-y-1.5">
+                <Input
+                  label="Email"
+                  placeholder="you@company.com"
+                  type="email"
+                  size="md"
+                  value={formData.email}
+                  onChange={(value) => handleChange("email", value)}
+                  isInvalid={!!errors.email}
+                  isRequired
+                />
+                {errors.email && (
+                  <p className="text-sm text-red-500">{errors.email}</p>
+                )}
+              </div>
 
               {/* Phone Number with Country Code */}
               <div className="space-y-1.5">
@@ -215,34 +274,41 @@ export default function ContactPage() {
                 )}
               </div>
 
-              <TextArea
-                label="Message"
-                placeholder="Tell us how we can help you..."
-                rows={4}
-                value={formData.message}
-                onChange={(value) => handleChange("message", value)}
-                isInvalid={!!errors.message}
-                hint={errors.message}
-                isRequired
-              />
+              <div className="space-y-1.5">
+                <TextArea
+                  label="Message"
+                  placeholder="Tell us how we can help you..."
+                  rows={4}
+                  value={formData.message}
+                  onChange={(value) => handleChange("message", value)}
+                  isInvalid={!!errors.message}
+                  isRequired
+                />
+                {errors.message && (
+                  <p className="text-sm text-red-500">{errors.message}</p>
+                )}
+              </div>
 
               {/* Privacy Policy Checkbox */}
-              <div className="flex items-start gap-2">
-                <Checkbox
-                  isSelected={formData.agreeToPrivacy}
-                  onChange={(checked) => handleChange("agreeToPrivacy", checked)}
-                />
-                <label className="text-sm text-tertiary">
-                  You agree to our friendly{" "}
-                  <Link href="/privacy" className="text-primary underline hover:text-brand-600">
-                    privacy policy
-                  </Link>
-                  .
-                </label>
+              <div className="space-y-1.5">
+                <div className={`flex items-start gap-2 ${errors.agreeToPrivacy ? 'text-red-500' : ''}`}>
+                  <Checkbox
+                    isSelected={formData.agreeToPrivacy}
+                    onChange={(checked) => handleChange("agreeToPrivacy", checked)}
+                    isInvalid={!!errors.agreeToPrivacy}
+                  />
+                  <label className={`text-sm ${errors.agreeToPrivacy ? 'text-red-500' : 'text-tertiary'}`}>
+                    You agree to our friendly{" "}
+                    <Link href="/privacy" className="underline hover:text-brand-600">
+                      privacy policy
+                    </Link>
+                    .
+                  </label>
+                </div>
+                {errors.agreeToPrivacy && (
+                  <p className="text-sm text-red-500">{errors.agreeToPrivacy}</p>
+                )}
               </div>
-              {errors.agreeToPrivacy && (
-                <p className="text-sm text-red-500 -mt-3">{errors.agreeToPrivacy}</p>
-              )}
 
               <Button color="primary" size="lg" className="w-full" type="submit" isDisabled={isSubmitting}>
                 {isSubmitting ? "Sending..." : "Get in touch"}
