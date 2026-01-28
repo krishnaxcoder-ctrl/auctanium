@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import {
     ArrowRight,
@@ -16,6 +17,7 @@ import { Button } from "@/components/base/buttons/button";
 import { Badge } from "@/components/base/badges/badges";
 import { FeaturedIcon } from "@/components/foundations/featured-icon/featured-icon";
 
+// Best practice: rendering-hoist-jsx - static data defined outside component
 const steps = [
     {
         icon: UserPlus01,
@@ -67,7 +69,35 @@ const steps = [
     },
 ];
 
-export const HowItWorksSection = () => {
+// Best practice: rerender-memo - extract step card as memoized component
+const StepCard = memo(function StepCard({ step }: { step: typeof steps[number] }) {
+    return (
+        <div className="relative">
+            <div className="group relative bg-primary p-6 border border-secondary transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-brand-300">
+                {/* Icon */}
+                <div className="mb-5">
+                    <FeaturedIcon
+                        icon={step.icon}
+                        size="lg"
+                        color={step.color}
+                        theme="modern"
+                    />
+                </div>
+
+                {/* Content */}
+                <h3 className="text-lg font-semibold text-primary group-hover:text-brand-600">
+                    {step.title}
+                </h3>
+                <p className="mt-2 text-sm text-tertiary leading-relaxed line-clamp-3">
+                    {step.description}
+                </p>
+            </div>
+        </div>
+    );
+});
+
+// Best practice: rerender-memo - memoize to prevent unnecessary re-renders
+export const HowItWorksSection = memo(function HowItWorksSection() {
     return (
         <section id="how-it-works" className="bg-secondary py-8 lg:py-6">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
@@ -89,27 +119,7 @@ export const HowItWorksSection = () => {
                 {/* Steps */}
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                     {steps.map((step, index) => (
-                        <div key={index} className="relative">
-                            <div className="group relative bg-primary p-6 border border-secondary transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-brand-300">
-                                {/* Icon */}
-                                <div className="mb-5">
-                                    <FeaturedIcon
-                                        icon={step.icon}
-                                        size="lg"
-                                        color={step.color}
-                                        theme="modern"
-                                    />
-                                </div>
-
-                                {/* Content */}
-                                <h3 className="text-lg font-semibold text-primary group-hover:text-brand-600">
-                                    {step.title}
-                                </h3>
-                                <p className="mt-2 text-sm text-tertiary leading-relaxed line-clamp-3">
-                                    {step.description}
-                                </p>
-                            </div>
-                        </div>
+                        <StepCard key={index} step={step} />
                     ))}
                 </div>
 
@@ -124,4 +134,4 @@ export const HowItWorksSection = () => {
             </div>
         </section>
     );
-};
+});

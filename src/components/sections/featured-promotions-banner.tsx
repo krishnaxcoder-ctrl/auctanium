@@ -1,12 +1,14 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Play, Headphones02, BookOpen02, Users01 } from "@untitledui/icons";
 import { Button } from "@/components/base/buttons/button";
 import { Badge } from "@/components/base/badges/badges";
 
-export const FeaturedPromotionsBanner = () => {
+// Best practice: rerender-memo - memoize to prevent unnecessary re-renders
+export const FeaturedPromotionsBanner = memo(function FeaturedPromotionsBanner() {
     return (
         <section className="bg-secondary py-8 lg:py-6">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
@@ -152,4 +154,4 @@ export const FeaturedPromotionsBanner = () => {
             </div>
         </section>
     );
-};
+});

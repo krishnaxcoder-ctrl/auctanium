@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 import {
     Clock,
     Heart,
@@ -48,41 +48,48 @@ interface Props {
     transparentBorder?: boolean;
 }
 
+// Best practice: rendering-hoist-jsx - static data defined outside component
 const conditionLabels = {
     new: { label: "New", color: "success" as const },
     "like-new": { label: "Like New", color: "blue" as const },
     good: { label: "Good", color: "warning" as const },
     fair: { label: "Fair", color: "gray" as const },
-};
+} as const;
 
-export function MarketplaceProductCard({ product, view = "grid", transparentBorder = false }: Props) {
+// Best practice: rerender-memo - memoize to prevent unnecessary re-renders
+export const MarketplaceProductCard = memo(function MarketplaceProductCard({
+    product,
+    view = "grid",
+    transparentBorder = false
+}: Props) {
     const [isWishlisted, setIsWishlisted] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
 
-    const handleWishlist = (e: React.MouseEvent) => {
+    // Best practice: rerender-functional-setstate - use functional update for toggle
+    const handleWishlist = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
         e.nativeEvent.stopImmediatePropagation();
-        setIsWishlisted(!isWishlisted);
-    };
+        setIsWishlisted(prev => !prev);
+    }, []);
 
-    const preventLinkClick = (e: React.MouseEvent) => {
+    // Best practice: useCallback for stable reference
+    const preventLinkClick = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
         e.nativeEvent.stopImmediatePropagation();
-    };
+    }, []);
 
-    const handleQuickBid = (e: React.MouseEvent) => {
+    const handleQuickBid = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
         // Quick bid logic
-    };
+    }, []);
 
-    const handleAddToCart = (e: React.MouseEvent) => {
+    const handleAddToCart = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
         // Add to cart logic
-    };
+    }, []);
 
     if (view === "list") {
         return (
@@ -205,4 +212,4 @@ export function MarketplaceProductCard({ product, view = "grid", transparentBord
             </div>
         </Link>
     );
-}
+});

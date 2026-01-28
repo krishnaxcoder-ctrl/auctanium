@@ -1,9 +1,11 @@
 "use client";
 
+import { memo } from "react";
 import { Badge } from "@/components/base/badges/badges";
 import { Avatar } from "@/components/base/avatar/avatar";
 import { RatingStars } from "@/components/foundations/rating-stars";
 
+// Best practice: rendering-hoist-jsx - static data defined outside component
 const testimonials = [
     {
         name: "Rajesh Kumar",
@@ -67,7 +69,43 @@ const testimonials = [
     },
 ];
 
-export const TestimonialsSection = () => {
+// Best practice: rerender-memo - extract card as memoized component
+const TestimonialCard = memo(function TestimonialCard({
+    testimonial
+}: {
+    testimonial: typeof testimonials[number]
+}) {
+    return (
+        <div className="group relative">
+            <div className="h-full rounded-2xl bg-primary border border-secondary p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 hover:border-brand-300 hover:ring-1 hover:ring-brand-300">
+                {/* Header with rating and earned badge */}
+                <div className="flex justify-between items-center mb-4">
+                    <RatingStars rating={testimonial.rating} />
+                    <Badge type="pill-color" size="sm" color="success">
+                        {testimonial.earned}
+                    </Badge>
+                </div>
+
+                <p className="text-primary text-sm leading-relaxed mb-5 line-clamp-3">
+                    "{testimonial.content}"
+                </p>
+
+                <div className="flex items-center gap-3 pt-4 border-t border-primary">
+                    <Avatar size="md" src={testimonial.avatar} />
+                    <div>
+                        <p className="font-semibold text-sm text-primary">{testimonial.name}</p>
+                        <p className="text-xs text-tertiary">
+                            {testimonial.role} • {testimonial.location}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+});
+
+// Best practice: rerender-memo - memoize to prevent unnecessary re-renders
+export const TestimonialsSection = memo(function TestimonialsSection() {
     return (
         <section id="testimonials" className="bg-primary py-4 lg:py-6 border-y-4 border-brand-300">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
@@ -85,37 +123,10 @@ export const TestimonialsSection = () => {
 
                 <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {testimonials.map((testimonial, index) => (
-                        <div
-                            key={index}
-                            className="group relative"
-                        >
-                            <div className="h-full rounded-2xl bg-primary border border-secondary p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 hover:border-brand-300 hover:ring-1 hover:ring-brand-300">
-                                {/* Header with rating and earned badge */}
-                                <div className="flex justify-between items-center mb-4">
-                                    <RatingStars rating={testimonial.rating} />
-                                    <Badge type="pill-color" size="sm" color="success">
-                                        {testimonial.earned}
-                                    </Badge>
-                                </div>
-
-                                <p className="text-primary text-sm leading-relaxed mb-5 line-clamp-3">
-                                    "{testimonial.content}"
-                                </p>
-
-                                <div className="flex items-center gap-3 pt-4 border-t border-primary">
-                                    <Avatar size="md" src={testimonial.avatar} />
-                                    <div>
-                                        <p className="font-semibold text-sm text-primary">{testimonial.name}</p>
-                                        <p className="text-xs text-tertiary">
-                                            {testimonial.role} • {testimonial.location}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <TestimonialCard key={index} testimonial={testimonial} />
                     ))}
                 </div>
             </div>
         </section>
     );
-};
+});

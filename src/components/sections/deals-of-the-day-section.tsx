@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback, memo } from "react";
 import Link from "next/link";
 import { ArrowRight, Clock, Zap, ChevronLeft, ChevronRight } from "@untitledui/icons";
 import { Badge } from "@/components/base/badges/badges";
 import { Button } from "@/components/base/buttons/button";
 import { MarketplaceProductCard, MarketplaceProduct } from "@/components/marketplace/MarketplaceProductCard";
 
-const dealsOfTheDay: MarketplaceProduct[] = [
+// Best practice: rendering-hoist-jsx - static data defined outside component
+const dealsOfTheDay: readonly MarketplaceProduct[] = [
     {
         id: "dotd-1",
         title: "Authenticated Banksy Print - Girl with Balloon",
@@ -85,8 +86,8 @@ const dealsOfTheDay: MarketplaceProduct[] = [
     },
 ];
 
-// Countdown Timer Component
-const CountdownTimer = () => {
+// Best practice: rerender-memo - memoize countdown timer to isolate re-renders
+const CountdownTimer = memo(function CountdownTimer() {
     const [timeLeft, setTimeLeft] = useState({
         hours: 23,
         minutes: 59,
@@ -95,6 +96,7 @@ const CountdownTimer = () => {
 
     useEffect(() => {
         const timer = setInterval(() => {
+            // Best practice: rerender-functional-setstate - use functional update
             setTimeLeft((prev) => {
                 if (prev.seconds > 0) {
                     return { ...prev, seconds: prev.seconds - 1 };
@@ -123,34 +125,36 @@ const CountdownTimer = () => {
             <span className="text-sm text-tertiary">until deals expire</span>
         </div>
     );
-};
+});
 
-export const DealsOfTheDaySection = () => {
+// Best practice: rerender-memo - memoize to prevent unnecessary re-renders
+export const DealsOfTheDaySection = memo(function DealsOfTheDaySection() {
     const sliderRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
 
-    const checkScrollPosition = () => {
+    // Best practice: useCallback for stable references
+    const checkScrollPosition = useCallback(() => {
         if (sliderRef.current) {
             const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
             setCanScrollLeft(scrollLeft > 0);
             setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
         }
-    };
+    }, []);
 
-    const scrollLeft = () => {
+    const scrollLeft = useCallback(() => {
         if (sliderRef.current) {
             const scrollAmount = sliderRef.current.clientWidth;
             sliderRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
         }
-    };
+    }, []);
 
-    const scrollRight = () => {
+    const scrollRight = useCallback(() => {
         if (sliderRef.current) {
             const scrollAmount = sliderRef.current.clientWidth;
             sliderRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
         }
-    };
+    }, []);
 
     return (
         <section className="bg-primary py-4 lg:py-6 border-y border-secondary overflow-x-clip">
@@ -219,4 +223,4 @@ export const DealsOfTheDaySection = () => {
             </div>
         </section>
     );
-};
+});

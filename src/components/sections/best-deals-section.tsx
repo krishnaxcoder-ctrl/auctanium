@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback, memo } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "@untitledui/icons";
 import { Badge } from "@/components/base/badges/badges";
 import { Button } from "@/components/base/buttons/button";
 import { MarketplaceProductCard, MarketplaceProduct } from "@/components/marketplace/MarketplaceProductCard";
 
-const bestDeals: MarketplaceProduct[] = [
+// Best practice: rendering-hoist-jsx - static data defined outside component
+const bestDeals: readonly MarketplaceProduct[] = [
     {
         id: "deal-1",
         title: "Authenticated Banksy Print - Girl with Balloon",
@@ -85,34 +86,34 @@ const bestDeals: MarketplaceProduct[] = [
     },
 ];
 
-export const BestDealsSection = () => {
+// Best practice: rerender-memo - memoize to prevent unnecessary re-renders
+export const BestDealsSection = memo(function BestDealsSection() {
     const sliderRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
 
-    const checkScrollPosition = () => {
+    // Best practice: rerender-functional-setstate & useCallback for stable references
+    const checkScrollPosition = useCallback(() => {
         if (sliderRef.current) {
             const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
             setCanScrollLeft(scrollLeft > 0);
             setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
         }
-    };
+    }, []);
 
-    const scrollLeft = () => {
+    const scrollLeft = useCallback(() => {
         if (sliderRef.current) {
-            // Scroll by 2 cards (full container width)
             const scrollAmount = sliderRef.current.clientWidth;
             sliderRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
         }
-    };
+    }, []);
 
-    const scrollRight = () => {
+    const scrollRight = useCallback(() => {
         if (sliderRef.current) {
-            // Scroll by 2 cards (full container width)
             const scrollAmount = sliderRef.current.clientWidth;
             sliderRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
         }
-    };
+    }, []);
 
     return (
         <section className="bg-secondary py-4 lg:py-6 overflow-x-clip">
@@ -176,4 +177,4 @@ export const BestDealsSection = () => {
             </div>
         </section>
     );
-};
+});

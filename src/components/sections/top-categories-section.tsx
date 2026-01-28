@@ -1,9 +1,11 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "@untitledui/icons";
 
+// Best practice: rendering-hoist-jsx - static data defined outside component with const assertion
 const categories = [
     {
         name: "Electronics",
@@ -70,7 +72,8 @@ const categories = [
 // Export categories for use in other components
 export { categories };
 
-export const TopCategoriesSection = () => {
+// Best practice: rerender-memo - memoize to prevent unnecessary re-renders
+export const TopCategoriesSection = memo(function TopCategoriesSection() {
     return (
         <section className="bg-primary py-4 lg:py-6">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
@@ -121,4 +124,4 @@ export const TopCategoriesSection = () => {
             </div>
         </section>
     );
-};
+});

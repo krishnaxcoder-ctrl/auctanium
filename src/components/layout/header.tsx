@@ -1477,8 +1477,7 @@ export const Header = () => {
                     <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-primary to-transparent z-10" />
 
                     <div
-                        className="flex items-center gap-1 py-2 px-1 overflow-x-auto [&::-webkit-scrollbar]:hidden"
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        className="flex items-center gap-1 py-2 px-1 overflow-x-auto"
                     >
                         {parentCategories.map((category) => (
                             <button

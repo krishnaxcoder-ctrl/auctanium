@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, memo } from "react";
+import { useEffect, useRef, useState, memo, useCallback } from "react";
 import {
     ArrowRight,
     Play,
@@ -15,27 +15,49 @@ import { Avatar } from "@/components/base/avatar/avatar";
 import { RatingStars } from "@/components/foundations/rating-stars";
 import { cx } from "@/utils/cx";
 
-// Animated counter hook - starts after hydration
+// Best practice: rerender-use-ref-transient-values
+// Use refs for animation values to avoid re-renders during animation
+// Only update state at key points (start and end)
 const useAnimatedCounter = (end: number, duration: number = 2000) => {
-    const [count, setCount] = useState(end); // Start at end value to avoid layout shift
+    const [displayCount, setDisplayCount] = useState(end); // Start at end for SSR
+    const countRef = useRef<HTMLSpanElement>(null);
+    const hasAnimatedRef = useRef(false);
 
     useEffect(() => {
-        // Reset to 0 and animate after mount
-        setCount(0);
+        // Only animate once
+        if (hasAnimatedRef.current) return;
+        hasAnimatedRef.current = true;
+
+        const element = countRef.current;
+        if (!element) {
+            setDisplayCount(end);
+            return;
+        }
+
         let startTime: number;
         let animationFrame: number;
 
         const animate = (timestamp: number) => {
             if (!startTime) startTime = timestamp;
             const progress = Math.min((timestamp - startTime) / duration, 1);
-            setCount(Math.floor(progress * end));
+            const currentCount = Math.floor(progress * end);
+
+            // Best practice: rerender-use-ref-transient-values
+            // Update DOM directly instead of triggering re-renders
+            element.textContent = currentCount.toLocaleString();
+
             if (progress < 1) {
                 animationFrame = requestAnimationFrame(animate);
+            } else {
+                // Final state update for consistency
+                setDisplayCount(end);
             }
         };
 
         // Small delay to prioritize LCP
         const timeoutId = setTimeout(() => {
+            // Reset to 0 and start animation
+            element.textContent = "0";
             animationFrame = requestAnimationFrame(animate);
         }, 100);
 
@@ -45,7 +67,7 @@ const useAnimatedCounter = (end: number, duration: number = 2000) => {
         };
     }, [end, duration]);
 
-    return count;
+    return { countRef, displayCount };
 };
 
 // Trust badges - memoized to prevent re-renders
@@ -80,7 +102,7 @@ const TrustBadge = memo(function TrustBadge({
 
 // Main hero section - optimized for LCP
 export const HeroSection = memo(function HeroSection() {
-    const userCount = useAnimatedCounter(50000, 2500);
+    const { countRef, displayCount } = useAnimatedCounter(50000, 2500);
 
     return (
         <section
@@ -99,7 +121,7 @@ export const HeroSection = memo(function HeroSection() {
                                         <span className="absolute inline-flex size-full animate-ping rounded-full bg-success-500 opacity-75" />
                                         <span className="relative inline-flex size-2 rounded-full bg-success-500" />
                                     </span>
-                                    {userCount.toLocaleString()}+ live auctions right now
+                                    <span ref={countRef}>{displayCount.toLocaleString()}</span>+ live auctions right now
                                 </span>
                             </Badge>
                         </div>

@@ -1,5 +1,4 @@
-"use client";
-
+import { memo } from "react";
 import {
     Shield01,
     CheckVerified01,
@@ -8,6 +7,7 @@ import {
 } from "@untitledui/icons";
 import { cx } from "@/utils/cx";
 
+// Best practice: rendering-hoist-jsx - define static data outside component
 const trustItems = [
     {
         icon: Shield01,
@@ -29,9 +29,10 @@ const trustItems = [
         title: "24/7 Support",
         description: "We're here to help anytime",
     },
-];
+] as const;
 
-export const TrustAssuranceStrip = () => {
+// Best practice: rerender-memo - memoize to prevent unnecessary re-renders
+export const TrustAssuranceStrip = memo(function TrustAssuranceStrip() {
     return (
         <section className="bg-secondary border-y border-secondary">
             <div className="mx-auto max-w-8xl px-0 sm:px-6 lg:px-8">
@@ -63,4 +64,4 @@ export const TrustAssuranceStrip = () => {
             </div>
         </section>
     );
-};
+});

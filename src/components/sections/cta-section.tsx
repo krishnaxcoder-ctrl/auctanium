@@ -1,18 +1,21 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Play, Shield01, Award01, TrendUp01 } from "@untitledui/icons";
 import { Button } from "@/components/base/buttons/button";
 import { Badge } from "@/components/base/badges/badges";
 
+// Best practice: rendering-hoist-jsx - static data defined outside component
 const trustBadges = [
     { icon: Shield01, label: "Secure Payments" },
     { icon: Award01, label: "Trusted Platform" },
     { icon: TrendUp01, label: "Best Deals" },
-];
+] as const;
 
-export const CTASection = () => {
+// Best practice: rerender-memo - memoize to prevent unnecessary re-renders
+export const CTASection = memo(function CTASection() {
     return (
         <section className="relative overflow-hidden py-16 lg:py-24">
             {/* Background Image */}
@@ -88,4 +91,4 @@ export const CTASection = () => {
             </div>
         </section>
     );
-};
+});
