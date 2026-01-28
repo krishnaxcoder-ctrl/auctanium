@@ -41,3 +41,9 @@ next-env.d.ts
 
 # Turborepo
 .turbo
+
+# Agent skills
+agent-skills-main
+.agents
+.agent
+.gemini
