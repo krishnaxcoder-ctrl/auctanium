@@ -1,7 +1,8 @@
 "use client";
 
-import { Suspense, lazy, ComponentType, ReactNode, memo } from "react";
+import { Suspense, lazy, ComponentType, ReactNode, memo, useMemo, useRef } from "react";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import { SectionSkeleton, Placeholder } from "@/components/shared-assets/skeletons";
 
 interface LazySectionProps {
     /** Factory function that returns a dynamic import */
@@ -16,42 +17,24 @@ interface LazySectionProps {
     className?: string;
 }
 
-// Shimmer skeleton element
-const ShimmerBox = ({ className }: { className?: string }) => (
-    <div
-        className={`relative overflow-hidden rounded bg-secondary ${className}`}
-    >
-        <div className="absolute inset-0 animate-shimmer" />
-    </div>
-);
+// Cache for lazy components to prevent recreation
+// Best practice: rerender-lazy-state-init - avoid expensive operations on every render
+const lazyComponentCache = new WeakMap<
+    () => Promise<{ default: ComponentType<object> }>,
+    React.LazyExoticComponent<ComponentType<object>>
+>();
 
-// Default skeleton that matches SectionSkeleton in home-screen
-const DefaultSkeleton = () => (
-    <div className="w-full py-16">
-        <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-            <ShimmerBox className="h-8 w-1/3 mx-auto mb-4" />
-            <ShimmerBox className="h-4 w-2/3 mx-auto mb-8" />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[...Array(4)].map((_, i) => (
-                    <div key={i} className="space-y-3">
-                        <ShimmerBox className="aspect-square w-full" />
-                        <ShimmerBox className="h-4 w-3/4" />
-                        <ShimmerBox className="h-3 w-1/2" />
-                    </div>
-                ))}
-            </div>
-        </div>
-    </div>
-);
-
-// Placeholder shown before section comes into view
-const Placeholder = ({ minHeight }: { minHeight?: string }) => (
-    <div
-        className="w-full"
-        style={{ minHeight: minHeight || "200px" }}
-        aria-hidden="true"
-    />
-);
+// Get or create cached lazy component
+function getCachedLazyComponent(
+    factory: () => Promise<{ default: ComponentType<object> }>
+): React.LazyExoticComponent<ComponentType<object>> {
+    let cached = lazyComponentCache.get(factory);
+    if (!cached) {
+        cached = lazy(factory);
+        lazyComponentCache.set(factory, cached);
+    }
+    return cached;
+}
 
 export const LazySection = memo(function LazySection({
     factory,
@@ -65,13 +48,27 @@ export const LazySection = memo(function LazySection({
         triggerOnce: true,
     });
 
-    // Only create the lazy component when in viewport
-    const LazyComponent = isIntersecting ? lazy(factory) : null;
+    // Best practice: rerender-lazy-state-init
+    // Get cached lazy component only once per factory
+    // This prevents creating a new lazy component on every render
+    const LazyComponent = useMemo(() => {
+        if (!isIntersecting) return null;
+        return getCachedLazyComponent(factory);
+    }, [isIntersecting, factory]);
 
     return (
-        <div ref={ref} className={className}>
-            {isIntersecting && LazyComponent ? (
-                <Suspense fallback={fallback || <DefaultSkeleton />}>
+        <div
+            ref={ref}
+            className={className}
+            style={{
+                // Best practice: rendering-content-visibility
+                // Improves rendering performance for off-screen content
+                contentVisibility: isIntersecting ? "visible" : "auto",
+                containIntrinsicSize: isIntersecting ? "auto" : `0 ${minHeight}`,
+            } as React.CSSProperties}
+        >
+            {LazyComponent ? (
+                <Suspense fallback={fallback ?? <SectionSkeleton />}>
                     <LazyComponent />
                 </Suspense>
             ) : (

@@ -23,11 +23,13 @@
       "mcp__context7__query-docs",
       "Bash(npm run dev:*)",
       "WebSearch",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "WebFetch(domain:vercel.com)",
+      "Bash(npx skills:*)"
     ]
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "supabase"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }
