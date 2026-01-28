@@ -18,16 +18,16 @@ interface SectionConfig {
 // Best practice: bundle-dynamic-imports & bundle-barrel-imports
 // Each section is dynamically imported only when needed
 // Factories are defined once at module level to avoid recreation (rerender-lazy-state-init)
-const createSectionFactory = (
-    importFn: () => Promise<{ [key: string]: ComponentType<object> }>,
-    exportName: string
+const createSectionFactory = <T extends Record<string, unknown>>(
+    importFn: () => Promise<T>,
+    exportName: keyof T
 ) => {
     // Cache the promise to avoid duplicate imports
     let cachedPromise: Promise<{ default: ComponentType<object> }> | null = null;
     return () => {
         if (!cachedPromise) {
             cachedPromise = importFn().then((mod) => ({
-                default: mod[exportName],
+                default: mod[exportName] as ComponentType<object>,
             }));
         }
         return cachedPromise;
