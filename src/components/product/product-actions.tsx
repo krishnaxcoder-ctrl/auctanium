@@ -210,11 +210,11 @@ export function ProductActions({
 
                 {/* Action Buttons */}
                 {hasStock ? (
-                    <div className="space-y-3">
+                    <div className="flex gap-3">
                         <Button
                             color="primary"
-                            size="xl"
-                            className="w-full"
+                            size="lg"
+                            className="flex-1"
                             onClick={handleBuyNow}
                             isLoading={isBuyingNow}
                             iconLeading={Zap}
@@ -223,8 +223,8 @@ export function ProductActions({
                         </Button>
                         <Button
                             color="secondary"
-                            size="xl"
-                            className="w-full"
+                            size="lg"
+                            className="flex-1"
                             onClick={handleAddToCart}
                             isLoading={isAddingToCart}
                             iconLeading={ShoppingCart01}

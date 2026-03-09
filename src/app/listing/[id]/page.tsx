@@ -427,54 +427,71 @@ export default function ListingPage() {
 
                     {/* Right Column - Bidding/Purchase Card */}
                     <div className="lg:col-span-1">
-                        <div className="space-y-4">
-                            <div className="border border-secondary bg-primary">
+                        <div className="sticky top-4 space-y-4">
+                            <div className="border border-secondary rounded-xl bg-primary overflow-hidden">
                                 {/* Auction Timer (if auction) */}
                                 {isAuction && auction && (
-                                    <div className="p-4 border-b border-secondary">
+                                    <div className="p-5 border-b border-secondary bg-gradient-to-r from-brand-50 to-transparent">
+                                        <div className="text-xs font-medium text-brand-600 uppercase tracking-wide mb-3">Auction Ends In</div>
                                         <CountdownTimer endTime={auction.end_time} />
                                     </div>
                                 )}
 
-                                {/* Pricing Section */}
-                                <div className="p-4 border-b border-secondary">
-                                    {isAuction && (
-                                        <>
-                                            <div className="text-xs text-tertiary uppercase tracking-wide">CURRENT BID</div>
-                                            <div className="text-3xl font-semibold text-primary mt-1">
-                                                {formatCurrency(currentBid)}
+                                {/* Pricing Section - Only for auctions */}
+                                {isAuction && (
+                                    <div className="p-5 border-b border-secondary">
+                                        <div className="text-xs text-tertiary uppercase tracking-wide">Current Bid</div>
+                                        <div className="text-3xl font-bold text-primary mt-1">
+                                            {formatCurrency(currentBid)}
+                                        </div>
+                                        {product.no_reserve && (
+                                            <div className="inline-flex items-center gap-1.5 mt-2 px-2 py-1 rounded-full bg-success-50 text-success-700 text-xs font-medium">
+                                                <Check className="size-3" />
+                                                No Reserve
                                             </div>
-                                            {product.no_reserve && (
-                                                <div className="text-sm text-success-600 mt-1">No reserve price</div>
-                                            )}
-                                        </>
-                                    )}
-                                    {isBuyNow && product.buy_now_price && (
-                                        <div className={isAuction ? "mt-4 pt-4 border-t border-secondary" : ""}>
-                                            <div className="text-xs text-tertiary uppercase tracking-wide">
-                                                {isAuction ? "BUY NOW PRICE" : "PRICE"}
+                                        )}
+                                        {isBuyNow && product.buy_now_price && (
+                                            <div className="mt-4 pt-4 border-t border-secondary flex items-baseline justify-between">
+                                                <span className="text-sm text-tertiary">Buy Now Price</span>
+                                                <span className="text-xl font-semibold text-primary">{formatCurrency(product.buy_now_price)}</span>
                                             </div>
-                                            <div className="text-2xl font-semibold text-primary mt-1">
-                                                {formatCurrency(product.buy_now_price)}
+                                        )}
+                                    </div>
+                                )}
+
+                                {/* Price Section - Buy Now Only Products */}
+                                {!isAuction && isBuyNow && product.buy_now_price && (
+                                    <div className="p-5 border-b border-secondary">
+                                        <div className="flex items-baseline justify-between">
+                                            <div>
+                                                <div className="text-3xl font-bold text-primary">
+                                                    {formatCurrency(product.buy_now_price)}
+                                                </div>
+                                                {product.free_shipping && (
+                                                    <div className="flex items-center gap-1.5 mt-2 text-sm text-success-600">
+                                                        <Truck01 className="size-4" />
+                                                        <span>Free Shipping</span>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
-                                    )}
-                                </div>
+                                    </div>
+                                )}
 
                                 {/* Estimate (for auctions) */}
                                 {isAuction && product.estimate_low && product.estimate_high && (
-                                    <div className="p-4 border-b border-secondary">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-sm text-tertiary">Estimate</span>
-                                        </div>
-                                        <div className="text-lg font-semibold text-primary mt-1">
-                                            {formatCurrency(product.estimate_low)} - {formatCurrency(product.estimate_high)}
+                                    <div className="px-5 py-3 border-b border-secondary bg-secondary/30">
+                                        <div className="flex items-center justify-between text-sm">
+                                            <span className="text-tertiary">Estimate</span>
+                                            <span className="font-medium text-primary">
+                                                {formatCurrency(product.estimate_low)} – {formatCurrency(product.estimate_high)}
+                                            </span>
                                         </div>
                                     </div>
                                 )}
 
                                 {/* Product Actions (Bid/Buy Now buttons) */}
-                                <div className="p-4 border-b border-secondary">
+                                <div className="p-5 border-b border-secondary">
                                     <ProductActions
                                         product={{
                                             id: product.id,
@@ -486,6 +503,7 @@ export default function ListingPage() {
                                             buy_now_price: product.buy_now_price || undefined,
                                             stock_quantity: product.stock_quantity,
                                             status: product.status,
+                                            free_shipping: product.free_shipping,
                                         }}
                                         auctionEndTime={auction?.end_time}
                                         minimumBidIncrement={auction?.minimum_bid_increment}
@@ -493,81 +511,84 @@ export default function ListingPage() {
                                     />
                                 </div>
 
-                                {/* Watchers */}
+                                {/* Watchers - More prominent */}
                                 {product.watchers_count > 0 && (
-                                    <div className="p-4 border-b border-secondary">
-                                        <div className="flex items-center gap-2 text-sm text-tertiary">
-                                            <Eye className="size-4" />
-                                            <span>{product.watchers_count} people are watching this</span>
+                                    <div className="px-5 py-3 border-b border-secondary bg-warning-50/50">
+                                        <div className="flex items-center gap-2 text-sm">
+                                            <Eye className="size-4 text-warning-600" />
+                                            <span className="text-warning-700 font-medium">{product.watchers_count} people watching</span>
                                         </div>
                                     </div>
                                 )}
 
                                 {/* Bid History (for auctions) */}
                                 {isAuction && bidHistory.length > 0 && (
-                                    <div className="p-4 border-b border-secondary">
-                                        <div className="space-y-3">
+                                    <div className="p-5 border-b border-secondary">
+                                        <div className="text-xs font-medium text-tertiary uppercase tracking-wide mb-3">Recent Bids</div>
+                                        <div className="space-y-2.5">
                                             {(showAllBids ? bidHistory : bidHistory.slice(0, 3)).map((bid, index) => (
                                                 <div key={bid.id} className="flex items-center justify-between text-sm">
                                                     <div className="flex items-center gap-2">
-                                                        <div className={`w-1 h-4 ${index === 0 ? "bg-brand-600" : index === 1 ? "bg-warning-500" : "bg-secondary"}`} />
+                                                        <div className={`size-2 rounded-full ${index === 0 ? "bg-brand-600" : index === 1 ? "bg-warning-500" : "bg-gray-300"}`} />
                                                         <span className="text-primary">{bid.bidder_display_name}</span>
                                                     </div>
-                                                    <span className="font-medium text-primary">{formatCurrency(bid.amount)}</span>
+                                                    <span className="font-semibold text-primary">{formatCurrency(bid.amount)}</span>
                                                 </div>
                                             ))}
                                         </div>
                                         {totalBids > 3 && (
                                             <button
                                                 onClick={() => setShowAllBids(!showAllBids)}
-                                                className="mt-4 text-sm text-brand-600 hover:underline flex items-center gap-1"
+                                                className="mt-3 text-sm text-brand-600 hover:text-brand-700 font-medium flex items-center gap-1"
                                             >
-                                                {showAllBids ? "Show less" : `See all bids (${totalBids})`}
+                                                {showAllBids ? "Show less" : `View all ${totalBids} bids`}
                                                 <ChevronDown className={`size-4 transition-transform ${showAllBids ? "rotate-180" : ""}`} />
                                             </button>
                                         )}
                                     </div>
                                 )}
 
-                                {/* Buyer Protection & Shipping */}
-                                <div className="p-4 border-b border-secondary space-y-3">
-                                    <div className="flex items-center gap-2 text-sm">
-                                        <Shield01 className="size-4 text-tertiary" />
-                                        <span className="text-tertiary">
-                                            Buyer Protection fee: {product.buyer_protection_fee}%
-                                        </span>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-sm">
-                                        <Truck01 className="size-4 text-tertiary" />
-                                        <span className="text-tertiary">
-                                            {product.free_shipping
-                                                ? "Free shipping"
-                                                : product.shipping_available
-                                                  ? `Shipping: ${formatCurrency(product.shipping_cost)}`
-                                                  : "Shipping unavailable"}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Buyer Protection Info */}
-                                <div className="p-4 border-b border-secondary">
+                                {/* Trust Badges */}
+                                <div className="p-5 space-y-4">
                                     <div className="flex items-start gap-3">
-                                        <Shield01 className="size-5 text-brand-600 shrink-0 mt-0.5" />
-                                        <div>
-                                            <div className="text-sm font-medium text-primary">Buyer Protection</div>
-                                            <p className="text-xs text-tertiary mt-1">
-                                                Your payment is safe until you receive your item.
+                                        <div className="flex items-center justify-center size-10 rounded-full bg-brand-50">
+                                            <Shield01 className="size-5 text-brand-600" />
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="text-sm font-semibold text-primary">Buyer Protection</div>
+                                            <p className="text-xs text-tertiary mt-0.5">
+                                                Money-back guarantee if item not as described
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <div className="flex items-center justify-center size-10 rounded-full bg-success-50">
+                                            <Truck01 className="size-5 text-success-600" />
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="text-sm font-semibold text-primary">
+                                                {product.free_shipping ? "Free Shipping" : "Shipping Available"}
+                                            </div>
+                                            <p className="text-xs text-tertiary mt-0.5">
+                                                {product.free_shipping
+                                                    ? "This item ships free"
+                                                    : product.shipping_available
+                                                      ? `Shipping cost: ${formatCurrency(product.shipping_cost)}`
+                                                      : "Pickup only"}
                                             </p>
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Help */}
-                                <div className="p-4">
-                                    <div className="text-sm font-medium text-primary">Any questions?</div>
-                                    <Link href="/contact" className="text-xs text-brand-600 hover:underline flex items-center gap-1 mt-1">
-                                        <HelpCircle className="size-3" /> Get in touch
-                                    </Link>
+                                <div className="px-5 py-4 bg-secondary/30 border-t border-secondary">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-tertiary">Need help?</span>
+                                        <Link href="/contact" className="text-sm text-brand-600 hover:text-brand-700 font-medium flex items-center gap-1">
+                                            Contact Us
+                                            <HelpCircle className="size-3.5" />
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
