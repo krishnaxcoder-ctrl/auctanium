@@ -244,33 +244,6 @@ export function ProductActions({
     // Auction or Both (Auction + Buy Now) UI
     return (
         <div className={cx("space-y-4", className)}>
-            {/* Auction Time Remaining */}
-            {isAuction && timeInfo && (
-                <div
-                    className={cx(
-                        "rounded-lg p-3 text-center",
-                        timeInfo.isUrgent && !isEnded
-                            ? "bg-error-50 border border-error-200"
-                            : isEnded
-                              ? "bg-secondary"
-                              : "bg-warning-50 border border-warning-200"
-                    )}
-                >
-                    {isEnded ? (
-                        <span className="font-medium text-tertiary">Auction Ended</span>
-                    ) : (
-                        <>
-                            <span className={cx("text-sm font-medium", timeInfo.isUrgent ? "text-error-600" : "text-warning-700")}>
-                                {timeInfo.isUrgent ? "Ending Soon: " : "Time Left: "}
-                            </span>
-                            <span className={cx("font-bold", timeInfo.isUrgent ? "text-error-700" : "text-warning-800")}>
-                                {timeInfo.formatted}
-                            </span>
-                        </>
-                    )}
-                </div>
-            )}
-
             {/* Error Message */}
             {error && (
                 <div className="rounded-lg bg-error-50 border border-error-200 p-3 text-sm text-error-700">
@@ -280,8 +253,39 @@ export function ProductActions({
 
             {/* Action Buttons */}
             <div className="space-y-3">
-                {/* Bid Button (for auctions) */}
-                {isAuction && !isEnded && (
+                {/* Both Auction + Buy Now - Side by Side */}
+                {isAuction && !isEnded && isBuyNow && buyNowPrice && hasStock && (
+                    <div className="flex gap-3">
+                        <BidModal
+                            productId={product.id}
+                            productTitle={product.title}
+                            productImage={product.images?.[0]}
+                            currentBid={currentBid}
+                            startingPrice={product.starting_price || 0}
+                            minimumIncrement={minimumBidIncrement}
+                            timeRemaining={timeRemaining}
+                            onBidPlaced={onBidPlaced}
+                            trigger={
+                                <Button color="primary" size="lg" className="flex-1">
+                                    Place Bid
+                                </Button>
+                            }
+                        />
+                        <Button
+                            color="secondary"
+                            size="lg"
+                            className="flex-1"
+                            onClick={handleBuyNow}
+                            isLoading={isBuyingNow}
+                            iconLeading={Zap}
+                        >
+                            Buy Now - {formatCurrency(buyNowPrice)}
+                        </Button>
+                    </div>
+                )}
+
+                {/* Auction Only - Full Width */}
+                {isAuction && !isEnded && !(isBuyNow && buyNowPrice && hasStock) && (
                     <BidModal
                         productId={product.id}
                         productTitle={product.title}
@@ -299,10 +303,10 @@ export function ProductActions({
                     />
                 )}
 
-                {/* Buy Now Button */}
-                {isBuyNow && buyNowPrice && hasStock && (
+                {/* Buy Now Only (no auction or auction ended) - Full Width */}
+                {(!isAuction || isEnded) && isBuyNow && buyNowPrice && hasStock && (
                     <Button
-                        color={isAuction ? "secondary" : "primary"}
+                        color="primary"
                         size="xl"
                         className="w-full"
                         onClick={handleBuyNow}
