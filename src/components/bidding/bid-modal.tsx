@@ -211,7 +211,7 @@ export function BidModal({
                                             label="Your Bid"
                                             type="number"
                                             value={bidAmount}
-                                            onChange={(e) => setBidAmount(e.target.value)}
+                                            onChange={setBidAmount}
                                             placeholder={`Min: ${formatCurrency(minBid)}`}
                                             isInvalid={!!error && error.includes("Minimum")}
                                             hint={`Minimum bid: ${formatCurrency(minBid)}`}
@@ -238,7 +238,7 @@ export function BidModal({
                                                     label="Maximum Bid"
                                                     type="number"
                                                     value={maxBidAmount}
-                                                    onChange={(e) => setMaxBidAmount(e.target.value)}
+                                                    onChange={setMaxBidAmount}
                                                     placeholder="Enter your maximum"
                                                     hint="We'll bid for you up to this amount"
                                                 />
