@@ -195,8 +195,8 @@ export function BidModal({
                                                     className={cx(
                                                         "rounded-lg border py-2 text-sm font-medium transition-colors",
                                                         bidAmount === amount.toString()
-                                                            ? "border-brand-primary bg-brand-primary text-white"
-                                                            : "border-primary bg-primary hover:border-brand-primary hover:text-brand-primary"
+                                                            ? "border-brand-600 bg-brand-600 text-white"
+                                                            : "border-secondary bg-primary text-primary hover:border-brand-600 hover:text-brand-600"
                                                     )}
                                                 >
                                                     {formatCurrency(amount)}
