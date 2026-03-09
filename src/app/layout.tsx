@@ -5,6 +5,7 @@ import { RouteProvider } from "@/providers/router-provider";
 import { Theme } from "@/providers/theme";
 import { ClarityProvider } from "@/providers/clarity-provider";
 import { WishlistProvider } from "@/providers/wishlist-provider";
+import { CartProvider } from "@/providers/cart-provider";
 import { ToastProvider } from "@/components/base/toast/toast";
 import { LayoutWrapper } from "@/components/layout/layout-wrapper";
 import NextTopLoader from "nextjs-toploader";
@@ -100,7 +101,9 @@ export default function RootLayout({
                             <Theme>
                                 <ToastProvider>
                                     <WishlistProvider>
-                                        <LayoutWrapper>{children}</LayoutWrapper>
+                                        <CartProvider>
+                                            <LayoutWrapper>{children}</LayoutWrapper>
+                                        </CartProvider>
                                     </WishlistProvider>
                                 </ToastProvider>
                             </Theme>
