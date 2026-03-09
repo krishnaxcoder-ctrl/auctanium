@@ -41,6 +41,10 @@ const sectionFactories = {
         () => import("@/components/sections/top-categories-section"),
         "TopCategoriesSection"
     ),
+    trustAssurance: createSectionFactory(
+        () => import("@/components/sections/trust-assurance-strip"),
+        "TrustAssuranceStrip"
+    ),
     bestDeals: createSectionFactory(
         () => import("@/components/sections/best-deals-section"),
         "BestDealsSection"
@@ -104,6 +108,7 @@ const sectionFactories = {
 const SECTION_CONFIGS: readonly SectionConfig[] = [
     // Critical sections - Load at 800px before viewport
     { key: "topCategories", factory: sectionFactories.topCategories, minHeight: "400px", priority: "critical" },
+    { key: "trustAssurance", factory: sectionFactories.trustAssurance, minHeight: "100px", priority: "critical" },
     { key: "bestDeals", factory: sectionFactories.bestDeals, minHeight: "500px", priority: "critical" },
     // Standard sections - Load at 400px before viewport
     { key: "mostViewed", factory: sectionFactories.mostViewed, minHeight: "400px", priority: "standard" },

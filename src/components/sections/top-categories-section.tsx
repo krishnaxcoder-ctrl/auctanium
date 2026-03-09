@@ -77,19 +77,8 @@ export const TopCategoriesSection = memo(function TopCategoriesSection() {
     return (
         <section className="bg-primary py-4 lg:py-6">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
-                {/* Header */}
-                <div className="flex items-center justify-between">
-                    <h2 className="text-lg font-semibold text-primary sm:text-xl">
-                        Shop by Category
-                    </h2>
-                    <Link href="/categories" className="flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700">
-                        See All
-                        <ArrowRight className="size-4" />
-                    </Link>
-                </div>
-
                 {/* Categories Grid */}
-                <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                     {categories.map((category) => (
                         <Link
                             key={category.slug}
