@@ -10,6 +10,8 @@ const isPublicRoute = createRouteMatcher([
   '/reset-password(.*)',
   '/verify-email(.*)',
   '/sso-callback(.*)',
+  '/sign-in(.*)',
+  '/sign-up(.*)',
   '/about(.*)',
   '/contact(.*)',
   '/blog(.*)',
@@ -22,6 +24,7 @@ const isPublicRoute = createRouteMatcher([
   '/licenses(.*)',
   '/listing/(.*)',
   '/api/webhook(.*)',
+  '/api/wishlist(.*)',
 ]);
 
 // Define protected routes that require authentication
