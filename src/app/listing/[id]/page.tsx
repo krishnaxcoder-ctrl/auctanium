@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 import {
   ChevronRight,
   ChevronDown,
@@ -21,6 +22,7 @@ import {
   MessageChatCircle,
   HelpCircle,
   ChevronLeft,
+  RefreshCw01,
 } from "@untitledui/icons";
 import { Button } from "@/components/base/buttons/button";
 import {
@@ -28,6 +30,7 @@ import {
   RelatedProductsByCategory,
   AllRelatedProducts,
 } from "@/components/listing";
+import { useWishlistContext } from "@/providers/wishlist-provider";
 
 // Product type definition
 interface Product {
@@ -277,17 +280,37 @@ function CountdownTimer({ endDate }: { endDate: Date }) {
 
 export default function ListingPage() {
   const params = useParams();
+  const router = useRouter();
+  const { isSignedIn } = useAuth();
   const id = params.id as string;
   const [selectedImage, setSelectedImage] = useState(0);
-  const [isWishlisted, setIsWishlisted] = useState(false);
   const [showAllBids, setShowAllBids] = useState(false);
   const [customBid, setCustomBid] = useState("");
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isTogglingWishlist, setIsTogglingWishlist] = useState(false);
+
+  // Wishlist context
+  const { isWishlisted, toggleWishlist, isLoading: isWishlistLoading } = useWishlistContext();
+  const isProductWishlisted = isWishlisted(id);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  const handleToggleWishlist = async () => {
+    if (!isSignedIn) {
+      router.push("/login");
+      return;
+    }
+
+    setIsTogglingWishlist(true);
+    try {
+      await toggleWishlist(id);
+    } finally {
+      setIsTogglingWishlist(false);
+    }
+  };
 
   const product = mockProducts[id] || defaultProduct;
   const minBid = product.currentBid + 5;
@@ -341,10 +364,15 @@ export default function ListingPage() {
           {/* Like & Share - Hidden on mobile, shown on desktop */}
           <div className="hidden sm:flex items-center gap-3">
             <button
-              onClick={() => setIsWishlisted(!isWishlisted)}
-              className="flex items-center gap-1.5 text-tertiary hover:text-primary transition-colors"
+              onClick={handleToggleWishlist}
+              disabled={isTogglingWishlist || isWishlistLoading}
+              className="flex items-center gap-1.5 text-tertiary hover:text-primary transition-colors disabled:opacity-50"
             >
-              <Heart className={`size-5 ${isWishlisted ? "fill-error-500 text-error-500" : ""}`} />
+              {isTogglingWishlist ? (
+                <RefreshCw01 className="size-5 animate-spin" />
+              ) : (
+                <Heart className={`size-5 ${isProductWishlisted ? "fill-error-500 text-error-500" : ""}`} />
+              )}
               <span className="text-sm">{product.watchers}</span>
             </button>
             <button className="text-tertiary hover:text-primary transition-colors">
@@ -370,10 +398,15 @@ export default function ListingPage() {
                 {/* Floating Like & Share - Mobile only */}
                 <div className="absolute top-3 right-3 flex items-center gap-2 sm:hidden">
                   <button
-                    onClick={() => setIsWishlisted(!isWishlisted)}
-                    className="flex items-center justify-center size-9 rounded-full bg-white/90 backdrop-blur-sm shadow-md text-gray-600 hover:text-primary transition-colors"
+                    onClick={handleToggleWishlist}
+                    disabled={isTogglingWishlist || isWishlistLoading}
+                    className="flex items-center justify-center size-9 rounded-full bg-white/90 backdrop-blur-sm shadow-md text-gray-600 hover:text-primary transition-colors disabled:opacity-50"
                   >
-                    <Heart className={`size-5 ${isWishlisted ? "fill-error-500 text-error-500" : ""}`} />
+                    {isTogglingWishlist ? (
+                      <RefreshCw01 className="size-5 animate-spin" />
+                    ) : (
+                      <Heart className={`size-5 ${isProductWishlisted ? "fill-error-500 text-error-500" : ""}`} />
+                    )}
                   </button>
                   <button className="flex items-center justify-center size-9 rounded-full bg-white/90 backdrop-blur-sm shadow-md text-gray-600 hover:text-primary transition-colors">
                     <Share07 className="size-5" />

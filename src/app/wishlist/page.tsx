@@ -2,23 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
-import {
-    Heart,
-    Clock,
-    Trash01,
-    ArrowRight,
-} from "@untitledui/icons";
+import { useState, useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { Heart, Clock, Trash01, ArrowRight, RefreshCw01 } from "@untitledui/icons";
 import { Button } from "@/components/base/buttons/button";
 import { cx } from "@/utils/cx";
 
 const tabs = [
     { id: "all", label: "All" },
-    { id: "objects", label: "Objects" },
-    { id: "searches", label: "Searches" },
-    { id: "collections", label: "Collections" },
     { id: "auctions", label: "Auctions" },
-    { id: "sellers", label: "Sellers" },
 ];
 
 interface WishlistItem {
@@ -35,26 +27,27 @@ interface WishlistItem {
     };
 }
 
-const initialWishlist: WishlistItem[] = [
-    {
+// Mock products database (same as listing page)
+const mockProducts: Record<string, WishlistItem> = {
+    "1": {
         id: "1",
-        title: "Bose QuietComfort Ultra Headphones - Premium Sound",
-        image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400&h=500&fit=crop",
-        currentBid: 320,
-        timeLeft: "3h 45m",
-        bids: 15,
-        seller: { name: "AudioWorld", rating: 4.9 },
+        title: "Premium Wireless Noise-Canceling Headphones - AudioPro AP-500X",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=500&fit=crop",
+        currentBid: 245,
+        timeLeft: "9d 5h",
+        bids: 12,
+        seller: { name: "TECHSTORE PREMIUM", rating: 4.9 },
     },
-    {
+    "2": {
         id: "2",
-        title: "iPad Pro 12.9\" M2 256GB - Space Gray",
-        image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=500&fit=crop",
-        currentBid: 890,
-        timeLeft: "8h 12m",
-        bids: 22,
-        seller: { name: "TechDeals", rating: 4.8 },
+        title: "Apple MacBook Pro 16\" M3 Max - Space Black - Professional Workstation",
+        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=500&fit=crop",
+        currentBid: 2850,
+        timeLeft: "2d 14h",
+        bids: 28,
+        seller: { name: "APPLE AUTHORIZED RESELLER", rating: 4.8 },
     },
-    {
+    "3": {
         id: "3",
         title: "DJI Mavic 3 Pro Drone - Fly More Combo",
         image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400&h=500&fit=crop",
@@ -63,7 +56,7 @@ const initialWishlist: WishlistItem[] = [
         bids: 31,
         seller: { name: "DroneWorld", rating: 4.7 },
     },
-    {
+    "4": {
         id: "4",
         title: "Samsung 65\" OLED 4K Smart TV",
         image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=500&fit=crop",
@@ -72,7 +65,7 @@ const initialWishlist: WishlistItem[] = [
         bids: 18,
         seller: { name: "ElectroHub", rating: 4.9 },
     },
-    {
+    "5": {
         id: "5",
         title: "Vintage Rolex Datejust 36mm - 1985",
         image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400&h=500&fit=crop",
@@ -81,7 +74,7 @@ const initialWishlist: WishlistItem[] = [
         bids: 67,
         seller: { name: "LuxuryWatches", rating: 5.0 },
     },
-    {
+    "6": {
         id: "6",
         title: "Herman Miller Aeron Chair - Size B",
         image: "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=400&h=500&fit=crop",
@@ -89,15 +82,103 @@ const initialWishlist: WishlistItem[] = [
         bids: 8,
         seller: { name: "OfficePro", rating: 4.6 },
     },
-];
+};
 
 export default function WishlistPage() {
+    const { isSignedIn, isLoaded } = useAuth();
     const [activeTab, setActiveTab] = useState("all");
-    const [wishlist, setWishlist] = useState(initialWishlist);
+    const [wishlistIds, setWishlistIds] = useState<string[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isRemoving, setIsRemoving] = useState<string | null>(null);
 
-    const removeFromWishlist = (id: string) => {
-        setWishlist(wishlist.filter((item) => item.id !== id));
+    // Fetch wishlist from API
+    useEffect(() => {
+        async function fetchWishlist() {
+            if (!isLoaded) return;
+
+            if (!isSignedIn) {
+                setWishlistIds([]);
+                setIsLoading(false);
+                return;
+            }
+
+            try {
+                const response = await fetch("/api/wishlist");
+                if (response.ok) {
+                    const data = await response.json();
+                    setWishlistIds(data.productIds || []);
+                }
+            } catch (error) {
+                console.error("Failed to fetch wishlist:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchWishlist();
+    }, [isSignedIn, isLoaded]);
+
+    // Get wishlist items from mock products
+    const wishlistItems = wishlistIds
+        .map((id) => mockProducts[id])
+        .filter(Boolean);
+
+    const removeFromWishlist = async (productId: string) => {
+        setIsRemoving(productId);
+        try {
+            const response = await fetch(`/api/wishlist?productId=${productId}`, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                setWishlistIds((prev) => prev.filter((id) => id !== productId));
+            }
+        } catch (error) {
+            console.error("Failed to remove from wishlist:", error);
+        } finally {
+            setIsRemoving(null);
+        }
     };
+
+    // Loading state
+    if (!isLoaded || isLoading) {
+        return (
+            <div className="min-h-screen bg-primary">
+                <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <div className="flex items-center justify-center py-20">
+                        <RefreshCw01 className="size-8 text-brand-600 animate-spin" />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Not signed in state
+    if (!isSignedIn) {
+        return (
+            <div className="min-h-screen bg-primary">
+                <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <div className="text-center py-20">
+                        <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-6">
+                            <Heart className="size-10 text-gray-400" />
+                        </div>
+                        <h2 className="text-xl font-semibold text-primary mb-2">
+                            Sign in to view your wishlist
+                        </h2>
+                        <p className="text-tertiary mb-6 max-w-sm mx-auto">
+                            Create an account or sign in to save your favorite items.
+                        </p>
+                        <Link href="/login">
+                            <Button color="primary" size="lg">
+                                Sign In
+                                <ArrowRight className="size-5 ml-2" />
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-primary">
@@ -111,7 +192,7 @@ export default function WishlistPage() {
                         <div>
                             <h1 className="text-lg font-semibold text-primary">My bids & favourites</h1>
                             <p className="text-sm text-tertiary">
-                                {wishlist.length} {wishlist.length === 1 ? "item" : "items"} saved
+                                {wishlistItems.length} {wishlistItems.length === 1 ? "item" : "items"} saved
                             </p>
                         </div>
                     </div>
@@ -136,9 +217,9 @@ export default function WishlistPage() {
                 </div>
 
                 {/* Wishlist Grid */}
-                {wishlist.length > 0 ? (
+                {wishlistItems.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-                        {wishlist.map((item) => (
+                        {wishlistItems.map((item) => (
                             <div
                                 key={item.id}
                                 className="group bg-primary border border-secondary rounded-xl overflow-hidden"
@@ -165,9 +246,14 @@ export default function WishlistPage() {
                                                 e.stopPropagation();
                                                 removeFromWishlist(item.id);
                                             }}
-                                            className="absolute top-2 right-2 p-2 rounded-full bg-red-50 cursor-pointer"
+                                            disabled={isRemoving === item.id}
+                                            className="absolute top-2 right-2 p-2 rounded-full bg-red-50 cursor-pointer disabled:opacity-50"
                                         >
-                                            <Heart className="size-4 text-red-500 fill-red-500" />
+                                            {isRemoving === item.id ? (
+                                                <RefreshCw01 className="size-4 text-red-500 animate-spin" />
+                                            ) : (
+                                                <Heart className="size-4 text-red-500 fill-red-500" />
+                                            )}
                                         </button>
                                     </div>
                                 </Link>
@@ -201,9 +287,14 @@ export default function WishlistPage() {
                                         </Link>
                                         <button
                                             onClick={() => removeFromWishlist(item.id)}
-                                            className="flex items-center justify-center size-9 rounded-lg border border-secondary text-tertiary hover:text-red-500 hover:border-red-300"
+                                            disabled={isRemoving === item.id}
+                                            className="flex items-center justify-center size-9 rounded-lg border border-secondary text-tertiary hover:text-red-500 hover:border-red-300 disabled:opacity-50"
                                         >
-                                            <Trash01 className="size-4" />
+                                            {isRemoving === item.id ? (
+                                                <RefreshCw01 className="size-4 animate-spin" />
+                                            ) : (
+                                                <Trash01 className="size-4" />
+                                            )}
                                         </button>
                                     </div>
                                 </div>
