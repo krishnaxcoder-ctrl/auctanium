@@ -7,6 +7,12 @@ const supabase = createClient(
     process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
+// Helper to check if string is UUID
+function isUUID(str: string): boolean {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(str);
+}
+
 // GET - Get product details
 export async function GET(
     request: NextRequest,
@@ -15,7 +21,8 @@ export async function GET(
     try {
         const { id } = await params;
 
-        const { data: product, error } = await supabase
+        // Query by UUID or slug
+        const query = supabase
             .from("products")
             .select(`
                 *,
@@ -28,9 +35,12 @@ export async function GET(
                     winner_id,
                     winning_bid
                 )
-            `)
-            .eq("id", id)
-            .single();
+            `);
+
+        // Check if id is UUID or slug
+        const { data: product, error } = isUUID(id)
+            ? await query.eq("id", id).single()
+            : await query.eq("slug", id).single();
 
         if (error || !product) {
             return NextResponse.json({ error: "Product not found" }, { status: 404 });

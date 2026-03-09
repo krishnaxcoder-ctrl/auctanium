@@ -1,98 +1,83 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState, useCallback, memo } from "react";
-import { ArrowRight, ChevronLeft, ChevronRight } from "@untitledui/icons";
-import { Badge } from "@/components/base/badges/badges";
-import { Button } from "@/components/base/buttons/button";
+import { useRef, useState, useCallback, useEffect } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight, RefreshCw01 } from "@untitledui/icons";
 import { MarketplaceProductCard, MarketplaceProduct } from "@/components/marketplace/MarketplaceProductCard";
 
-// Best practice: rendering-hoist-jsx - static data defined outside component
-const bestDeals: readonly MarketplaceProduct[] = [
-    {
-        id: "deal-1",
-        title: "Authenticated Banksy Print - Girl with Balloon",
-        image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=500&fit=crop",
-        currentBid: 15000,
-        startingPrice: 12000,
-        timeLeft: "5d 8h",
-        bids: 18,
-        seller: { name: "CertifiedArt", rating: 5.0, verified: true },
-        category: "Art",
-        condition: "like-new",
-        watchers: 656,
-        isFeatured: true,
-        type: "auction",
-    },
-    {
-        id: "deal-2",
-        title: "PSA 10 Gem Mint 1st Edition Charizard",
-        image: "https://images.unsplash.com/photo-1613771404784-3a5686aa2be3?w=400&h=500&fit=crop",
-        currentBid: 28000,
-        startingPrice: 22000,
-        timeLeft: "7d 12h",
-        bids: 25,
-        seller: { name: "GradedCards", rating: 4.9, verified: true },
-        category: "Trading Cards",
-        condition: "new",
-        watchers: 989,
-        isHot: true,
-        type: "auction",
-    },
-    {
-        id: "deal-3",
-        title: "CGC 9.8 Amazing Spider-Man #300 - Signed",
-        image: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=400&h=500&fit=crop",
-        currentBid: 4200,
-        startingPrice: 3500,
-        timeLeft: "3d 4h",
-        bids: 34,
-        seller: { name: "ComicVault", rating: 4.8, verified: true },
-        category: "Comics",
-        condition: "like-new",
-        watchers: 445,
-        type: "auction",
-    },
-    {
-        id: "deal-4",
-        title: "GIA Certified 2ct Diamond Engagement Ring",
-        image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&h=500&fit=crop",
-        currentBid: 18500,
-        buyNowPrice: 22000,
-        startingPrice: 15000,
-        timeLeft: "4d 16h",
-        bids: 11,
-        seller: { name: "CertifiedGems", rating: 5.0, verified: true },
-        category: "Jewelry",
-        condition: "new",
-        watchers: 378,
-        freeShipping: true,
-        type: "both",
-    },
-    {
-        id: "deal-5",
-        title: "Authenticated Signed Michael Jackson Thriller LP",
-        image: "https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?w=400&h=500&fit=crop",
-        currentBid: 5500,
-        startingPrice: 4000,
-        timeLeft: "2d 8h",
-        bids: 29,
-        seller: { name: "MusicMemorabilia", rating: 4.7, verified: true },
-        category: "Music",
-        condition: "good",
-        watchers: 256,
-        isHot: true,
-        type: "auction",
-    },
-];
+// Helper to calculate time left
+function calculateTimeLeft(endTime: string): string {
+    const now = new Date().getTime();
+    const end = new Date(endTime).getTime();
+    const diff = end - now;
 
-// Best practice: rerender-memo - memoize to prevent unnecessary re-renders
-export const BestDealsSection = memo(function BestDealsSection() {
+    if (diff <= 0) return "Ended";
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    if (days > 0) return `${days}d ${hours}h`;
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    return `${hours}h ${minutes}m`;
+}
+
+// Transform API product to MarketplaceProduct
+function transformProduct(product: any): MarketplaceProduct {
+    const auction = product.auctions?.[0];
+
+    return {
+        id: product.slug || product.id,
+        title: product.title,
+        image: product.images?.[0] || "",
+        images: product.images,
+        currentBid: product.current_bid || undefined,
+        buyNowPrice: product.buy_now_price || undefined,
+        startingPrice: product.starting_price || undefined,
+        timeLeft: auction?.end_time ? calculateTimeLeft(auction.end_time) : undefined,
+        endTime: auction?.end_time ? new Date(auction.end_time) : undefined,
+        bids: product.bids_count || 0,
+        seller: {
+            name: product.seller_name || "Seller",
+            rating: 4.8,
+            verified: product.seller_verified || false,
+        },
+        category: product.category,
+        condition: product.condition || "new",
+        watchers: product.watchers_count || 0,
+        isHot: product.bids_count > 10,
+        isFeatured: product.no_reserve,
+        freeShipping: product.free_shipping || false,
+        type: product.listing_type as "auction" | "buy-now" | "both",
+    };
+}
+
+export function BestDealsSection() {
     const sliderRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
+    const [products, setProducts] = useState<MarketplaceProduct[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // Best practice: rerender-functional-setstate & useCallback for stable references
+    // Fetch products from API
+    useEffect(() => {
+        async function fetchProducts() {
+            try {
+                const response = await fetch("/api/products?limit=10");
+                if (response.ok) {
+                    const data = await response.json();
+                    const transformed = data.products.map(transformProduct);
+                    setProducts(transformed);
+                }
+            } catch (error) {
+                console.error("Failed to fetch products:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchProducts();
+    }, []);
+
     const checkScrollPosition = useCallback(() => {
         if (sliderRef.current) {
             const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
@@ -101,19 +86,35 @@ export const BestDealsSection = memo(function BestDealsSection() {
         }
     }, []);
 
-    const scrollLeft = useCallback(() => {
+    const scrollLeftFn = useCallback(() => {
         if (sliderRef.current) {
             const scrollAmount = sliderRef.current.clientWidth;
             sliderRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
         }
     }, []);
 
-    const scrollRight = useCallback(() => {
+    const scrollRightFn = useCallback(() => {
         if (sliderRef.current) {
             const scrollAmount = sliderRef.current.clientWidth;
             sliderRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
         }
     }, []);
+
+    if (isLoading) {
+        return (
+            <section className="bg-secondary py-4 lg:py-6">
+                <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+                    <div className="flex items-center justify-center h-48">
+                        <RefreshCw01 className="size-6 animate-spin text-brand-600" />
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    if (products.length === 0) {
+        return null;
+    }
 
     return (
         <section className="bg-secondary py-4 lg:py-6 overflow-x-clip">
@@ -123,7 +124,7 @@ export const BestDealsSection = memo(function BestDealsSection() {
                     <h2 className="text-lg font-semibold text-primary sm:text-xl">
                         Best Deals & Discounts
                     </h2>
-                    <Link href="/deals" className="flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700">
+                    <Link href="/marketplace" className="flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700">
                         See All
                         <ArrowRight className="size-4" />
                     </Link>
@@ -136,7 +137,7 @@ export const BestDealsSection = memo(function BestDealsSection() {
                         onScroll={checkScrollPosition}
                         className="flex gap-2 pb-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
                     >
-                        {bestDeals.map((product, index) => (
+                        {products.map((product, index) => (
                             <div
                                 key={product.id}
                                 className={`flex-shrink-0 ${index % 2 === 0 ? "snap-start snap-always" : ""}`}
@@ -147,20 +148,20 @@ export const BestDealsSection = memo(function BestDealsSection() {
                         ))}
                     </div>
 
-                    {/* Left Arrow - positioned at screen edge */}
+                    {/* Left Arrow */}
                     {canScrollLeft && (
                         <button
-                            onClick={scrollLeft}
+                            onClick={scrollLeftFn}
                             className="absolute top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-lg border border-gray-200 -left-4"
                         >
                             <ChevronLeft className="size-5 text-gray-700" />
                         </button>
                     )}
 
-                    {/* Right Arrow - positioned at screen edge */}
+                    {/* Right Arrow */}
                     {canScrollRight && (
                         <button
-                            onClick={scrollRight}
+                            onClick={scrollRightFn}
                             className="absolute top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-lg border border-gray-200 -right-4"
                         >
                             <ChevronRight className="size-5 text-gray-700" />
@@ -170,11 +171,11 @@ export const BestDealsSection = memo(function BestDealsSection() {
 
                 {/* Desktop Grid */}
                 <div className="mt-6 hidden sm:grid grid-cols-3 gap-4 lg:grid-cols-5">
-                    {bestDeals.map((product) => (
+                    {products.map((product) => (
                         <MarketplaceProductCard key={product.id} product={product} />
                     ))}
                 </div>
             </div>
         </section>
     );
-});
+}
