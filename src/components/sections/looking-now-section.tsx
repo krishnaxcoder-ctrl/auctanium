@@ -1,89 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight, Eye } from "@untitledui/icons";
-import { Badge } from "@/components/base/badges/badges";
-import { Button } from "@/components/base/buttons/button";
-import { MarketplaceProductCard, MarketplaceProduct } from "@/components/marketplace/MarketplaceProductCard";
-
-const liveActivityProducts: MarketplaceProduct[] = [
-    {
-        id: "live-1",
-        title: "Authenticated Banksy Print - Girl with Balloon",
-        image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=500&fit=crop",
-        currentBid: 15000,
-        startingPrice: 12000,
-        timeLeft: "5d 8h",
-        bids: 18,
-        seller: { name: "CertifiedArt", rating: 5.0, verified: true },
-        category: "Art",
-        condition: "like-new",
-        watchers: 656,
-        isFeatured: true,
-        type: "auction",
-    },
-    {
-        id: "live-2",
-        title: "PSA 10 Gem Mint 1st Edition Charizard",
-        image: "https://images.unsplash.com/photo-1613771404784-3a5686aa2be3?w=400&h=500&fit=crop",
-        currentBid: 28000,
-        startingPrice: 22000,
-        timeLeft: "7d 12h",
-        bids: 25,
-        seller: { name: "GradedCards", rating: 4.9, verified: true },
-        category: "Trading Cards",
-        condition: "new",
-        watchers: 989,
-        isHot: true,
-        type: "auction",
-    },
-    {
-        id: "live-3",
-        title: "CGC 9.8 Amazing Spider-Man #300 - Signed",
-        image: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=400&h=500&fit=crop",
-        currentBid: 4200,
-        startingPrice: 3500,
-        timeLeft: "3d 4h",
-        bids: 34,
-        seller: { name: "ComicVault", rating: 4.8, verified: true },
-        category: "Comics",
-        condition: "like-new",
-        watchers: 445,
-        type: "auction",
-    },
-    {
-        id: "live-4",
-        title: "GIA Certified 2ct Diamond Engagement Ring",
-        image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&h=500&fit=crop",
-        currentBid: 18500,
-        buyNowPrice: 22000,
-        startingPrice: 15000,
-        timeLeft: "4d 16h",
-        bids: 11,
-        seller: { name: "CertifiedGems", rating: 5.0, verified: true },
-        category: "Jewelry",
-        condition: "new",
-        watchers: 378,
-        freeShipping: true,
-        type: "both",
-    },
-    {
-        id: "live-5",
-        title: "Authenticated Signed Michael Jackson Thriller LP",
-        image: "https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?w=400&h=500&fit=crop",
-        currentBid: 5500,
-        startingPrice: 4000,
-        timeLeft: "2d 8h",
-        bids: 29,
-        seller: { name: "MusicMemorabilia", rating: 4.7, verified: true },
-        category: "Music",
-        condition: "good",
-        watchers: 256,
-        isHot: true,
-        type: "auction",
-    },
-];
+import { ArrowRight, ChevronLeft, ChevronRight, RefreshCw01 } from "@untitledui/icons";
+import { MarketplaceProductCard } from "@/components/marketplace/MarketplaceProductCard";
+import { useProducts } from "@/hooks/use-products";
 
 // Live activity indicator
 const LiveIndicator = () => {
@@ -109,45 +30,55 @@ const LiveIndicator = () => {
     );
 };
 
-export const LookingNowSection = () => {
+export function LookingNowSection() {
     const sliderRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
+    const { products, isLoading } = useProducts({ limit: 10 });
 
-    const checkScrollPosition = () => {
+    const checkScrollPosition = useCallback(() => {
         if (sliderRef.current) {
             const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
             setCanScrollLeft(scrollLeft > 0);
             setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
         }
-    };
+    }, []);
 
-    const scrollLeft = () => {
+    const scrollLeftFn = useCallback(() => {
         if (sliderRef.current) {
-            const scrollAmount = sliderRef.current.clientWidth;
-            sliderRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+            sliderRef.current.scrollBy({ left: -sliderRef.current.clientWidth, behavior: "smooth" });
         }
-    };
+    }, []);
 
-    const scrollRight = () => {
+    const scrollRightFn = useCallback(() => {
         if (sliderRef.current) {
-            const scrollAmount = sliderRef.current.clientWidth;
-            sliderRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+            sliderRef.current.scrollBy({ left: sliderRef.current.clientWidth, behavior: "smooth" });
         }
-    };
+    }, []);
+
+    if (isLoading) {
+        return (
+            <section className="bg-primary py-4 lg:py-6 border-y border-secondary">
+                <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
+                    <div className="flex items-center justify-center h-48">
+                        <RefreshCw01 className="size-6 animate-spin text-brand-600" />
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    if (products.length === 0) return null;
 
     return (
         <section className="bg-primary py-4 lg:py-6 border-y border-secondary overflow-x-clip">
             <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8 overflow-visible">
-                {/* Header */}
                 <div className="flex items-start justify-between">
                     <div>
                         <LiveIndicator />
-                        <h2 className="mt-2 text-lg font-semibold text-primary sm:text-xl">
-                            What People Are Looking At
-                        </h2>
+                        <h2 className="mt-2 text-lg font-semibold text-primary sm:text-xl">What People Are Looking At</h2>
                     </div>
-                    <Link href="/live" className="shrink-0 flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700">
+                    <Link href="/marketplace" className="shrink-0 flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700">
                         See All
                         <ArrowRight className="size-4" />
                     </Link>
@@ -155,38 +86,20 @@ export const LookingNowSection = () => {
 
                 {/* Mobile Slider */}
                 <div className="mt-6 sm:hidden relative overflow-visible">
-                    <div
-                        ref={sliderRef}
-                        onScroll={checkScrollPosition}
-                        className="flex gap-2 pb-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
-                    >
-                        {liveActivityProducts.map((product, index) => (
-                            <div
-                                key={product.id}
-                                className={`flex-shrink-0 ${index % 2 === 0 ? "snap-start snap-always" : ""}`}
-                                style={{ width: "calc((100% - 8px) / 2)" }}
-                            >
+                    <div ref={sliderRef} onScroll={checkScrollPosition} className="flex gap-2 pb-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory">
+                        {products.map((product, index) => (
+                            <div key={product.id} className={`flex-shrink-0 ${index % 2 === 0 ? "snap-start snap-always" : ""}`} style={{ width: "calc((100% - 8px) / 2)" }}>
                                 <MarketplaceProductCard product={product} />
                             </div>
                         ))}
                     </div>
-
-                    {/* Left Arrow */}
                     {canScrollLeft && (
-                        <button
-                            onClick={scrollLeft}
-                            className="absolute top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-lg border border-gray-200 -left-4"
-                        >
+                        <button onClick={scrollLeftFn} className="absolute top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-lg border border-gray-200 -left-4">
                             <ChevronLeft className="size-5 text-gray-700" />
                         </button>
                     )}
-
-                    {/* Right Arrow */}
                     {canScrollRight && (
-                        <button
-                            onClick={scrollRight}
-                            className="absolute top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-lg border border-gray-200 -right-4"
-                        >
+                        <button onClick={scrollRightFn} className="absolute top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-lg border border-gray-200 -right-4">
                             <ChevronRight className="size-5 text-gray-700" />
                         </button>
                     )}
@@ -194,11 +107,11 @@ export const LookingNowSection = () => {
 
                 {/* Desktop Grid */}
                 <div className="mt-6 hidden sm:grid grid-cols-3 gap-4 lg:grid-cols-5">
-                    {liveActivityProducts.map((product) => (
+                    {products.map((product) => (
                         <MarketplaceProductCard key={product.id} product={product} />
                     ))}
                 </div>
             </div>
         </section>
     );
-};
+}
