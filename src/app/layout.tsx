@@ -4,6 +4,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { RouteProvider } from "@/providers/router-provider";
 import { Theme } from "@/providers/theme";
 import { ClarityProvider } from "@/providers/clarity-provider";
+import { WishlistProvider } from "@/providers/wishlist-provider";
+import { ToastProvider } from "@/components/base/toast/toast";
 import { LayoutWrapper } from "@/components/layout/layout-wrapper";
 import NextTopLoader from "nextjs-toploader";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -96,7 +98,11 @@ export default function RootLayout({
                     >
                         <RouteProvider>
                             <Theme>
-                                <LayoutWrapper>{children}</LayoutWrapper>
+                                <ToastProvider>
+                                    <WishlistProvider>
+                                        <LayoutWrapper>{children}</LayoutWrapper>
+                                    </WishlistProvider>
+                                </ToastProvider>
                             </Theme>
                         </RouteProvider>
                     </ClerkProvider>

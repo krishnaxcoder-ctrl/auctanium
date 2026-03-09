@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useCallback, memo } from "react";
+import { useCallback, memo } from "react";
+import { useRouter } from "next/navigation";
 import {
     Clock,
     Heart,
@@ -16,6 +17,8 @@ import {
 import { cx } from "@/utils/cx";
 import { Badge, BadgeWithIcon } from "@/components/base/badges/badges";
 import { Button } from "@/components/base/buttons/button";
+import { useWishlistContext } from "@/providers/wishlist-provider";
+import { useToast } from "@/components/base/toast/toast";
 
 export interface MarketplaceProduct {
     id: string;
@@ -62,15 +65,35 @@ export const MarketplaceProductCard = memo(function MarketplaceProductCard({
     view = "grid",
     transparentBorder = false
 }: Props) {
-    const [isWishlisted, setIsWishlisted] = useState(false);
+    const router = useRouter();
+    const { isWishlisted, toggleWishlist } = useWishlistContext();
+    const { showToast } = useToast();
 
-    // Best practice: rerender-functional-setstate - use functional update for toggle
-    const handleWishlist = useCallback((e: React.MouseEvent) => {
+    const productIsWishlisted = isWishlisted(product.id);
+
+    // Handle wishlist toggle with toast feedback
+    const handleWishlist = useCallback(async (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
         e.nativeEvent.stopImmediatePropagation();
-        setIsWishlisted(prev => !prev);
-    }, []);
+
+        const result = await toggleWishlist(product.id);
+
+        if (result.requiresAuth) {
+            showToast("Please sign in to add items to wishlist", "info");
+            router.push("/login");
+            return;
+        }
+
+        if (result.success) {
+            showToast(
+                result.added ? "Added to wishlist" : "Removed from wishlist",
+                result.added ? "wishlist-add" : "wishlist-remove"
+            );
+        } else {
+            showToast("Something went wrong. Please try again.", "error");
+        }
+    }, [product.id, toggleWishlist, showToast, router]);
 
     // Best practice: useCallback for stable reference
     const preventLinkClick = useCallback((e: React.MouseEvent) => {
@@ -110,13 +133,13 @@ export const MarketplaceProductCard = memo(function MarketplaceProductCard({
                         onMouseDown={preventLinkClick}
                         className={cx(
                             "absolute top-3 right-3 p-2.5 rounded-full shadow-md cursor-pointer",
-                            isWishlisted ? "bg-red-50" : "bg-white/95 backdrop-blur-sm"
+                            productIsWishlisted ? "bg-red-50" : "bg-white/95 backdrop-blur-sm"
                         )}
                     >
                         <Heart
                             className={cx(
                                 "size-5",
-                                isWishlisted ? "text-red-500 fill-red-500" : "text-gray-400"
+                                productIsWishlisted ? "text-red-500 fill-red-500" : "text-gray-400"
                             )}
                         />
                     </button>
@@ -171,13 +194,13 @@ export const MarketplaceProductCard = memo(function MarketplaceProductCard({
                     onMouseDown={preventLinkClick}
                     className={cx(
                         "absolute top-2 right-2 p-2 rounded-full shadow-md cursor-pointer",
-                        isWishlisted ? "bg-red-50" : "bg-white/95 backdrop-blur-sm"
+                        productIsWishlisted ? "bg-red-50" : "bg-white/95 backdrop-blur-sm"
                     )}
                 >
                     <Heart
                         className={cx(
                             "size-4",
-                            isWishlisted ? "text-red-500 fill-red-500" : "text-gray-400"
+                            productIsWishlisted ? "text-red-500 fill-red-500" : "text-gray-400"
                         )}
                     />
                 </button>
