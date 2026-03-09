@@ -268,7 +268,7 @@ export function BidModal({
 
                                     {/* Error Message */}
                                     {error && (
-                                        <div className="mb-4 rounded-lg bg-error-primary p-3 text-sm text-white">
+                                        <div className="mb-4 rounded-lg bg-red-600 p-3 text-sm text-white">
                                             {error}
                                         </div>
                                     )}
