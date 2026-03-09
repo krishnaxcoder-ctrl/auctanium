@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { ShoppingBag01, Zap } from "@untitledui/icons";
+import { ShoppingCart01, Zap, Minus, Plus, Check, Truck01 } from "@untitledui/icons";
 import { Button } from "@/components/base/buttons/button";
 import { BidModal } from "@/components/bidding/bid-modal";
-import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { useAuction, formatTimeRemaining } from "@/hooks/use-auction";
 import { useCart } from "@/hooks/use-cart";
 import { cx } from "@/utils/cx";
@@ -22,6 +21,7 @@ interface ProductActionsProps {
         buy_now_price?: number;
         stock_quantity?: number;
         status: string;
+        free_shipping?: boolean;
     };
     auctionEndTime?: string;
     minimumBidIncrement?: number;
@@ -29,6 +29,7 @@ interface ProductActionsProps {
     onBidPlaced?: (amount: number) => void;
     onAddToCart?: () => void;
     onBuyNow?: () => void;
+    showPriceSection?: boolean;
 }
 
 export function ProductActions({
@@ -39,13 +40,17 @@ export function ProductActions({
     onBidPlaced,
     onAddToCart,
     onBuyNow,
+    showPriceSection = true,
 }: ProductActionsProps) {
     const { isSignedIn } = useAuth();
     const router = useRouter();
-    const { addToCart } = useCart();
+    const { addToCart, isLoading: isCartLoading } = useCart();
 
+    const [quantity, setQuantity] = useState(1);
     const [isBuyingNow, setIsBuyingNow] = useState(false);
+    const [isAddingToCart, setIsAddingToCart] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
     // For auction products, use the auction hook
     const { auctionStatus, timeRemaining, isEnded } = useAuction(
@@ -55,15 +60,58 @@ export function ProductActions({
     const isAuction = product.listing_type === "auction" || product.listing_type === "both";
     const isBuyNow = product.listing_type === "buy-now" || product.listing_type === "both";
     const isAvailable = product.status === "active";
-    const hasStock = (product.stock_quantity ?? 1) > 0;
+    const maxQuantity = product.stock_quantity ?? 1;
+    const hasStock = maxQuantity > 0;
 
     const currentBid = auctionStatus?.currentBid || product.current_bid || product.starting_price || 0;
     const buyNowPrice = product.buy_now_price;
     const timeInfo = auctionStatus ? formatTimeRemaining(timeRemaining) : null;
 
+    const formatCurrency = (amount: number) => {
+        return new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(amount);
+    };
+
+    const handleQuantityChange = (delta: number) => {
+        const newQty = quantity + delta;
+        if (newQty >= 1 && newQty <= maxQuantity) {
+            setQuantity(newQty);
+        }
+    };
+
+    const handleAddToCart = async () => {
+        if (!isSignedIn) {
+            router.push("/login");
+            return;
+        }
+
+        setIsAddingToCart(true);
+        setError(null);
+        setSuccessMessage(null);
+
+        try {
+            const result = await addToCart(product.id, quantity);
+            if (result.success) {
+                setSuccessMessage("Added to cart!");
+                onAddToCart?.();
+                setTimeout(() => setSuccessMessage(null), 2000);
+            } else {
+                setError(result.message || "Failed to add to cart");
+            }
+        } catch (err) {
+            setError("Something went wrong");
+        } finally {
+            setIsAddingToCart(false);
+        }
+    };
+
     const handleBuyNow = async () => {
         if (!isSignedIn) {
-            setError("Please sign in to purchase");
+            router.push("/login");
             return;
         }
 
@@ -76,9 +124,7 @@ export function ProductActions({
         setError(null);
 
         try {
-            // Add to cart and redirect to checkout
-            const result = await addToCart(product.id, 1);
-
+            const result = await addToCart(product.id, quantity);
             if (result.success) {
                 onBuyNow?.();
                 router.push("/checkout");
@@ -92,71 +138,134 @@ export function ProductActions({
         }
     };
 
-    const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-        }).format(amount);
-    };
-
     if (!isAvailable) {
         return (
-            <div className={cx("rounded-lg bg-secondary p-4 text-center", className)}>
+            <div className={cx("rounded-xl bg-secondary p-6 text-center", className)}>
                 <p className="font-medium text-tertiary">This item is no longer available</p>
             </div>
         );
     }
 
-    return (
-        <div className={cx("space-y-4", className)}>
-            {/* Price Display */}
-            <div className="space-y-2">
-                {isAuction && (
-                    <div className="flex items-baseline justify-between">
-                        <span className="text-sm text-tertiary">Current Bid:</span>
-                        <span className="text-2xl font-bold text-primary">
-                            {formatCurrency(currentBid)}
+    // Pure Buy Now Product UI
+    if (!isAuction && isBuyNow) {
+        return (
+            <div className={cx("space-y-5", className)}>
+                {/* Stock Status */}
+                {hasStock && (
+                    <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-center size-5 rounded-full bg-success-100">
+                            <Check className="size-3 text-success-600" />
+                        </div>
+                        <span className="text-sm font-medium text-success-600">
+                            In Stock {maxQuantity > 1 && `(${maxQuantity} available)`}
                         </span>
                     </div>
                 )}
 
-                {isBuyNow && buyNowPrice && (
-                    <div className="flex items-baseline justify-between">
-                        <span className="text-sm text-tertiary">
-                            {isAuction ? "Buy Now Price:" : "Price:"}
-                        </span>
-                        <span
-                            className={cx(
-                                "font-bold",
-                                isAuction ? "text-lg text-secondary" : "text-2xl text-primary"
+                {/* Quantity Selector */}
+                {hasStock && maxQuantity > 1 && (
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium text-primary">Quantity</label>
+                        <div className="flex items-center gap-3">
+                            <div className="flex items-center border border-secondary rounded-lg">
+                                <button
+                                    onClick={() => handleQuantityChange(-1)}
+                                    disabled={quantity <= 1}
+                                    className="p-3 text-tertiary hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                                >
+                                    <Minus className="size-4" />
+                                </button>
+                                <span className="w-12 text-center text-base font-semibold text-primary">
+                                    {quantity}
+                                </span>
+                                <button
+                                    onClick={() => handleQuantityChange(1)}
+                                    disabled={quantity >= maxQuantity}
+                                    className="p-3 text-tertiary hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                                >
+                                    <Plus className="size-4" />
+                                </button>
+                            </div>
+                            {quantity > 1 && buyNowPrice && (
+                                <span className="text-sm text-tertiary">
+                                    Total: <span className="font-semibold text-primary">{formatCurrency(buyNowPrice * quantity)}</span>
+                                </span>
                             )}
-                        >
-                            {formatCurrency(buyNowPrice)}
-                        </span>
+                        </div>
                     </div>
+                )}
+
+                {/* Error/Success Messages */}
+                {error && (
+                    <div className="rounded-lg bg-error-50 border border-error-200 p-3 text-sm text-error-700">
+                        {error}
+                    </div>
+                )}
+                {successMessage && (
+                    <div className="rounded-lg bg-success-50 border border-success-200 p-3 text-sm text-success-700 flex items-center gap-2">
+                        <Check className="size-4" />
+                        {successMessage}
+                    </div>
+                )}
+
+                {/* Action Buttons */}
+                {hasStock ? (
+                    <div className="space-y-3">
+                        <Button
+                            color="primary"
+                            size="xl"
+                            className="w-full"
+                            onClick={handleBuyNow}
+                            isLoading={isBuyingNow}
+                            iconLeading={Zap}
+                        >
+                            Buy Now
+                        </Button>
+                        <Button
+                            color="secondary"
+                            size="xl"
+                            className="w-full"
+                            onClick={handleAddToCart}
+                            isLoading={isAddingToCart}
+                            iconLeading={ShoppingCart01}
+                        >
+                            Add to Cart
+                        </Button>
+                    </div>
+                ) : (
+                    <Button color="secondary" size="xl" className="w-full" isDisabled>
+                        Out of Stock
+                    </Button>
                 )}
             </div>
+        );
+    }
 
+    // Auction or Both (Auction + Buy Now) UI
+    return (
+        <div className={cx("space-y-4", className)}>
             {/* Auction Time Remaining */}
             {isAuction && timeInfo && (
                 <div
                     className={cx(
                         "rounded-lg p-3 text-center",
                         timeInfo.isUrgent && !isEnded
-                            ? "bg-error-primary text-white"
+                            ? "bg-error-50 border border-error-200"
                             : isEnded
                               ? "bg-secondary"
-                              : "bg-warning-primary text-warning-primary"
+                              : "bg-warning-50 border border-warning-200"
                     )}
                 >
                     {isEnded ? (
                         <span className="font-medium text-tertiary">Auction Ended</span>
                     ) : (
                         <>
-                            <span className="text-sm font-medium">
+                            <span className={cx("text-sm font-medium", timeInfo.isUrgent ? "text-error-600" : "text-warning-700")}>
                                 {timeInfo.isUrgent ? "Ending Soon: " : "Time Left: "}
                             </span>
-                            <span className="font-bold">{timeInfo.formatted}</span>
+                            <span className={cx("font-bold", timeInfo.isUrgent ? "text-error-700" : "text-warning-800")}>
+                                {timeInfo.formatted}
+                            </span>
                         </>
                     )}
                 </div>
@@ -164,7 +273,7 @@ export function ProductActions({
 
             {/* Error Message */}
             {error && (
-                <div className="rounded-lg bg-error-primary p-3 text-center text-sm text-white">
+                <div className="rounded-lg bg-error-50 border border-error-200 p-3 text-sm text-error-700">
                     {error}
                 </div>
             )}
@@ -183,7 +292,7 @@ export function ProductActions({
                         timeRemaining={timeRemaining}
                         onBidPlaced={onBidPlaced}
                         trigger={
-                            <Button color="primary" size="lg" className="w-full">
+                            <Button color="primary" size="xl" className="w-full">
                                 Place Bid
                             </Button>
                         }
@@ -194,7 +303,7 @@ export function ProductActions({
                 {isBuyNow && buyNowPrice && hasStock && (
                     <Button
                         color={isAuction ? "secondary" : "primary"}
-                        size="lg"
+                        size="xl"
                         className="w-full"
                         onClick={handleBuyNow}
                         isLoading={isBuyingNow}
@@ -204,20 +313,9 @@ export function ProductActions({
                     </Button>
                 )}
 
-                {/* Add to Cart Button (for buy-now items) */}
-                {isBuyNow && !isAuction && hasStock && (
-                    <AddToCartButton
-                        productId={product.id}
-                        productTitle={product.title}
-                        maxQuantity={product.stock_quantity}
-                        onSuccess={onAddToCart}
-                        onError={(msg) => setError(msg)}
-                    />
-                )}
-
                 {/* Out of Stock */}
                 {isBuyNow && !hasStock && (
-                    <Button color="secondary" size="lg" className="w-full" isDisabled>
+                    <Button color="secondary" size="xl" className="w-full" isDisabled>
                         Out of Stock
                     </Button>
                 )}
@@ -225,9 +323,9 @@ export function ProductActions({
 
             {/* Bid Count (for auctions) */}
             {isAuction && auctionStatus && (
-                <div className="flex items-center justify-center gap-4 text-sm text-tertiary">
+                <div className="flex items-center justify-center gap-4 text-sm text-tertiary pt-2">
                     <span>{auctionStatus.totalBids} bids</span>
-                    <span className="text-quaternary">|</span>
+                    <span className="text-quaternary">•</span>
                     <span>{auctionStatus.uniqueBidders} bidders</span>
                 </div>
             )}
