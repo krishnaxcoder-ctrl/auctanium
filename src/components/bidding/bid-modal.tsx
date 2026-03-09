@@ -139,7 +139,7 @@ export function BidModal({
                                     <h2 className="text-lg font-semibold text-primary">{productTitle}</h2>
                                     <div className="mt-1 flex items-center gap-3">
                                         <span className="text-sm text-tertiary">Current Bid:</span>
-                                        <span className="text-lg font-bold text-brand-primary">
+                                        <span className="text-lg font-bold text-brand-600">
                                             {formatCurrency(currentBid > 0 ? currentBid : startingPrice)}
                                         </span>
                                     </div>
@@ -150,7 +150,7 @@ export function BidModal({
                             <div
                                 className={cx(
                                     "mb-6 rounded-lg p-3 text-center",
-                                    timeInfo.isUrgent ? "bg-error-primary text-white" : "bg-secondary"
+                                    timeInfo.isUrgent ? "bg-red-600 text-white" : "bg-gray-100 text-gray-700"
                                 )}
                             >
                                 <span className="text-sm font-medium">
@@ -160,7 +160,7 @@ export function BidModal({
                             </div>
 
                             {success ? (
-                                <div className="rounded-lg bg-success-primary p-4 text-center text-white">
+                                <div className="rounded-lg bg-green-600 p-4 text-center text-white">
                                     <svg
                                         className="mx-auto mb-2 h-12 w-12"
                                         fill="none"
@@ -225,7 +225,7 @@ export function BidModal({
                                                 type="checkbox"
                                                 checked={useMaxBid}
                                                 onChange={(e) => setUseMaxBid(e.target.checked)}
-                                                className="h-4 w-4 rounded border-primary text-brand-primary focus:ring-brand-primary"
+                                                className="h-4 w-4 rounded border-gray-300 text-brand-600 focus:ring-brand-600"
                                             />
                                             <span className="text-sm text-secondary">
                                                 Set maximum bid (auto-bid)
@@ -253,12 +253,12 @@ export function BidModal({
                                                 type="checkbox"
                                                 checked={agreedToTerms}
                                                 onChange={(e) => setAgreedToTerms(e.target.checked)}
-                                                className="mt-1 h-4 w-4 rounded border-primary text-brand-primary focus:ring-brand-primary"
+                                                className="mt-1 h-4 w-4 rounded border-gray-300 text-brand-600 focus:ring-brand-600"
                                             />
                                             <span className="text-sm text-tertiary">
                                                 I understand that placing a bid creates a binding contract to
                                                 purchase this item if I win. By bidding, I agree to the{" "}
-                                                <a href="/terms" className="text-brand-primary hover:underline">
+                                                <a href="/terms" className="text-brand-600 hover:underline">
                                                     Terms of Service
                                                 </a>
                                                 .
