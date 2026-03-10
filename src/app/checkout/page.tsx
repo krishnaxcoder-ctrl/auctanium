@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -51,7 +51,23 @@ interface CheckoutSummary {
     total: number;
 }
 
+function CheckoutFallback() {
+    return (
+        <div className="min-h-screen bg-primary flex items-center justify-center">
+            <RefreshCw01 className="size-8 animate-spin text-brand-600" />
+        </div>
+    );
+}
+
 export default function CheckoutPage() {
+    return (
+        <Suspense fallback={<CheckoutFallback />}>
+            <CheckoutContent />
+        </Suspense>
+    );
+}
+
+function CheckoutContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
 

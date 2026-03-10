@@ -8,14 +8,21 @@ const nextConfig = {
 
     // Experimental features for performance
     experimental: {
-        // Tree-shake heavy packages
+        // Tree-shake heavy packages - key optimization for Turbopack
+        // Note: @untitledui/icons excluded - incompatible with optimizePackageImports
         optimizePackageImports: [
-            "@untitledui/icons",
             "@clerk/nextjs",
             "motion",
+            "react-aria",
             "react-aria-components",
+            "@supabase/supabase-js",
+            "zod",
+            "tailwind-merge",
         ],
     },
+
+    // Server-only packages - not bundled, resolved at runtime (faster builds)
+    serverExternalPackages: ["resend"],
 
 
     // Image optimization settings
@@ -45,6 +52,10 @@ const nextConfig = {
                 protocol: "https",
                 hostname: "img.clerk.com",
             },
+            {
+                protocol: "https",
+                hostname: "*.supabase.co",
+            },
         ],
         // Optimize image formats - AVIF first for better compression
         formats: ["image/avif", "image/webp"],
@@ -58,13 +69,10 @@ const nextConfig = {
         contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     },
 
-    // Turbopack configuration (Next.js 16 default)
-    turbopack: {},
-
     // Production optimizations
     poweredByHeader: false,
 
-    // Enable gzip/brotli headers
+    // Cache headers for static assets
     headers: async () => [
         {
             source: "/:all*(svg|jpg|jpeg|png|webp|avif|gif|ico|woff|woff2)",
@@ -85,57 +93,6 @@ const nextConfig = {
             ],
         },
     ],
-
-    // Webpack optimizations
-    webpack: (config, { isServer }) => {
-        // Optimize bundle size
-        if (!isServer) {
-            config.optimization = {
-                ...config.optimization,
-                splitChunks: {
-                    chunks: "all",
-                    minSize: 20000,
-                    maxSize: 244000, // Target ~240KB chunks for better caching
-                    cacheGroups: {
-                        default: false,
-                        vendors: false,
-                        // Framework chunk (React, Next.js core)
-                        framework: {
-                            name: "framework",
-                            chunks: "all",
-                            test: /[\\/]node_modules[\\/](react|react-dom|scheduler|next)[\\/]/,
-                            priority: 40,
-                            enforce: true,
-                        },
-                        // UI Library chunk
-                        ui: {
-                            name: "ui",
-                            chunks: "all",
-                            test: /[\\/]node_modules[\\/](@untitledui|react-aria|motion)[\\/]/,
-                            priority: 30,
-                        },
-                        // Vendor chunk (other node_modules)
-                        vendor: {
-                            name: "vendor",
-                            chunks: "all",
-                            test: /[\\/]node_modules[\\/]/,
-                            priority: 20,
-                        },
-                        // Common chunk for shared code
-                        common: {
-                            name: "common",
-                            minChunks: 2,
-                            chunks: "all",
-                            priority: 10,
-                            reuseExistingChunk: true,
-                            enforce: true,
-                        },
-                    },
-                },
-            };
-        }
-        return config;
-    },
 };
 
 export default nextConfig;
