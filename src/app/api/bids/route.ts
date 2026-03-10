@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         // Get product and auction info
         const { data: product, error: productError } = await supabase
             .from("products")
-            .select("id, listing_type, current_bid, starting_price, status, seller_id")
+            .select("id, listing_type, current_bid, starting_price, status, seller_id, bids_count")
             .eq("id", productId)
             .single();
 
