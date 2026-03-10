@@ -93,12 +93,11 @@ export const TopCategoriesSection = memo(function TopCategoriesSection() {
                 <div
                     ref={scrollRef}
                     onScroll={checkScroll}
-                    className="flex overflow-x-auto scrollbar-hide"
-                    style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                    className="grid grid-cols-6 gap-4"
                 >
-                    {categories.map((cat) => (
-                        <Link key={cat.slug} href={`/category/${cat.slug}`} className="group flex-shrink-0 w-[150px]">
-                            <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-secondary">
+                    {categories.slice(0, 6).map((cat) => (
+                        <Link key={cat.slug} href={`/category/${cat.slug}`} className="group">
+                            <div className="relative aspect-[4/5] overflow-hidden bg-secondary">
                                 <Image src={cat.image} alt={cat.name} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
                             </div>
                             <p className="mt-2 text-sm font-medium text-primary text-center group-hover:text-brand-600 transition-colors">
