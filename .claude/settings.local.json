@@ -34,7 +34,8 @@
       "mcp__supabase__search_docs",
       "mcp__supabase__list_migrations",
       "mcp__supabase__generate_typescript_types",
-      "Bash(npm ls:*)"
+      "Bash(npm ls:*)",
+      "mcp__magic__21st_magic_component_refiner"
     ]
   },
   "enableAllProjectMcpServers": true,
